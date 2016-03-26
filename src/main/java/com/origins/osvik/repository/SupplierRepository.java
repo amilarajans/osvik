@@ -1,0 +1,14 @@
+package com.origins.osvik.repository;
+
+import com.origins.osvik.domain.Supplier;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+/**
+ * Created by Amila-Kumara on 3/12/2016.
+ */
+public abstract interface SupplierRepository extends JpaRepository<Supplier, Integer> {
+    @Query(value = "SELECT supplier FROM Supplier supplier WHERE supplier.code=:code")
+    Supplier findOneByCode(@Param("code") String code);
+}

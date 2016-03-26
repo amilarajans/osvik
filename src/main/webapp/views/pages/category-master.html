@@ -1,0 +1,131 @@
+<div id="page-wrapper" class="col-lg-10 col-lg-offset-2">
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <i class="fa fa-fw fa-tasks"></i> Category MASTER
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="fa fa-dashboard"></i> <a href="#dashboard">Dashboard</a>
+                    </li>
+                    <li class="active">
+                        <i class="fa fa-tasks"></i> Category MASTER
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-6">
+                <form role="form">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Add a New Major Category</h2>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Major Category</label>
+                        <input type="text" class="form-control" placeholder="Enter text" ng-model="category.name">
+                    </div>
+
+                    <button type="submit" class="btn btn-success" ng-click="addCategory()">Submit Button</button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetCategory()">Reset Button</button>
+                    <br><br><br>
+                </form>
+                <form role="form">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Add a New Sub Category</h2>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Major Category</label>
+                        <select class="form-control" ng-model="subCategory.category">
+                            <option ng-repeat="category in categoryList" value="{{category.id}}">{{category.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sub Category</label>
+                        <input type="text" class="form-control" placeholder="Enter text" ng-model="subCategory.name">
+                    </div>
+                    <br>
+
+                    <button type="submit" class="btn btn-success" ng-click="addSubCategory()">Submit Button</button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetSubCategory()">Reset Button</button>
+
+                </form>
+
+            </div>
+            <div class="col-lg-1"></div>
+
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <br> <br> <br>
+            <div class="col-lg-10">
+                <h2>Listing of all Category</h2>
+                <br>
+                <div class="row">
+                    <div class="col-lg-3">
+
+                        <select class="form-control">
+
+                            <option>Major Category</option>
+                            <option ng-repeat="category in categoryList" value="{{category.id}}">{{category.name}}
+                            </option>
+                        </select>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group input-group">
+
+                            <input type="text" class="form-control" placeholder=" Name">
+                            <span class="input-group-btn"><button class="btn btn-default" type="button"><i
+                                    class="fa fa-search"></i></button></span>
+                        </div>
+
+                    </div>
+
+                </div>
+                <br> <br>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Sub Category</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>001</td>
+                            <td>Sub0001</td>
+                            <td>
+                                <button type="submit" class="btn btn-primary ">Update</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger ">Delete</button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <!--<uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>-->
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /.container-fluid -->
+
+</div>

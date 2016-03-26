@@ -1,0 +1,42 @@
+CREATE TABLE AUTHORITY (
+  name VARCHAR(50) NOT NULL,
+  PRIMARY KEY (name)
+);
+
+CREATE TABLE USER_INFO (
+  login      VARCHAR(50)  NOT NULL,
+  password   VARCHAR(100) NULL,
+  first_name VARCHAR(50)  NULL,
+  last_name  VARCHAR(50)  NULL,
+  email      VARCHAR(100) NULL,
+  PRIMARY KEY (login)
+);
+
+CREATE TABLE USER_AUTHORITY (
+  login VARCHAR(50)  NULL,
+  name  VARCHAR(255) NULL
+);
+
+CREATE TABLE HIBERNATE_SEQUENCE (
+  next_val BIGINT(20) NULL
+);
+
+ALTER TABLE USER_AUTHORITY ADD INDEX idx_user_authority (login, name);
+
+ALTER TABLE USER_AUTHORITY ADD CONSTRAINT fk_authority_name FOREIGN KEY (name) REFERENCES AUTHORITY (name);
+
+ALTER TABLE USER_AUTHORITY ADD CONSTRAINT fk_user_login FOREIGN KEY (login) REFERENCES USER_INFO (login);
+
+INSERT INTO HIBERNATE_SEQUENCE (next_val) VALUES (1);
+
+# create admin user
+
+INSERT INTO USER_INFO (login, password, first_name, last_name, email) VALUES
+  ('admin', 'b8f57d6d6ec0a60dfe2e20182d4615b12e321cad9e2979e0b9f81e0d6eda78ad9b6dcfe53e4e22d1', NULL, 'Administrator',
+   NULL);
+
+INSERT INTO AUTHORITY (name) VALUES ('ROLE_ADMIN');
+INSERT INTO AUTHORITY (name) VALUES ('ROLE_USER');
+
+INSERT INTO USER_AUTHORITY (login, name) VALUES ('admin', 'ROLE_ADMIN');
+INSERT INTO USER_AUTHORITY (login, name) VALUES ('admin', 'ROLE_USER');

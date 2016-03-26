@@ -1,0 +1,211 @@
+{
+  "GENERAL": {
+    "YES": "Yes",
+    "NO": "No",
+    "ACTION": {
+      "LOGOUT": "Sign out",
+      "DISMISS-ALERT": "Click to dismiss this message",
+      "RETURN-TO-LIST": "Return to list",
+      "SHOW-RESULTS": "Show {{'GENERAL.RESULT-SIZES.' + resultSize.toString() | translate}} results",
+      "REFRESH-LIST": "Refresh list",
+      "SORT-BY": "Sort by {{name | translate}}",
+      "CLEAR-FILTERS": "Clear filters",
+      "CANCEL-AND-CLOSE": "Cancel and close",
+      "CANCEL": "Cancel",
+      "NEXT": "Next",
+      "PREVIOUS": "Previous",
+      "CLOSE": "Close",
+      "SHOWLICENSE": "License info"
+    },
+    "TITLE": {
+      "MAIN": "OSVIK Administrator",
+      "ACTIONS": "Actions",
+      "FILTERS": "Filters",
+      "CLUSTERS": "Clusters"
+    },
+    "MENU": {
+      "DEPLOYMENTS": "Deployments",
+      "PROCESS-DEFINITIONS": "Definitions",
+      "PROCESS-INSTANCES": "Instances",
+      "TASKS": "Tasks",
+      "JOBS": "Jobs",
+      "CONFIGURATION": "Configuration",
+      "CONFIGURATION-ENGINE": "Engine",
+      "CONFIGURATION-USERS": "Configure users",
+      "MONITORING": "Monitoring"
+    },
+    "RESULT-SIZES": {
+      "10": "10",
+      "25": "25",
+      "50": "50",
+      "100": "100",
+      "100000000": "all"
+    }
+  },
+  "LOGIN": {
+    "TITLE": "Sign in",
+    "USERNAME": "Username",
+    "USERNAME-PLACEHOLDER": "Enter your username",
+    "PASSWORD": "Password",
+    "PASSWORD-PLACEHOLDER": "Enter your password",
+    "ACTION": {
+      "CONFIRM": "Sign in"
+    }
+  },
+  "MONITORING": {
+    "REFRESH-INTERVAL": "Refresh page every {{name}}",
+    "NUMBER-OF-MEMBERS": "Number of members:",
+    "NODE-ID": "Id:",
+    "LAST-UPDATED": "Last updated:",
+    "LAST-METRICS-UPDATE": "Last metrics update:",
+    "NOT-ENOUGH-DATA": "The node is in an unknown state. This could be because the node hasn't finished joining the cluster or it hasn't send enough data yet to display here.",
+    "JOB-EXECUTOR-RUNNING": "Job executor running:",
+    "JAVA-VERSION": "Java version:",
+    "SUITE-INFORMATION": "This is an Activiti BPM Suite instance, version is {{bpmSuiteMajorVersion}}.{{bpmSuiteMinorVersion}}.{{bpmSuiteRevisionVersion}} (edition '{{bpmSuiteEdition}}')",
+    "MEMORY-USAGE": "Memory usage:",
+    "MEMORY-USED": "used",
+    "MEMORY-HEAP": "Heap:",
+    "MEMORY-NON-HEAP": "Non-heap:",
+    "UPTIME": "Uptime:",
+    "GARBAGE-COLLECTION": "Ran {{['collection.count']}} times, total time spent is {{['collection.time'] | humanTime}}",
+    "MASTER-CONFIGURATION": "Master configuration:",
+    "MASTER-CONFIGURATION-USED": "Correct master configuration used",
+    "MASTER-CONFIGURATION-NOT-USED": "Master configuration is not used",
+    "MASTER-CONFIGURATION-DISABLED": "Master configuration is disabled",
+    "MASTER-CONFIGURATION-INCORRECT": "Incorrect master configuration!",
+    "CLASSES-LOADED": "Current classes loaded:",
+    "CLASSES-UNLOADED": "Total classes unloaded:",
+    "CLASSES-TOTAL": "Total classes loaded:",
+    "CACHE-HITS": "Cache hits",
+    "CACHE-MISSES": "Cache misses",
+    "CACHE-ADDITIONS": "Cache additions",
+    "CACHE-REMOVALS": "Cache removals",
+    "JOBS-EXECUTED": "Number of jobs executed",
+    "JOBS-FAILED": "Number of jobs failed",
+    "JOBS-QUEUE-FULL": "Job queue full",
+    "PROCESS-INSTANCES": "Process instances started",
+    "HOUR-COUNT-CHART": "Total number / hour",
+    "WEEKDAY-COUNT-CHART": "Total number / weekday",
+    "TASKS-COMPLETED": "Tasks completed",
+    "MEAN-RATE": "Mean rate (per second):",
+    "TOTAL": "Total:",
+    "COUNT": "Count",
+    "MAX": "Max",
+    "MIN": "Min",
+    "STDDEV": "Stddev",
+    "MINUTE-RATE": "1/5/15 minute rate:",
+    "REST-REQUEST-TYPE": "Request type (rate unit = events/second)",
+    "REST-ENDPOINTS": "REST endpoints timings (duration unit = seconds, rate unit = calls/second)",
+    "ELASTIC-SEARCH-VERSION": "Version",
+    "ELASTIC-SEARCH-CLUSTER-NAME": "Cluster name",
+    "ELASTIC-SEARCH-STATE": "Status",
+    "ELASTIC-SEARCH-STATE-DESCRIPTION": "a red status indicates that the specific shard is not allocated in the cluster, yellow means that the primary shard is allocated but replicas are not, and green means that all shards are allocated",
+    "ELASTIC-SEARCH-INDICES": "Indices",
+    "ELASTIC-SEARCH-DOCS-COUNT": "Doc count",
+    "ELASTIC-SEARCH-SHARD-INFO": "Shard info",
+    "TITLE": {
+      "MAIN": "Cluster monitoring",
+      "NODE": "Node {{ipAddress}}",
+      "MEMORY": "Memory",
+      "GARBAGE-COLLECTION": "Garbage collection",
+      "CLASSLOADING": "Classloading",
+      "PROCESS-DEFINITION-CACHE": "Process definition cache",
+      "JOB-METRICS": "Job metrics",
+      "RUNTIME-METRICS": "Runtime metrics",
+      "BPM-SUITE": "Activti BPM Suite information",
+      "BPM-SUITE-REST-METRICS": "Rest endpoint metrics",
+      "BPM-SUITE-ELASTIC-SEARCH": "Elastic Search"
+    }
+  },
+  "USER": {
+    "POPUP": {
+      "CHANGE-PASSWORD": {
+        "TITLE": "Change password for '{{login}}'",
+        "OLD-PASSWORD": "Old password",
+        "NEW-PASSWORD": "New password",
+        "CONFIRM": "Change password"
+      },
+      "DELETE": {
+        "TITLE": "Delete user {{login}}",
+        "MESSAGE": "Are you sure you want to delete user '{{login}}'?",
+        "CONFIRM": "Delete user"
+      },
+      "EDIT": {
+        "TITLE": "Edit user {{login}}",
+        "LOGIN": "Login",
+        "EMAIL": "Email",
+        "FIRSTNAME": "Firstname",
+        "LASTNAME": "Lastname",
+        "CONFIRM": "Update user"
+      },
+      "NEW": {
+        "TITLE": "Create new user",
+        "LOGIN": "Login",
+        "EMAIL": "Email",
+        "FIRSTNAME": "Firstname",
+        "LASTNAME": "Lastname",
+        "PASSWORD": "Password",
+        "CONFIRM": "Create user"
+      }
+    }
+  },
+  "USERS": {
+    "TITLE": "Users",
+    "ACTION": {
+      "EDIT": "Edit user",
+      "NEW": "Create new user",
+      "DELETE": "Delete user",
+      "CHANGE-PASSWORD": "Change password"
+    },
+    "HEADER": {
+      "LOGIN": "Login",
+      "FIRSTNAME": "Firstname",
+      "LASTNAME": "Lastname",
+      "EMAIL": "Email",
+      "CLUSTER_USER": "Cluster user"
+    }
+  },
+  "LICENSE": {
+    "POPUP": {
+      "TITLE": "License information",
+      "HOLDER": "Holder",
+      "SUBJECT": "Subject",
+      "PRODUCTKEY": "Product type",
+      "GOODAFTERDATE": "License valid after",
+      "GOODBEFOREDATE": "License valid until",
+      "NUMBER_OF_PROCESSES": "Number of active processes",
+      "NUMBER_OF_ADMINS": "Number of administrator users",
+      "MULTI_TENANT": "Multi tenant",
+      "DEFAULT_TENANT": "Default tenant"
+    }
+  },
+  "VARIABLES": {
+    "HEADER": {
+      "NAME": "Name",
+      "TYPE": "Type",
+      "VALUE": "Value"
+    }
+  },
+  "ALERT": {
+    "GENERAL": {
+      "HTTP-ERROR": "An error occured while getting data from server",
+      "AUTHENTICATION-ERROR": "You entered invalid login credentials"
+    },
+    "USER": {
+      "DELETED": "User '{{login}}' deleted successfully.",
+      "UPDATED": "User '{{login}}' updated successfully.",
+      "CREATED": "User '{{login}}' created.",
+      "PASSWORD-CHANGED": "Password for '{{login}}' is changed successfully."
+    }
+  },
+  "MENU": {
+    "DASHBOARD": "Dashboard",
+    "SUPPLIER": "Supplier Master",
+    "CLIENT": "Client Master",
+    "REP": "REP. Master",
+    "CATEGORY": "Category Master",
+    "UNIT": "Unit Master",
+    "BANK": "Bank Master",
+    "ITEM": "Item Master"
+  }
+}
