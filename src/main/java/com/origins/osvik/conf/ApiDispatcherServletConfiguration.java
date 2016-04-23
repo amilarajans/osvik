@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -21,14 +20,12 @@ import java.util.List;
  * Created by Amila-Kumara on 1/4/2016.
  */
 @Configuration
-@ComponentScan({"com.origins.osvik.web.api", "com.origins.osvik.web.rest.exception"})
+@ComponentScan({"com.origins.osvik.web.rest", "com.origins.osvik.web.rest.exception"})
 @EnableAsync
 public class ApiDispatcherServletConfiguration extends WebMvcConfigurationSupport {
     private final Logger log = LoggerFactory.getLogger(ApiDispatcherServletConfiguration.class);
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private Environment environment;
 
     @Bean
     public SessionLocaleResolver localeResolver() {

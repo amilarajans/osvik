@@ -24,8 +24,8 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService {
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
     private static final String ADMIN_AUTHORITY = "ROLE_ADMIN";
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -34,7 +34,7 @@ public class UserService {
     private AuthorityRepository authorityRepository;
 
     public User createAdminUser(String login, String password, String firstName, String lastName, String email) {
-        return createUser(login, password, firstName, lastName, email, "ROLE_ADMIN");
+        return createUser(login, password, firstName, lastName, email, ADMIN_AUTHORITY);
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email, String... authorities) {

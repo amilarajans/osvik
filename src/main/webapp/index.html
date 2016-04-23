@@ -62,8 +62,6 @@
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li><a href="" ng-click="showLicenseInfo()" translate="GENERAL.ACTION.SHOWLICENSE"></a></li>
-            <li><a href="#users" translate="GENERAL.MENU.CONFIGURATION-USERS"></a></li>
             <li><a href="#logout" translate="GENERAL.ACTION.LOGOUT"></a></li>
         </ul>
     </div>
@@ -94,6 +92,9 @@
             </li>
             <li ng-class="{active: navigation.selection == 'item'}">
                 <a href="#item"><i class="fa fa-fw fa-medkit"></i> {{'MENU.ITEM' | translate}}</a>
+            </li>
+            <li>
+                <a href="#logout"><i class="fa fa-fw fa-sign-out"></i> {{'MENU.LOGOUT' | translate}}</a>
             </li>
         </ul>
     </div>

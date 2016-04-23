@@ -15,6 +15,8 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
+        $scope.editMode = false;
+
         $scope.count = function () {
             $http.get('app/api/v1/supplier/count').success(function (rs) {
                 $scope.itemsPerPage = rs.pageSize;
@@ -49,8 +51,33 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
             });
         };
 
+        $scope.updateSupplier = function () {
+            $http.post('app/api/v1/supplier/update', $scope.supplier).success(function (data) {
+                toastr.success('Successfully Updated !!');
+                $scope.pageChanged();
+                $scope.resetSupplier();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
+        $scope.editSupplier = function (supplier) {
+            $scope.supplier = supplier;
+            $scope.editMode = true;
+        };
+
+        $scope.deleteSupplier = function (id) {
+            $http.delete('app/api/v1/supplier/delete/' + id).success(function (data) {
+                toastr.success('Successfully Deleted !!');
+                $scope.pageChanged();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
         $scope.resetSupplier = function () {
             $scope.supplier = {};
+            $scope.editMode = false;
         };
 
         $scope.count();

@@ -13,6 +13,8 @@ activitiAdminApp.controller('ClientController', ['$rootScope', '$scope', '$http'
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
+        $scope.editMode = false;
+
         $scope.count = function () {
             $http.get('app/api/v1/client/count').success(function (rs) {
                 $scope.itemsPerPage = rs.pageSize;
@@ -47,8 +49,33 @@ activitiAdminApp.controller('ClientController', ['$rootScope', '$scope', '$http'
             });
         };
 
+        $scope.updateClient = function () {
+            $http.post('app/api/v1/client/update', $scope.client).success(function (data) {
+                toastr.success('Successfully Updated !!');
+                $scope.pageChanged();
+                $scope.resetClient();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
+        $scope.editClient = function (client) {
+            $scope.client = client;
+            $scope.editMode = true;
+        };
+
+        $scope.deleteClient = function (id) {
+            $http.delete('app/api/v1/client/delete/' + id).success(function (data) {
+                toastr.success('Successfully Deleted !!');
+                $scope.pageChanged();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
         $scope.resetClient = function () {
             $scope.client = {};
+            $scope.editMode = false;
         };
 
         $scope.count();

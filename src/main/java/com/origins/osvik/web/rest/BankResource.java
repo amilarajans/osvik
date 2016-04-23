@@ -2,7 +2,6 @@ package com.origins.osvik.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.origins.osvik.domain.Bank;
-import com.origins.osvik.dto.BankRepresentation;
 import com.origins.osvik.dto.Page;
 import com.origins.osvik.repository.BankRepository;
 import org.slf4j.Logger;
@@ -45,16 +44,20 @@ public class BankResource {
 
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
-    public void save(@RequestBody BankRepresentation bank) {
-        Bank newBank=new Bank();
-        newBank.setName(bank.getName());
-        newBank.setAccNo(bank.getAccNo());
-        newBank.setAccType(bank.getAccType());
-        newBank.setEmail(bank.getEmail());
-        newBank.setTel(bank.getTel());
-        newBank.setRemark(bank.getRemark());
-        bankRepository.save(newBank);
+    public void save(@RequestBody Bank bank) {
+        bankRepository.save(bank);
     }
 
+    @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void update(@RequestBody Bank bank) {
+        bankRepository.save(bank);
+    }
+
+    @RequestMapping(value = {"/delete/{id}"}, method = {RequestMethod.DELETE}, produces = {"application/json"})
+    @Timed
+    public void delete(@PathVariable String id) {
+        bankRepository.delete(Integer.valueOf(id));
+    }
 
 }

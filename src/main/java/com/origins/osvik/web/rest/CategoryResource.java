@@ -13,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -68,6 +65,12 @@ public class CategoryResource {
         }
     }
 
+    @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void updateCategory(@RequestBody Category category) {
+        categoryRepository.save(category);
+    }
+
     @RequestMapping(value = {"/sub/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
     public void saveSubCategory(@RequestBody ObjectNode actionBody) {
@@ -80,5 +83,20 @@ public class CategoryResource {
         } else {
             throw new ConflictException("Sub Category already exist with name " + subCategoryName);
         }
+    }
+
+    @RequestMapping(value = {"/sub/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void updateSubCategory(@RequestBody SubCategory subCategory) {
+        System.out.println(subCategory);
+        Category category = categoryRepository.findOne(subCategory.getCategoryId());
+        subCategory.setCategory(category);
+        subCategoryRepository.save(subCategory);
+    }
+
+    @RequestMapping(value = {"/sub/delete/{id}"}, method = {RequestMethod.DELETE}, produces = {"application/json"})
+    @Timed
+    public void delete(@PathVariable String id) {
+        subCategoryRepository.delete(Integer.valueOf(id));
     }
 }

@@ -70,5 +70,17 @@ public class UnitResource {
         }
     }
 
+    @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void update(@RequestBody Unit unit) {
+        unitRepository.save(unit);
+    }
+
+    @RequestMapping(value = {"/delete/{id}"}, method = {RequestMethod.DELETE}, produces = {"application/json"})
+    @Timed
+    public void delete(@PathVariable String id) {
+        unitRepository.delete(Integer.valueOf(id));
+    }
+
 
 }

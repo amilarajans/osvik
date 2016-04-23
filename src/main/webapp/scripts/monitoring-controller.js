@@ -1,9 +1,3 @@
-/*
- * Copyright 2005-2015 Alfresco Software, Ltd. All rights reserved.
- * License rights for this program may be obtained from Alfresco Software, Ltd.
- * pursuant to a written agreement and any use of this program without such an
- * agreement is prohibited.
- */
 'use strict';
 
 /* Controllers */
@@ -143,7 +137,7 @@ activitiAdminApp.controller('MonitoringController', ['$rootScope', '$scope', '$h
                     delete clusterInfo[i]['bpmSuiteElasticSearchStatsJson'];
                 }
             }
-        }
+        };
 
         // Method to refresh the cluster info with the backend
         var refreshClusterInfo = function() {

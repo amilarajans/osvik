@@ -6,11 +6,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    <i class="fa fa-fw fa-user-md"></i>  Medical representative MASTER
+                    <i class="fa fa-fw fa-user-md"></i> Medical representative MASTER
                 </h1>
                 <ol class="breadcrumb">
                     <li>
-                        <i class="fa fa-dashboard"></i>  <a href="#dashboard">Dashboard</a>
+                        <i class="fa fa-dashboard"></i> <a href="#dashboard">Dashboard</a>
                     </li>
                     <li class="active">
                         <i class="fa fa-user-md"></i> Medical representative MASTER
@@ -55,8 +55,15 @@
 
                     <br>
 
-                    <button type="submit" class="btn btn-success" ng-click="addRep()">Submit Button</button>
-                    <button type="reset" class="btn btn-warning" ng-click="resetRep()">Reset Button</button>
+                    <button type="submit" ng-show="!editMode" class="btn btn-success" ng-click="addRep()">
+                        {{'GENERAL.ACTION.SAVE' | translate}}
+                    </button>
+                    <button type="submit" ng-show="editMode" class="btn btn-success" ng-click="updateRep()">
+                        {{'GENERAL.ACTION.UPDATE' | translate}}
+                    </button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetRep()">
+                        {{'GENERAL.ACTION.RESET' | translate}}
+                    </button>
 
                 </form>
 
@@ -74,7 +81,8 @@
                     <div class="col-lg-3">
                         <div class="form-group input-group">
                             <input type="text" class="form-control" placeholder=" Name">
-                            <span class="input-group-btn"  ><button class="btn btn-default" type="button" ><i class="fa fa-search"></i></button></span>
+                            <span class="input-group-btn"><button class="btn btn-default" type="button"><i
+                                    class="fa fa-search"></i></button></span>
                         </div>
 
                     </div>
@@ -102,12 +110,23 @@
                             <td>{{rep.address}}</td>
                             <td>{{rep.remark}}</td>
 
-                            <td><button type="submit" class="btn btn-primary btn-sm">Update </button></td>
+                            <td>
+                                <button type="submit" class="btn btn-primary btn-sm" ng-click="editRep(rep)">
+                                    {{'GENERAL.ACTION.EDIT' | translate}}
+                                </button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger btn-sm" ng-click="deleteRep(rep.id)">
+                                    {{'GENERAL.ACTION.DELETE' | translate}}
+                                </button>
+                            </td>
                         </tr>
 
                         </tbody>
                     </table>
-                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage"
+                                    ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                                    boundary-link-numbers="true"></uib-pagination>
                 </div>
             </div>
         </div>

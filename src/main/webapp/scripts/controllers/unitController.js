@@ -13,6 +13,8 @@ activitiAdminApp.controller('UnitController', ['$rootScope', '$scope', '$http', 
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
+        $scope.editMode = false;
+
         $scope.count = function () {
             $http.get('app/api/v1/unit/count').success(function (rs) {
                 $scope.itemsPerPage = rs.pageSize;
@@ -48,8 +50,33 @@ activitiAdminApp.controller('UnitController', ['$rootScope', '$scope', '$http', 
             });
         };
 
+        $scope.updateUnit = function () {
+            $http.post('app/api/v1/unit/update', $scope.unit).success(function (data) {
+                toastr.success('Successfully Updated !!');
+                $scope.pageChanged();
+                $scope.resetUnit();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
+        $scope.editUnit = function (unit) {
+            $scope.unit = unit;
+            $scope.editMode = true;
+        };
+
+        $scope.deleteUnit = function (id) {
+            $http.delete('app/api/v1/unit/delete/' + id).success(function (data) {
+                toastr.success('Successfully Deleted !!');
+                $scope.pageChanged();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
         $scope.resetUnit = function () {
             $scope.unit = {};
+            $scope.editMode = false;
         };
 
         $scope.count();

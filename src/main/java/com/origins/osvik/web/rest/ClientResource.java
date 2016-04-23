@@ -2,7 +2,6 @@ package com.origins.osvik.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.origins.osvik.domain.Client;
-import com.origins.osvik.dto.ClientRepresentation;
 import com.origins.osvik.dto.Page;
 import com.origins.osvik.repository.ClientRepository;
 import com.origins.osvik.web.rest.exception.ConflictException;
@@ -45,21 +44,24 @@ public class ClientResource {
 
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
-    public void save(@RequestBody ClientRepresentation client) {
+    public void save(@RequestBody Client client) {
         if (clientRepository.findOneByCode(client.getCode()) == null) {
-            Client newClient = new Client();
-            newClient.setCode(client.getCode());
-            newClient.setName(client.getName());
-            newClient.setEmail(client.getEmail());
-            newClient.setAddress(client.getAddress());
-            newClient.setTel(client.getTel());
-            newClient.setWeb(client.getWeb());
-            newClient.setRemark(client.getRemark());
-            clientRepository.save(newClient);
+            clientRepository.save(client);
         } else {
             throw new ConflictException("Client already exist with code " + client.getCode());
         }
     }
 
+    @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void update(@RequestBody Client client) {
+        clientRepository.save(client);
+    }
+
+    @RequestMapping(value = {"/delete/{id}"}, method = {RequestMethod.DELETE}, produces = {"application/json"})
+    @Timed
+    public void delete(@PathVariable String id) {
+        clientRepository.delete(Integer.valueOf(id));
+    }
 
 }

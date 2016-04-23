@@ -3,7 +3,6 @@ package com.origins.osvik.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.origins.osvik.domain.Rep;
 import com.origins.osvik.dto.Page;
-import com.origins.osvik.dto.RepRepresentation;
 import com.origins.osvik.repository.RepRepository;
 import com.origins.osvik.web.rest.exception.ConflictException;
 import org.slf4j.Logger;
@@ -45,19 +44,24 @@ public class RepResource {
 
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
-    public void save(@RequestBody RepRepresentation rep) {
+    public void save(@RequestBody Rep rep) {
         if (repRepository.findOneByName(rep.getName()) == null) {
-            Rep newRep = new Rep();
-            newRep.setName(rep.getName());
-            newRep.setEmail(rep.getEmail());
-            newRep.setAddress(rep.getAddress());
-            newRep.setTel(rep.getTel());
-            newRep.setRemark(rep.getRemark());
-            repRepository.save(newRep);
+            repRepository.save(rep);
         } else {
             throw new ConflictException("Rep already exist with name " + rep.getName());
         }
     }
 
+    @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void update(@RequestBody Rep rep) {
+        repRepository.save(rep);
+    }
+
+    @RequestMapping(value = {"/delete/{id}"}, method = {RequestMethod.DELETE}, produces = {"application/json"})
+    @Timed
+    public void delete(@PathVariable String id) {
+        repRepository.delete(Integer.valueOf(id));
+    }
 
 }

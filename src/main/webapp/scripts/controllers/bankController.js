@@ -13,6 +13,8 @@ activitiAdminApp.controller('BankController', ['$rootScope', '$scope', '$http', 
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
+        $scope.editMode = false;
+
         $scope.count = function () {
             $http.get('app/api/v1/bank/count').success(function (rs) {
                 $scope.itemsPerPage = rs.pageSize;
@@ -47,8 +49,33 @@ activitiAdminApp.controller('BankController', ['$rootScope', '$scope', '$http', 
             });
         };
 
+        $scope.updateBank = function () {
+            $http.post('app/api/v1/bank/update', $scope.bank).success(function (data) {
+                toastr.success('Successfully Updated !!');
+                $scope.pageChanged();
+                $scope.resetBank();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
+        $scope.editBank = function (bank) {
+            $scope.bank = bank;
+            $scope.editMode = true;
+        };
+
+        $scope.deleteBank = function (id) {
+            $http.delete('app/api/v1/bank/delete/' + id).success(function (data) {
+                toastr.success('Successfully Deleted !!');
+                $scope.pageChanged();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
         $scope.resetBank = function () {
             $scope.bank = {};
+            $scope.editMode = false;
         };
 
         $scope.count();

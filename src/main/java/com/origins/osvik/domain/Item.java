@@ -1,6 +1,7 @@
 package com.origins.osvik.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ITEM")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Item implements Serializable {
     private static final long serialVersionUID = 5142510069953283639L;
     @Id

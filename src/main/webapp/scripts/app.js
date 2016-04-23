@@ -226,13 +226,6 @@ activitiAdminApp
             // Call when the user logs out
             $rootScope.$on('event:auth-loginCancelled', function () {
                 $rootScope.authenticated = false;
-
-                // Explicitly clear cluster data to re-fetch
-                $rootScope.activeServer = undefined;
-                $rootScope.changeActiveCluster(undefined);
-                $rootScope.availableClusters = undefined;
-                $rootScope.availableServers = undefined;
-                $rootScope.serverLoaded = false;
                 $location.path('');
             });
         }])
