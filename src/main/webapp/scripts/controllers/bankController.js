@@ -14,25 +14,22 @@ activitiAdminApp.controller('BankController', ['$rootScope', '$scope', '$http', 
         $scope.currentPage = 1;
 
         $scope.editMode = false;
-
-        $scope.count = function () {
-            $http.get('app/api/v1/bank/count').success(function (rs) {
-                $scope.itemsPerPage = rs.pageSize;
-                $scope.totalItems = rs.count;
-                $scope.pageChanged();
-            }).error(function (e) {
-                console.log(e);
-            });
-        };
+        $scope.bankName;
 
         $scope.pageChanged = function () {
+            if (!$scope.bankName) {
+                name = '*';
+            } else {
+                name = $scope.bankName;
+            }
             $http.get('app/api/v1/bank/all', {
                 params: {
                     page: $scope.currentPage,
-                    size: $scope.itemsPerPage
+                    name: name
                 }
             }).success(function (rs) {
-                $scope.bankList = rs;
+                $scope.bankList = rs.content;
+                $scope.totalItems = rs.totalElements;
             }).error(function (e) {
                 $scope.bankList = [];
                 console.log(e);
@@ -78,5 +75,9 @@ activitiAdminApp.controller('BankController', ['$rootScope', '$scope', '$http', 
             $scope.editMode = false;
         };
 
-        $scope.count();
+        $scope.searchBank = function () {
+            $scope.pageChanged();
+        };
+
+        $scope.pageChanged();
     }]);

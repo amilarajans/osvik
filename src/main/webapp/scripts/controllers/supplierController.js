@@ -16,25 +16,22 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
         $scope.currentPage = 1;
 
         $scope.editMode = false;
-
-        $scope.count = function () {
-            $http.get('app/api/v1/supplier/count').success(function (rs) {
-                $scope.itemsPerPage = rs.pageSize;
-                $scope.totalItems = rs.count;
-                $scope.pageChanged();
-            }).error(function (e) {
-                console.log(e);
-            });
-        };
+        $scope.supplierName;
 
         $scope.pageChanged = function () {
+            if (!$scope.supplierName) {
+                name = '*';
+            } else {
+                name = $scope.supplierName;
+            }
             $http.get('app/api/v1/supplier/all', {
                 params: {
                     page: $scope.currentPage,
-                    size: $scope.itemsPerPage
+                    name: name
                 }
             }).success(function (rs) {
-                $scope.supplierList = rs;
+                $scope.supplierList = rs.content;
+                $scope.totalItems = rs.totalElements;
             }).error(function (e) {
                 $scope.supplierList = [];
                 console.log(e);
@@ -80,5 +77,9 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
             $scope.editMode = false;
         };
 
-        $scope.count();
+        $scope.searchSupplier = function () {
+            $scope.pageChanged();
+        };
+
+        $scope.pageChanged();
     }]);

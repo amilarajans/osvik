@@ -4,7 +4,6 @@ import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.origins.osvik.domain.Category;
 import com.origins.osvik.domain.SubCategory;
-import com.origins.osvik.dto.Page;
 import com.origins.osvik.repository.CategoryRepository;
 import com.origins.osvik.repository.SubCategoryRepository;
 import com.origins.osvik.web.rest.exception.ConflictException;
@@ -13,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,20 +38,15 @@ public class CategoryResource {
 
     @RequestMapping(value = {"/all"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
-    public List<Category> getAllCategory() {
-        return categoryRepository.findAll();
+    public Page<Category> getAllCategory(@RequestParam("name") String name, @RequestParam("page") Integer page) {
+        name = name == null ? "%" : name.replace("*", "%");
+        return categoryRepository.findCategoryByName(name, new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "id")));
     }
 
     @RequestMapping(value = {"/sub/all"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
     public List<SubCategory> getAllSubCategory() {
         return subCategoryRepository.findAll();
-    }
-
-    @RequestMapping(value = {"/count"}, method = {RequestMethod.GET}, produces = {"application/json"})
-    @Timed
-    public Page getCount() {
-        return new Page(categoryRepository.count(), Long.parseLong(env.getProperty("result.page.size")));
     }
 
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})

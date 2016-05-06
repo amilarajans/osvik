@@ -16,16 +16,8 @@ activitiAdminApp.controller('CategoryController', ['$rootScope', '$scope', '$htt
 
         $scope.editCatMode = false;
         $scope.editSubCatMode = false;
+        $scope.categoryName;
 
-        $scope.count = function () {
-            $http.get('app/api/v1/category/count').success(function (rs) {
-                $scope.itemsPerPage = rs.pageSize;
-                $scope.totalItems = rs.count;
-                $scope.pageChanged();
-            }).error(function (e) {
-                console.log(e);
-            });
-        };
         //
         // $scope.loadCategory = function () {
         //     $http.get('app/api/v1/category/all').success(function (rs) {
@@ -37,13 +29,19 @@ activitiAdminApp.controller('CategoryController', ['$rootScope', '$scope', '$htt
         // };
 
         $scope.pageChanged = function () {
+            if (!$scope.categoryName) {
+                name = '*';
+            } else {
+                name = $scope.categoryName;
+            }
             $http.get('app/api/v1/category/all', {
                 params: {
                     page: $scope.currentPage,
-                    size: $scope.itemsPerPage
+                    name: name
                 }
             }).success(function (rs) {
-                $scope.categoryList = rs;
+                $scope.categoryList = rs.content;
+                $scope.totalItems = rs.totalElements;
             }).error(function (e) {
                 $scope.categoryList = [];
                 console.log(e);
@@ -123,5 +121,9 @@ activitiAdminApp.controller('CategoryController', ['$rootScope', '$scope', '$htt
             $scope.editSubCatMode = false;
         };
 
-        $scope.count();
+        $scope.searchCategory = function () {
+            $scope.pageChanged();
+        };
+
+        $scope.pageChanged();
     }]);

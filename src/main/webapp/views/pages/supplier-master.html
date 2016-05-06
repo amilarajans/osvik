@@ -121,21 +121,24 @@
                 <h2>Listing of all Suppliers</h2>
                 <br>
                 <div class="row">
-                    <div class="col-lg-3">
-                        <select class="form-control">
-                            <option>Select the country</option>
-                            <option>German</option>
-                            <option>Malasiya</option>
-                            <option>India</option>
-                            <option>USA</option>
-                        </select>
+                    <!--<div class="col-lg-3">-->
+                    <!--<select class="form-control">-->
+                    <!--<option>Select the country</option>-->
+                    <!--<option>German</option>-->
+                    <!--<option>Malasiya</option>-->
+                    <!--<option>India</option>-->
+                    <!--<option>USA</option>-->
+                    <!--</select>-->
 
-                    </div>
+                    <!--</div>-->
                     <div class="col-lg-3">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="company Name">
-                            <span class="input-group-btn"><button class="btn btn-default" type="button"><i
-                                    class="fa fa-search"></i></button></span>
+                            <input type="text" class="form-control" placeholder="Supplier Name" ng-model="supplierName">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="searchSupplier()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </div>
 
                     </div>

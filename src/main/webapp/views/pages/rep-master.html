@@ -80,9 +80,12 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder=" Name">
-                            <span class="input-group-btn"><button class="btn btn-default" type="button"><i
-                                    class="fa fa-search"></i></button></span>
+                            <input type="text" class="form-control" placeholder="Rep Name" ng-model="repName">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="searchRep()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </div>
 
                     </div>

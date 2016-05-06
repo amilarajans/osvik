@@ -14,25 +14,22 @@ activitiAdminApp.controller('RepController', ['$rootScope', '$scope', '$http', '
         $scope.currentPage = 1;
 
         $scope.editMode = false;
-
-        $scope.count = function () {
-            $http.get('app/api/v1/rep/count').success(function (rs) {
-                $scope.itemsPerPage = rs.pageSize;
-                $scope.totalItems = rs.count;
-                $scope.pageChanged();
-            }).error(function (e) {
-                console.log(e);
-            });
-        };
+        $scope.repName;
 
         $scope.pageChanged = function () {
+            if (!$scope.repName) {
+                name = '*';
+            } else {
+                name = $scope.repName;
+            }
             $http.get('app/api/v1/rep/all', {
                 params: {
                     page: $scope.currentPage,
-                    size: $scope.itemsPerPage
+                    name: name
                 }
             }).success(function (rs) {
-                $scope.repList = rs;
+                $scope.repList = rs.content;
+                $scope.totalItems = rs.totalElements;
             }).error(function (e) {
                 $scope.repList = [];
                 console.log(e);
@@ -78,5 +75,9 @@ activitiAdminApp.controller('RepController', ['$rootScope', '$scope', '$http', '
             $scope.editMode = false;
         };
 
-        $scope.count();
+        $scope.searchRep = function () {
+            $scope.pageChanged();
+        };
+
+        $scope.pageChanged();
     }]);

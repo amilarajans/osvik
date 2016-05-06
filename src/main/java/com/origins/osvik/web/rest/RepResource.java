@@ -2,7 +2,6 @@ package com.origins.osvik.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.origins.osvik.domain.Rep;
-import com.origins.osvik.dto.Page;
 import com.origins.osvik.repository.RepRepository;
 import com.origins.osvik.web.rest.exception.ConflictException;
 import org.slf4j.Logger;
@@ -10,11 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by Amila-Kumara on 3/12/2016.
@@ -32,14 +30,9 @@ public class RepResource {
 
     @RequestMapping(value = {"/all"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
-    public List<Rep> getAllByPage(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-        return repRepository.findAll(new PageRequest(page - 1, size, new Sort(Sort.Direction.ASC, "id"))).getContent();
-    }
-
-    @RequestMapping(value = {"/count"}, method = {RequestMethod.GET}, produces = {"application/json"})
-    @Timed
-    public Page getCount() {
-        return new Page(repRepository.count(), Long.parseLong(env.getProperty("result.page.size")));
+    public Page<Rep> getAllByPage(@RequestParam("name") String name, @RequestParam("page") Integer page) {
+        name = name == null ? "%" : name.replace("*", "%");
+        return repRepository.findRepByName(name, new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "id")));
     }
 
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
