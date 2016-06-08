@@ -43,6 +43,12 @@ public class CategoryResource {
         return categoryRepository.findCategoryByName(name, new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "id")));
     }
 
+    @RequestMapping(value = {"/allCategories"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @Timed
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
     @RequestMapping(value = {"/sub/all"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
     public List<SubCategory> getAllSubCategory() {

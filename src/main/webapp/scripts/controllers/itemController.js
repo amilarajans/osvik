@@ -12,13 +12,14 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
         $scope.unitList = [];
         $scope.supplierList = [];
         $scope.item = {};
+        $scope.editMode = false;
         $scope.maxSize = 10;
         $scope.itemsPerPage = 0;
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
         $scope.loadCategory = function () {
-            $http.get('app/api/v1/category/all').success(function (rs) {
+            $http.get('app/api/v1/category/allCategories').success(function (rs) {
                 $scope.categoryList = rs;
             }).error(function (e) {
                 $scope.categoryList = [];
@@ -89,6 +90,21 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
 
         $scope.resetItem = function () {
             $scope.item = {};
+            $scope.editMode = false;
+        };
+
+        $scope.editItem = function (item) {
+            $scope.item = item;
+            $scope.editMode = true;
+        };
+
+        $scope.deleteItem = function (id) {
+            $http.delete('app/api/v1/item/delete/' + id).success(function (data) {
+                toastr.success('Successfully Deleted !!');
+                $scope.pageChanged();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
         };
 
         $scope.count();

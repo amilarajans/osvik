@@ -142,7 +142,7 @@
                             <th>Item Name</th>
                             <th>Description</th>
                             <th>unit</th>
-                            <th>Item</th>
+                            <th>Supplier Name</th>
                             <th>Country</th>
                         </tr>
                         </thead>
@@ -150,18 +150,18 @@
                         <tr ng-repeat="item in itemList">
                             <td>{{item.id}}</td>
                             <td>{{item.code}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{item.categoryName}}</td>
+                            <td>{{item.subCategoryName}}</td>
                             <td>{{item.name}}</td>
                             <td>{{item.description}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{item.unitName}}</td>
+                            <td>{{item.supplierName}}</td>
                             <td>{{item.country}}</td>
-                            <td>
-                                <button type="submit" class="btn btn-primary btn-sm" ng-click="editItem(item)">
-                                    {{'GENERAL.ACTION.EDIT' | translate}}
-                                </button>
-                            </td>
+                            <!--<td>-->
+                            <!--<button type="submit" class="btn btn-primary btn-sm" ng-click="editItem(item)">-->
+                            <!--{{'GENERAL.ACTION.EDIT' | translate}}-->
+                            <!--</button>-->
+                            <!--</td>-->
                             <td>
                                 <button type="submit" class="btn btn-danger btn-sm"
                                         ng-click="deleteItem(item.id)">{{'GENERAL.ACTION.DELETE' | translate}}

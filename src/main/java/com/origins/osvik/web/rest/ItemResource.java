@@ -46,7 +46,7 @@ public class ItemResource {
     @RequestMapping(value = {"/all"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
     public List<Item> getAllByPage(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-        return itemRepository.findAll(new PageRequest(page - 1, size, new Sort(Sort.Direction.ASC, "id"))).getContent();
+        return itemRepository.findAllByPage(new PageRequest(page - 1, size, new Sort(Sort.Direction.ASC, "id"))).getContent();
     }
 
     @RequestMapping(value = {"/count"}, method = {RequestMethod.GET}, produces = {"application/json"})
@@ -74,5 +74,16 @@ public class ItemResource {
         }
     }
 
+    @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void update(@RequestBody Item item) {
+        itemRepository.save(item);
+    }
+
+    @RequestMapping(value = {"/delete/{id}"}, method = {RequestMethod.DELETE}, produces = {"application/json"})
+    @Timed
+    public void delete(@PathVariable String id) {
+        itemRepository.delete(Integer.valueOf(id));
+    }
 
 }

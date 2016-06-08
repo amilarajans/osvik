@@ -59,6 +59,33 @@ public class Item implements Serializable {
     @JoinColumn(name = "Supplier_idSupplier", nullable = false)
     private Supplier supplier;
 
+    @Transient
+    private String categoryName;
+
+    @Transient
+    private String subCategoryName;
+
+    @Transient
+    private String unitName;
+
+    @Transient
+    private String supplierName;
+
+    public Item() {
+    }
+
+    public Item(Integer id, String code, String categoryName, String subCategoryName, String name, String description, String unitName, String supplierName, String country) {
+        this.id = id;
+        this.code = code;
+        this.categoryName = categoryName;
+        this.subCategoryName = subCategoryName;
+        this.name = name;
+        this.description = description;
+        this.unitName = unitName;
+        this.supplierName = supplierName;
+        this.country = country;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -129,6 +156,38 @@ public class Item implements Serializable {
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 
     @Override
