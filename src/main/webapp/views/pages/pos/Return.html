@@ -1,0 +1,158 @@
+<div id="page-wrapper" class="col-lg-10 col-lg-offset-2">
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Return Note
+                    <!--<small>GRN</small>-->
+                </h1>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-2 text-left">
+                                <div class="form-group">
+                                    <input required class="form-control" placeholder="Enter Invoice No">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 text-left">
+                                <div class="form-group">
+                                    <input readonly="" class="form-control" placeholder="Client">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 text-left">
+                                <div class="form-group">
+                                    <input readonly="" class="form-control" placeholder="PO No">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 text-left">
+                                <div class="form-group">
+                                    <input readonly="" class="form-control" placeholder="Payment method">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 text-left">
+                                <div class="form-group">
+                                    <input readonly="" class="form-control" placeholder="Amount">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <form role="form">
+            <div class="row">
+
+                <div class="col-lg-3 text-left">
+                    <div class="form-group">
+                        <!--<label >Item Code</label>-->
+                        Item Code <input required="" class="form-control" placeholder="Item name /code"
+                                         id="inputSuccess">
+                    </div>
+                </div>
+                <div class="col-lg-1 text-left">
+                    <div class="form-group">
+                        QTY<input style="font-size: medium" required class="form-control" placeholder=" QTY">
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left">Unit Price
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">Rs.</span>
+                        <input style="font-size: medium" required="" class="form-control" placeholder="53">
+                        <span class="input-group-addon">.00</span>
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left">
+                    <div class="form-group">
+                        DOE<input readonly="" class="form-control" placeholder="22-05-2024">
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left">
+                    <div class="form-group">
+                        Lot No<input readonly="" class="form-control" placeholder=" 123123456">
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left">
+                    <div class="form-group ">
+                        Amount
+                        <input readonly="" type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <!--/.row-->
+            <!--code-->
+
+            <!--                        <button type="submit" class="btn btn-success">Submit </button>
+                                    <button type="reset" class="btn btn-default">Reset </button>-->
+        </form>
+
+        <!--tabel start-->
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <hr>
+                <div class="row">
+                    <div class="col-lg-2 text-left">
+                        <div class="form-group ">
+                            Cause Of Return
+                            <select class="form-control">
+                                <!--<option>Please Select</option>-->
+                                <option>Damaged</option>
+                                <option>Expired</option>
+                                <option>Wrong Item</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-left">
+                        <div class="form-group ">
+                            Date
+                            <input readonly="" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item Code</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Lot No</th>
+                            <th style="font-size: large">Qty</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>00</td>
+                            <td>test1</td>
+                            <td>test2</td>
+                            <td>500</td>
+                            <td>02-05-2025</td>
+                            <td>345Rt</td>
+                            <td>123er</td>
+                            <td>DMES</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-success">Print</button>
+                <button type="reset" class="btn btn-default">cancel</button>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- /#page-wrapper -->
+

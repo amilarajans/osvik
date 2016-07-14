@@ -48,6 +48,7 @@
     "STOCK": "Stock Master",
     "INVOICE": "Invoice",
     "CURRENTSTOCK": "Stock Management",
+    "RETURN": "Return Management",
     "LOGOUT": "Sign out"
   },
   "LOGIN": {

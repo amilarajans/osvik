@@ -1,0 +1,209 @@
+/**
+ * Created by Amila-Kumara on 3/19/2016.
+ */
+activitiAdminApp.controller('ReturnController', ['$rootScope', '$scope', '$http', 'toastr', '$uibModal',
+    function ($rootScope, $scope, $http, toastr, $uibModal) {
+
+        $rootScope.navigation = {selection: 'return'};
+
+        $scope.invoiceList = [];
+        $scope.itemList = [];
+        $scope.itemsList = [];
+        $scope.clientList = [];
+        $scope.currentItem = {};
+        $scope.currentClient = {};
+        $scope.invoiceNo = '';
+        $scope.totalQty = 0;
+        $scope.totalPrice = 0;
+        $scope.totalPriceTmp = 0;
+        $scope.discount = 0;
+        $scope.creditPeriod = 0;
+        $scope.poCode = '';
+        $scope.poDate = '';
+        $scope.clientCode = '';
+        $scope.paymentMethod = 0;
+        $scope.invoiceDate = new Date();
+        $scope.item = {
+            stockId: 0,
+            qty: 0,
+            unitPrice: 0,
+            itemCode: '',
+            desc: '',
+            name: '',
+            lotNo: ''
+        };
+        $scope.editMode = false;
+        $scope.invoicePrint = false;
+        $scope.maxSize = 10;
+        $scope.itemsPerPage = 0;
+        $scope.totalItems = 0;
+        $scope.currentPage = 1;
+
+        $scope.loadClient = function () {
+            $http.get('app/api/v1/client/allClients').success(function (rs) {
+                $scope.clientList = rs;
+                console.log(rs);
+            }).error(function (e) {
+                $scope.clientList = [];
+                console.log(e);
+            });
+        };
+
+        $scope.loadItems = function () {
+            $http.get('app/api/v1/stock/allStock').success(function (rs) {
+                $scope.itemsList = rs;
+            }).error(function (e) {
+                $scope.itemsList = [];
+                console.log(e);
+            });
+        };
+
+        $scope.changeCurrentClient = function (item) {
+            $scope.clientCode = item.code;
+            $scope.currentClient = item;
+        };
+
+        $scope.changeCurrentItem = function (item) {
+            // console.log(item);
+            $scope.currentItem = item;
+            $scope.item.unitPrice = item.price;
+            $scope.item.itemCode = item.code;
+            $scope.item.stockId = item.id;
+            $scope.item.desc = item.desc;
+            $scope.item.lotNo = item.lotNo;
+            $scope.item.name = item.name;
+            $scope.item.doe = item.doe;
+        };
+
+        $scope.addItem = function () {
+            if ($scope.item.qty > 0 && !!$scope.item.itemCode) {
+                $scope.totalQty += $scope.item.qty * 1;
+                $scope.totalPrice += $scope.item.qty * $scope.item.unitPrice;
+                $scope.totalPriceTmp += $scope.item.qty * $scope.item.unitPrice;
+
+                $scope.invoiceList.push($scope.item);
+                $scope.resetItem();
+                // $scope.pageChanged();
+                $scope.changeDiscount();
+                toastr.success('Item added to invoice');
+            } else {
+                toastr.error('No item to add');
+            }
+        };
+
+        $scope.changeDiscount = function () {
+            if ($scope.discount * 1 > 0) {
+                $scope.totalPrice = $scope.totalPriceTmp - (($scope.totalPriceTmp / 100) * $scope.discount)
+            } else {
+                $scope.totalPrice = $scope.totalPriceTmp;
+            }
+        };
+
+        $scope.invoice = function () {
+            if ($scope.invoiceList.length > 0) {
+                $http.post('app/api/v1/invoice/save', {
+                    invoices: $scope.invoiceList,
+                    discount: $scope.discount,
+                    creditPeriod: $scope.creditPeriod,
+                    poCode: $scope.poCode,
+                    poDate: $scope.poDate,
+                    paymentMethod: $scope.paymentMethod,
+                    clientCode: $scope.clientCode
+                }).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.invoiceNo = data.invoiceNo;
+                    $scope.invoicePrint = true;
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            } else {
+                toastr.error('No item(s) to Invoice');
+            }
+        };
+
+        $scope.printInvoice = function () {
+            // toastr.success($scope.invoiceNo);
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/pages/pos/bill.html',
+                controller: 'BillingController',
+                size: 'lg',
+                resolve: {
+                    invoiceList: function () {
+                        return $scope.invoiceList;
+                    },
+                    invoiceDetails: function () {
+                        return {
+                            qty: $scope.totalQty,
+                            price: $scope.totalPrice,
+                            discount: $scope.discount,
+                            client: $scope.currentClient,
+                            invoiceNo: $scope.invoiceNo,
+                            poCode: $scope.poCode,
+                            poDate: $scope.poDate,
+                            invoiceDate: $scope.invoiceDate
+                        };
+                    }
+                }
+            });
+
+            // modalInstance.result.then(function (result) {
+            // }, function () {
+            // });
+        };
+
+        $scope.resetItem = function () {
+            $scope.item = {
+                stockId: 0,
+                qty: 0,
+                unitPrice: 0,
+                itemCode: '',
+                desc: '',
+                name: '',
+                lotNo: ''
+            };
+            $scope.currentItem = {};
+            $scope.editMode = false;
+        };
+
+        $scope.resetInvoice = function () {
+            $scope.item = {
+                stockId: 0,
+                qty: 0,
+                unitPrice: 0,
+                itemCode: '',
+                desc: '',
+                name: '',
+                lotNo: ''
+            };
+            $scope.invoiceNo = '';
+            $scope.clientCode = '';
+            $scope.poCode = '';
+            $scope.poDate = '';
+            $scope.totalQty = 0;
+            $scope.totalPrice = 0;
+            $scope.totalPriceTmp = 0;
+            $scope.discount = 0;
+            $scope.creditPeriod = 0;
+            $scope.paymentMethod = 0;
+            $scope.currentItem = {};
+            $scope.invoiceList = [];
+            $scope.editMode = false;
+            $scope.invoicePrint = false;
+        };
+
+        $scope.deleteItem = function (item) {
+            var index = $scope.invoiceList.indexOf(item);
+            if (index > -1) {
+                $scope.invoiceList.splice(index, 1);
+            }
+            $scope.totalQty -= item.qty * 1;
+            $scope.totalPrice -= item.qty * item.unitPrice;
+            $scope.totalPriceTmp -= item.qty * item.unitPrice;
+            $scope.changeDiscount();
+            $scope.editMode = true;
+        };
+
+        $scope.loadClient();
+        $scope.loadItems();
+    }]);

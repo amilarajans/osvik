@@ -1,0 +1,129 @@
+<div id="page-wrapper" class="col-lg-10 col-lg-offset-2">
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Stock Management
+                    <!--<small>GRN</small>-->
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="fa fa-dashboard"></i> <a href="#dashboard">Dashboard</a>
+                    </li>
+                    <li class="active">
+                        <i class="fa fa-file"></i> Stock Management
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+
+        <!--tabel start-->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3> Current Stock </h3>
+                <div class="row">
+
+                    <div class="col-lg-3">
+                        <div class="form-group input-group">
+                            <input type="text" class="form-control" placeholder="ITEM Name / code / disc / lot / batch "
+                                   ng-model="searchBy">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="pageChanged()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="mCat">
+                                <option value="*">Major Category</option>
+                                <option ng-repeat="category in categoryList" value="{{category.name}}">
+                                    {{category.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="sCat">
+                                <option value="*">Sub Category</option>
+                                <option ng-repeat="subCategory in subCategoryList" value="{{subCategory.name}}">
+                                    {{subCategory.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="supplier">
+                                <option value="*">Supplier</option>
+                                <option ng-repeat="supplier in supplierList" value="{{supplier.name}}">
+                                    {{supplier.code}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--<div class="col-lg-2">-->
+                    <!--<div class="form-group">-->
+                    <!--&lt;!&ndash;<label>Sub Category</label>&ndash;&gt;-->
+                    <!--<select class="form-control">-->
+                    <!--&lt;!&ndash;<option>Please Select</option>&ndash;&gt;-->
+                    <!--<option>Sort by Qty</option>-->
+                    <!--<option>0- ^</option>-->
+                    <!--</select>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                </div>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item Code</th>
+                            <th>Name</th>
+                            <th style="font-size: large">Qty</th>
+                            <th>DOE</th>
+                            <th>Lot No</th>
+                            <th>Batch No</th>
+                            <th>Supplier</th>
+                            <th>Price(Rs)</th>
+                            <!--<th>Revenue</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in itemList">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.code}}</td>
+                            <td>{{item.name}}</td>
+                            <td style="font-size: large">{{item.qty}}</td>
+                            <td>{{item.doe | date:'dd-MM-yyyy'}}</td>
+                            <td>{{item.lotNo}}</td>
+                            <td>{{item.batchNo}}</td>
+                            <td>{{item.supplier}}</td>
+                            <td>{{item.price | number:2}}</td>
+                            <td>
+                                <button type="submit" class="btn btn-primary btn-sm">View</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage"
+                                    ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                                    boundary-link-numbers="true"></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- /#page-wrapper -->

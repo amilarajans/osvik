@@ -3,7 +3,7 @@
 /* App Module */
 
 var activitiAdminApp = angular.module('activitiAdminApp', ['http-auth-interceptor', 'ngResource', 'ngRoute', 'ngCookies',
-    'pascalprecht.translate', 'ngGrid', 'ui.select2', 'ui.bootstrap', 'angularFileUpload','ngSanitize','toastr']);
+    'pascalprecht.translate', 'ngGrid', 'ui.select', 'ui.bootstrap', 'angularFileUpload', 'ngSanitize', 'toastr']);
 
 var authRouteResolver = ['$rootScope', 'AuthenticationSharedService', function ($rootScope, AuthenticationSharedService) {
 
@@ -89,6 +89,31 @@ activitiAdminApp
                 .when('/item', {
                     templateUrl: 'views/pages/item-master.html',
                     controller: 'ItemController',
+                    resolve: authRouteResolver,
+                    reloadOnSearch: true
+                })
+                //pos parts
+                .when('/stock', {
+                    templateUrl: 'views/pages/pos/stock.html',
+                    controller: 'StockController',
+                    resolve: authRouteResolver,
+                    reloadOnSearch: true
+                })
+                .when('/current-stock', {
+                    templateUrl: 'views/pages/pos/current-stock.html',
+                    controller: 'CurrentStockController',
+                    resolve: authRouteResolver,
+                    reloadOnSearch: true
+                })
+                .when('/invoice', {
+                    templateUrl: 'views/pages/pos/invoice.html',
+                    controller: 'InvoiceController',
+                    resolve: authRouteResolver,
+                    reloadOnSearch: true
+                })
+                .when('/return', {
+                    templateUrl: 'views/pages/pos/return.html',
+                    controller: 'ReturnController',
                     resolve: authRouteResolver,
                     reloadOnSearch: true
                 })
@@ -191,6 +216,49 @@ activitiAdminApp
                 input.push(i);
             return input;
         };
+    }).filter('propsFilter', function () {
+    return function (items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+            var keys = Object.keys(props);
+
+            items.forEach(function (item) {
+                var itemMatches = false;
+
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+        return out;
+    };
+}).filter('pad', function () {
+    return function (input, size) {
+        var s = input + "";
+        while (s.length < size) s = "0" + s;
+        return s;
+    };
+})
+    .filter('highlight', function () {
+        function escapeRegexp(queryToEscape) {
+            return ('' + queryToEscape).replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+        }
+
+        return function (matchItem, query) {
+            return query && matchItem ? ('' + matchItem).replace(new RegExp(escapeRegexp(query), 'gi'), '<span class="ui-select-highlight">$&</span>') : matchItem;
+        };
     })
     .run(['$rootScope', '$location', 'AuthenticationSharedService', 'Account',
         function ($rootScope, $location, AuthenticationSharedService, Account) {
@@ -246,29 +314,8 @@ activitiAdminApp
             };
 
             $rootScope.checkLicenseValidity = function () {
-                if ($rootScope.activeServer && $rootScope.activeServer.id) {
-                    $http({
-                        method: 'GET',
-                        url: '/app/rest/license-validity?serverConfigId=' + $rootScope.activeServer.id
-                    }).success(function (data, status, headers, config) {
-                        var readonlyStatus = false;
-                        if (!data.adminLicenseValid || !data.serverLicenseValid) {
-                            readonlyStatus = true;
-                        }
 
-                        $rootScope.serverStatus = {
-                            adminLicenseValid: data.adminLicenseValid,
-                            serverLicenseValid: data.serverLicenseValid,
-                            readonlyStatus: readonlyStatus
-                        };
-                    }).error(function (data, status, headers, config) {
-                        console.log('Something went wrong: ' + data);
-                    });
-                }
             };
-
-            // Reference the fixed configuration values on the root scope
-            $rootScope.config = ActivitiAdmin.Config;
 
             // Store empty object for filter-references
             $rootScope.filters = {forced: {}};
@@ -323,15 +370,7 @@ activitiAdminApp
             };
 
             $rootScope.executeWhenReady = function (callback) {
-                if ($rootScope.activeServer) {
-                    callback();
-                } else {
-                    $rootScope.$watch('activeServer', function () {
-                        if ($rootScope.activeServer) {
-                            callback();
-                        }
-                    });
-                }
+
             };
         }
     ]);
