@@ -3,7 +3,6 @@ package com.origins.osvik.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.origins.osvik.domain.Item;
 import com.origins.osvik.dto.ItemRepresentation;
-import com.origins.osvik.dto.Page;
 import com.origins.osvik.repository.*;
 import com.origins.osvik.web.rest.exception.ConflictException;
 import org.slf4j.Logger;
@@ -11,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -45,14 +45,14 @@ public class ItemResource {
 
     @RequestMapping(value = {"/all"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
-    public List<Item> getAllByPage(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-        return itemRepository.findAllByPage(new PageRequest(page - 1, size, new Sort(Sort.Direction.ASC, "id"))).getContent();
+    public Page<Item> getAllByPage(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        return itemRepository.findAllByPage(new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "id")));
     }
 
-    @RequestMapping(value = {"/count"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @RequestMapping(value = {"/allItems"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
-    public Page getCount() {
-        return new Page(itemRepository.count(), Long.parseLong(env.getProperty("result.page.size")));
+    public List<Item> getAllByPage() {
+        return itemRepository.findAll();
     }
 
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})

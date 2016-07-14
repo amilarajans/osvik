@@ -80,7 +80,7 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="unit in unitList">
-                            <td>{{unit.id}}</td>
+                            <td>{{$index+1}}</td>
                             <td>{{unit.name}}</td>
                             <td>
                                 <button type="submit" class="btn btn-primary btn-sm" ng-click="editUnit(unit)">

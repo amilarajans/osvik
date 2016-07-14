@@ -30,6 +30,7 @@ activitiAdminApp.controller('UnitController', ['$rootScope', '$scope', '$http', 
             }).success(function (rs) {
                 $scope.unitList = rs.content;
                 $scope.totalItems = rs.totalElements;
+                $scope.itemsPerPage = rs.size;
             }).error(function (e) {
                 $scope.unitList = [];
                 console.log(e);

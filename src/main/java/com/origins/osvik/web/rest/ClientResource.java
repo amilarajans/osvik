@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by Amila-Kumara on 3/12/2016.
  */
@@ -33,6 +35,12 @@ public class ClientResource {
     public Page<Client> getAllByPage(@RequestParam("name") String name, @RequestParam("page") Integer page) {
         name = name == null ? "%" : name.replace("*", "%");
         return clientRepository.findClientByName(name, new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "id")));
+    }
+
+    @RequestMapping(value = {"/allClients"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @Timed
+    public List<Client> getAll() {
+        return clientRepository.findAll();
     }
 
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})

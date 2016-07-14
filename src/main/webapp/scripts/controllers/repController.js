@@ -30,6 +30,7 @@ activitiAdminApp.controller('RepController', ['$rootScope', '$scope', '$http', '
             }).success(function (rs) {
                 $scope.repList = rs.content;
                 $scope.totalItems = rs.totalElements;
+                $scope.itemsPerPage = rs.size;
             }).error(function (e) {
                 $scope.repList = [];
                 console.log(e);

@@ -30,6 +30,7 @@ activitiAdminApp.controller('BankController', ['$rootScope', '$scope', '$http', 
             }).success(function (rs) {
                 $scope.bankList = rs.content;
                 $scope.totalItems = rs.totalElements;
+                $scope.itemsPerPage = rs.size;
             }).error(function (e) {
                 $scope.bankList = [];
                 console.log(e);

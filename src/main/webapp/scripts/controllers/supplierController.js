@@ -32,6 +32,7 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
             }).success(function (rs) {
                 $scope.supplierList = rs.content;
                 $scope.totalItems = rs.totalElements;
+                $scope.itemsPerPage = rs.size;
             }).error(function (e) {
                 $scope.supplierList = [];
                 console.log(e);

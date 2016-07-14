@@ -19,7 +19,11 @@
       "UPDATE": "Update",
       "EDIT": "Edit",
       "RESET": "Reset",
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "ADDITEM": "Add Item",
+      "INVOICE": "Invoice",
+      "PRINT": "Print",
+      "NEWINVOICE": "New Invoice"
     },
     "TITLE": {
       "MAIN": "OSVIK Administrator"
@@ -41,6 +45,9 @@
     "UNIT": "Unit Master",
     "BANK": "Bank Master",
     "ITEM": "Item Master",
+    "STOCK": "Stock Master",
+    "INVOICE": "Invoice",
+    "CURRENTSTOCK": "Stock Management",
     "LOGOUT": "Sign out"
   },
   "LOGIN": {

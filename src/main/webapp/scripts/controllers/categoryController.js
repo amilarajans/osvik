@@ -42,6 +42,7 @@ activitiAdminApp.controller('CategoryController', ['$rootScope', '$scope', '$htt
             }).success(function (rs) {
                 $scope.categoryList = rs.content;
                 $scope.totalItems = rs.totalElements;
+                $scope.itemsPerPage = rs.size;
             }).error(function (e) {
                 $scope.categoryList = [];
                 console.log(e);

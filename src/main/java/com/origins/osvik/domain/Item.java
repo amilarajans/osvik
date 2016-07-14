@@ -8,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Amila-Kumara on 3/19/2016.
@@ -31,7 +32,7 @@ public class Item implements Serializable {
     @Column(name = "Name")
     private String name;
 
-    @Size(max = 45)
+    @Size(max = 100)
     @Column(name = "description")
     private String description;
 
@@ -58,6 +59,10 @@ public class Item implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Supplier_idSupplier", nullable = false)
     private Supplier supplier;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "item")
+    private List<Invoice> invoices;
 
     @Transient
     private String categoryName;
@@ -188,6 +193,14 @@ public class Item implements Serializable {
 
     public void setUnitName(String unitName) {
         this.unitName = unitName;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
     @Override

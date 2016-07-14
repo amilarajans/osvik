@@ -30,6 +30,7 @@ activitiAdminApp.controller('ClientController', ['$rootScope', '$scope', '$http'
             }).success(function (rs) {
                 $scope.clientList = rs.content;
                 $scope.totalItems = rs.totalElements;
+                $scope.itemsPerPage = rs.size;
             }).error(function (e) {
                 $scope.clientList = [];
                 console.log(e);
