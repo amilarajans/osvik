@@ -14,5 +14,5 @@ CREATE TABLE STOCK
   doe       DATE,
   lotNo     VARCHAR(45),
   batchNo   VARCHAR(45),
-  CONSTRAINT STOCK_unit_idunit_fk FOREIGN KEY (unit_id) REFERENCES unit (idunit)
+  CONSTRAINT STOCK_unit_idunit_fk FOREIGN KEY (unit_id) REFERENCES UNIT (idunit)
 )

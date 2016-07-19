@@ -42,7 +42,6 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
         $scope.loadClient = function () {
             $http.get('app/api/v1/client/allClients').success(function (rs) {
                 $scope.clientList = rs;
-                console.log(rs);
             }).error(function (e) {
                 $scope.clientList = [];
                 console.log(e);
@@ -108,7 +107,8 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
                     poCode: $scope.poCode,
                     poDate: $scope.poDate,
                     paymentMethod: $scope.paymentMethod,
-                    clientCode: $scope.clientCode
+                    clientCode: $scope.clientCode,
+                    totalPrice: $scope.totalPrice
                 }).success(function (data) {
                     toastr.success('Successfully Saved !!');
                     $scope.invoiceNo = data.invoiceNo;

@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class InvoiceRepresentation implements Serializable {
     private Double discount;
+    private Double totalPrice;
     private Integer creditPeriod;
     private String poCode;
     private String paymentMethod;
@@ -72,6 +73,14 @@ public class InvoiceRepresentation implements Serializable {
 
     public void setPoDate(Date poDate) {
         this.poDate = poDate;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @Override

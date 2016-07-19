@@ -28,18 +28,6 @@
                 <h3> Current Stock </h3>
                 <div class="row">
 
-                    <div class="col-lg-3">
-                        <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="ITEM Name / code / disc / lot / batch "
-                                   ng-model="searchBy">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="pageChanged()">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-
-                    </div>
                     <div class="col-lg-2">
                         <div class="form-group">
                             <select class="form-control" ng-model="mCat">
@@ -70,16 +58,18 @@
                             </select>
                         </div>
                     </div>
-                    <!--<div class="col-lg-2">-->
-                    <!--<div class="form-group">-->
-                    <!--&lt;!&ndash;<label>Sub Category</label>&ndash;&gt;-->
-                    <!--<select class="form-control">-->
-                    <!--&lt;!&ndash;<option>Please Select</option>&ndash;&gt;-->
-                    <!--<option>Sort by Qty</option>-->
-                    <!--<option>0- ^</option>-->
-                    <!--</select>-->
-                    <!--</div>-->
-                    <!--</div>-->
+                    <div class="col-lg-3">
+                        <div class="form-group input-group">
+                            <input type="text" class="form-control" placeholder="ITEM Name / code / disc / lot / batch "
+                                   ng-model="searchBy">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="pageChanged()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                    </div>
 
                 </div>
                 <hr>

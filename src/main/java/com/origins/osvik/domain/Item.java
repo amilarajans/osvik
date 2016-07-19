@@ -64,6 +64,10 @@ public class Item implements Serializable {
     @OneToMany(mappedBy = "item")
     private List<Invoice> invoices;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "item")
+    private List<ReturnInvoice> returnInvoices;
+
     @Transient
     private String categoryName;
 
@@ -203,8 +207,16 @@ public class Item implements Serializable {
         this.invoices = invoices;
     }
 
+    public List<ReturnInvoice> getReturnInvoices() {
+        return returnInvoices;
+    }
+
+    public void setReturnInvoices(List<ReturnInvoice> returnInvoices) {
+        this.returnInvoices = returnInvoices;
+    }
+
     @Override
     public String toString() {
-        return String.format("Item{id=%d, code='%s', name='%s', description='%s', country='%s', category=%s, subCategory=%s, unit=%s, supplier=%s}", id, code, name, description, country, category, subCategory, unit, supplier);
+        return String.format("Item{id=%d, code='%s', name='%s'}", id, code, name);
     }
 }

@@ -61,6 +61,8 @@ public class InvoiceResource {
     @Timed
     public ObjectNode save(@RequestBody InvoiceRepresentation invoices) {
         ObjectNode node = objectMapper.createObjectNode();
+        NumberFormat format = new DecimalFormat("######");
+
         InvoiceNo invoiceNo = new InvoiceNo();
         invoiceNo.setInvoiceNo(invoiceNoRepository.count() + 1);
         invoiceNo.setCreditPeriod(invoices.getCreditPeriod());
@@ -69,8 +71,11 @@ public class InvoiceResource {
         invoiceNo.setPoDate(invoices.getPoDate());
         invoiceNo.setPaymentMethod(invoices.getPaymentMethod());
         invoiceNo.setInvoiceDate(new Date());
+        invoiceNo.setTotal(invoices.getTotalPrice());
         invoiceNo.setClient(clientRepository.findOneByCode(invoices.getClientCode()));
         invoiceNoRepository.save(invoiceNo);
+
+        String invoiceNoStr = format.format(invoiceNo.getInvoiceNo());
 
         invoices.getInvoices().stream().forEach(invoice -> {
             invoice.setItem(itemRepository.findOneByCode(invoice.getItemCode()));
@@ -79,14 +84,14 @@ public class InvoiceResource {
             Stock one = stockRepository.findOne(invoice.getStockId());
 
             one.setId(null);
-            one.setInvoiceNo(null);
+            one.setInvoiceNo(invoiceNoStr);
+            one.setReturnInvoiceNo(null);
             one.setLocation(null);
             one.setQty(invoice.getQty() * -1);
             stockRepository.save(one);
         });
 
-        NumberFormat format = new DecimalFormat("######");
-        node.put("invoiceNo", format.format(invoiceNo.getInvoiceNo()));
+        node.put("invoiceNo", invoiceNoStr);
         return node;
     }
 

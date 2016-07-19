@@ -35,13 +35,14 @@
             </div>
         </div>
         <!----------->
-
+        <br/>
         <div class="row">
             <div class="col-lg-12" style=" text-align: Center; font-size: large; font-weight: bold;"> I N V O I C E
+                <br/> <br/>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-5" style="font-size:small;">
+            <div class="col-xs-8" style="font-size:small;">
                 <p>
                     Name: <label>{{invoiceDetails.client.name}}</label>
                 </p>
@@ -90,6 +91,8 @@
                             <td>{{$index+1}}</td>
                             <td>{{item.itemCode}}</td>
                             <td>
+                                {{item.name}}
+                                <br/>
                                 {{item.desc}}
                                 <br/>
                                 Exp Date : {{item.doe | date:'dd-MM-yyyy'}}
@@ -144,7 +147,7 @@
 
         <div class="row" style="">
             <div class=" col-lg-12 ">
-                <br>
+                <br/><br/>
                 <div class=" col-xs-4 " style="text-align: center;">----------------</div>
                 <div class=" col-xs-4" style="text-align: center;">----------------</div>
                 <div class=" col-xs-4" style="text-align: center;">----------------</div>
@@ -152,7 +155,7 @@
         </div>
         <div class="row" style="">
             <div class=" col-lg-12 ">
-                <br>
+
                 <div class=" col-xs-4" style="text-align: center;">Prepared By</div>
                 <div class=" col-xs-4" style="text-align: center;">Authorized By</div>
                 <div class=" col-xs-4" style="text-align: center;">Received By</div>

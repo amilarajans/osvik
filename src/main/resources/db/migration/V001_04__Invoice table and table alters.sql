@@ -1,6 +1,6 @@
-ALTER TABLE item
+ALTER TABLE ITEM
   MODIFY description VARCHAR(100);
-ALTER TABLE stock
+ALTER TABLE STOCK
   MODIFY qty DECIMAL;
 
 CREATE TABLE INVOICE_NO
@@ -9,12 +9,12 @@ CREATE TABLE INVOICE_NO
   invoiceNo     INT,
   poCode        VARCHAR(45),
   poDate        DATE,
-  paymentMethod VARCHAR(1), + +
-  invoiceDate DATETIME,
+  paymentMethod VARCHAR(1),
+  invoiceDate   DATETIME,
   discount      DECIMAL,
   creditPeriod  INT,
   client_id     INT,
-  CONSTRAINT invoice_client_idClient_fk FOREIGN KEY (client_id) REFERENCES client (idClient)
+  CONSTRAINT invoice_client_idClient_fk FOREIGN KEY (client_id) REFERENCES CLIENT (idClient)
 );
 
 CREATE TABLE INVOICE
@@ -24,6 +24,6 @@ CREATE TABLE INVOICE
   unitPrice  DECIMAL,
   item_id    INT,
   invoice_no INT,
-  CONSTRAINT invoice_item_idItem_fk FOREIGN KEY (item_id) REFERENCES item (idItem),
-  CONSTRAINT invoice_invoice_no_id_fk FOREIGN KEY (invoice_no) REFERENCES invoice_no (id)
+  CONSTRAINT invoice_item_idItem_fk FOREIGN KEY (item_id) REFERENCES ITEM (idItem),
+  CONSTRAINT invoice_invoice_no_id_fk FOREIGN KEY (invoice_no) REFERENCES INVOICE_NO (id)
 );

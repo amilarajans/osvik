@@ -35,7 +35,7 @@ public class InvoiceNo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date poDate;
 
-    @Size(max = 30)
+    @Size(max = 1)
     @Column(name = "paymentMethod")
     private String paymentMethod;
 
@@ -45,6 +45,9 @@ public class InvoiceNo implements Serializable {
 
     @Column(name = "discount")
     private Double discount;
+
+    @Column(name = "total")
+    private Double total;
 
     @Column(name = "creditPeriod")
     private Integer creditPeriod;
@@ -136,6 +139,14 @@ public class InvoiceNo implements Serializable {
 
     public void setPoDate(Date poDate) {
         this.poDate = poDate;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     @Override

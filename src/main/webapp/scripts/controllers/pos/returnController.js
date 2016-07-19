@@ -7,44 +7,41 @@ activitiAdminApp.controller('ReturnController', ['$rootScope', '$scope', '$http'
         $rootScope.navigation = {selection: 'return'};
 
         $scope.invoiceList = [];
-        $scope.itemList = [];
         $scope.itemsList = [];
-        $scope.clientList = [];
-        $scope.currentItem = {};
-        $scope.currentClient = {};
         $scope.invoiceNo = '';
-        $scope.totalQty = 0;
-        $scope.totalPrice = 0;
-        $scope.totalPriceTmp = 0;
-        $scope.discount = 0;
-        $scope.creditPeriod = 0;
-        $scope.poCode = '';
-        $scope.poDate = '';
-        $scope.clientCode = '';
-        $scope.paymentMethod = 0;
-        $scope.invoiceDate = new Date();
-        $scope.item = {
-            stockId: 0,
+        $scope.currentItem = {};
+        $scope.currentInvoice = {};
+        $scope.returnDate = new Date();
+        $scope.returnItemsList = [];
+        $scope.returnItem = {
             qty: 0,
             unitPrice: 0,
             itemCode: '',
+            stockId: 0,
             desc: '',
+            lotNo: '',
             name: '',
-            lotNo: ''
+            doe: new Date()
         };
+        $scope.causeOfReturn = '';
+
+        $scope.totalQty = 0;
+        $scope.totalPrice = 0;
+        $scope.totalPriceTmp = 0;
+
         $scope.editMode = false;
         $scope.invoicePrint = false;
+        //pagination
         $scope.maxSize = 10;
         $scope.itemsPerPage = 0;
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
-        $scope.loadClient = function () {
-            $http.get('app/api/v1/client/allClients').success(function (rs) {
-                $scope.clientList = rs;
-                console.log(rs);
+        $scope.loadInvoices = function () {
+            $http.get('app/api/v1/return/allInvoices').success(function (rs) {
+                $scope.invoiceList = rs;
             }).error(function (e) {
-                $scope.clientList = [];
+                $scope.invoiceList = [];
                 console.log(e);
             });
         };
@@ -58,152 +55,100 @@ activitiAdminApp.controller('ReturnController', ['$rootScope', '$scope', '$http'
             });
         };
 
-        $scope.changeCurrentClient = function (item) {
-            $scope.clientCode = item.code;
-            $scope.currentClient = item;
+        $scope.changeCurrentItem = function (item) {
+            $scope.currentItem = item;
+            $scope.returnItem.unitPrice = item.price;
+            $scope.returnItem.itemCode = item.code;
+            $scope.returnItem.stockId = item.id;
+            $scope.returnItem.desc = item.desc;
+            $scope.returnItem.lotNo = item.lotNo;
+            $scope.returnItem.name = item.name;
+            $scope.returnItem.doe = item.doe;
         };
 
-        $scope.changeCurrentItem = function (item) {
-            // console.log(item);
-            $scope.currentItem = item;
-            $scope.item.unitPrice = item.price;
-            $scope.item.itemCode = item.code;
-            $scope.item.stockId = item.id;
-            $scope.item.desc = item.desc;
-            $scope.item.lotNo = item.lotNo;
-            $scope.item.name = item.name;
-            $scope.item.doe = item.doe;
+        $scope.changeCurrentInvoice = function (invoice) {
+            $scope.currentInvoice = invoice;
+            $scope.invoiceNo = invoice.invoiceNo;
         };
 
         $scope.addItem = function () {
-            if ($scope.item.qty > 0 && !!$scope.item.itemCode) {
-                $scope.totalQty += $scope.item.qty * 1;
-                $scope.totalPrice += $scope.item.qty * $scope.item.unitPrice;
-                $scope.totalPriceTmp += $scope.item.qty * $scope.item.unitPrice;
+            if ($scope.returnItem.qty > 0 && !!$scope.returnItem.itemCode) {
+                $scope.totalQty += $scope.returnItem.qty * 1;
+                $scope.totalPrice += $scope.returnItem.qty * $scope.returnItem.unitPrice;
+                $scope.totalPriceTmp += $scope.returnItem.qty * $scope.returnItem.unitPrice;
 
-                $scope.invoiceList.push($scope.item);
+                $scope.returnItemsList.push($scope.returnItem);
                 $scope.resetItem();
-                // $scope.pageChanged();
-                $scope.changeDiscount();
-                toastr.success('Item added to invoice');
+                toastr.success('Item added to Return invoice');
             } else {
                 toastr.error('No item to add');
             }
         };
 
-        $scope.changeDiscount = function () {
-            if ($scope.discount * 1 > 0) {
-                $scope.totalPrice = $scope.totalPriceTmp - (($scope.totalPriceTmp / 100) * $scope.discount)
-            } else {
-                $scope.totalPrice = $scope.totalPriceTmp;
-            }
-        };
-
-        $scope.invoice = function () {
+        $scope.returnInvoice = function () {
             if ($scope.invoiceList.length > 0) {
-                $http.post('app/api/v1/invoice/save', {
-                    invoices: $scope.invoiceList,
-                    discount: $scope.discount,
-                    creditPeriod: $scope.creditPeriod,
-                    poCode: $scope.poCode,
-                    poDate: $scope.poDate,
-                    paymentMethod: $scope.paymentMethod,
-                    clientCode: $scope.clientCode
+                $http.post('app/api/v1/return/save', {
+                    invoiceNo: $scope.invoiceNo,
+                    returnItemsList: $scope.returnItemsList,
+                    returnDate: $scope.returnDate,
+                    causeOfReturn: $scope.causeOfReturn
                 }).success(function (data) {
                     toastr.success('Successfully Saved !!');
-                    $scope.invoiceNo = data.invoiceNo;
                     $scope.invoicePrint = true;
                 }).error(function (data) {
                     toastr.error(data.message);
                 });
             } else {
-                toastr.error('No item(s) to Invoice');
+                toastr.error('No item(s) to Return');
             }
         };
 
-        $scope.printInvoice = function () {
-            // toastr.success($scope.invoiceNo);
-            var modalInstance = $uibModal.open({
-                animation: true,
-                templateUrl: 'views/pages/pos/bill.html',
-                controller: 'BillingController',
-                size: 'lg',
-                resolve: {
-                    invoiceList: function () {
-                        return $scope.invoiceList;
-                    },
-                    invoiceDetails: function () {
-                        return {
-                            qty: $scope.totalQty,
-                            price: $scope.totalPrice,
-                            discount: $scope.discount,
-                            client: $scope.currentClient,
-                            invoiceNo: $scope.invoiceNo,
-                            poCode: $scope.poCode,
-                            poDate: $scope.poDate,
-                            invoiceDate: $scope.invoiceDate
-                        };
-                    }
-                }
-            });
-
-            // modalInstance.result.then(function (result) {
-            // }, function () {
-            // });
-        };
-
-        $scope.resetItem = function () {
-            $scope.item = {
-                stockId: 0,
-                qty: 0,
-                unitPrice: 0,
-                itemCode: '',
-                desc: '',
-                name: '',
-                lotNo: ''
-            };
-            $scope.currentItem = {};
-            $scope.editMode = false;
-        };
-
-        $scope.resetInvoice = function () {
-            $scope.item = {
-                stockId: 0,
-                qty: 0,
-                unitPrice: 0,
-                itemCode: '',
-                desc: '',
-                name: '',
-                lotNo: ''
-            };
+        $scope.resetForm = function () {
             $scope.invoiceNo = '';
-            $scope.clientCode = '';
-            $scope.poCode = '';
-            $scope.poDate = '';
+            $scope.currentItem = {};
+            $scope.currentInvoice = {};
+            $scope.returnItemsList = [];
+            $scope.returnItem = {
+                qty: 0,
+                unitPrice: 0,
+                itemCode: '',
+                stockId: 0,
+                desc: '',
+                lotNo: '',
+                name: '',
+                doe: new Date()
+            };
+            $scope.causeOfReturn = '';
+
             $scope.totalQty = 0;
             $scope.totalPrice = 0;
             $scope.totalPriceTmp = 0;
-            $scope.discount = 0;
-            $scope.creditPeriod = 0;
-            $scope.paymentMethod = 0;
+        };
+
+        $scope.resetItem = function () {
+            $scope.returnItem = {
+                qty: 0,
+                unitPrice: 0,
+                itemCode: '',
+                stockId: 0,
+                desc: '',
+                lotNo: '',
+                name: '',
+                doe: new Date()
+            };
             $scope.currentItem = {};
-            $scope.invoiceList = [];
-            $scope.editMode = false;
-            $scope.invoicePrint = false;
         };
 
         $scope.deleteItem = function (item) {
-            var index = $scope.invoiceList.indexOf(item);
+            var index = $scope.returnItemsList.indexOf(item);
             if (index > -1) {
-                $scope.invoiceList.splice(index, 1);
+                $scope.returnItemsList.splice(index, 1);
             }
             $scope.totalQty -= item.qty * 1;
-            $scope.totalPrice -= item.qty * item.unitPrice;
-            $scope.totalPriceTmp -= item.qty * item.unitPrice;
-            $scope.changeDiscount();
-            $scope.editMode = true;
+            $scope.totalPrice -= item.qty * currentItem.unitPrice;
+            $scope.totalPriceTmp -= item.qty * currentItem.unitPrice;
         };
 
-        $scope.loadClient();
+        $scope.loadInvoices();
         $scope.loadItems();
     }]);

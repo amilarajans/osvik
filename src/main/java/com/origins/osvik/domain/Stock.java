@@ -31,6 +31,10 @@ public class Stock implements Serializable {
     @Column(name = "invoiceNo")
     private String invoiceNo;
 
+    @Size(max = 20)
+    @Column(name = "returnInvoiceNo")
+    private String returnInvoiceNo;
+
     @Size(max = 45)
     @Column(name = "code")
     private String code;
@@ -118,6 +122,14 @@ public class Stock implements Serializable {
 
     public void setInvoiceNo(String invoiceNo) {
         this.invoiceNo = invoiceNo;
+    }
+
+    public String getReturnInvoiceNo() {
+        return returnInvoiceNo;
+    }
+
+    public void setReturnInvoiceNo(String returnInvoiceNo) {
+        this.returnInvoiceNo = returnInvoiceNo;
     }
 
     public String getLocation() {
