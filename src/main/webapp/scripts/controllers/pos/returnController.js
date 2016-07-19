@@ -145,8 +145,8 @@ activitiAdminApp.controller('ReturnController', ['$rootScope', '$scope', '$http'
                 $scope.returnItemsList.splice(index, 1);
             }
             $scope.totalQty -= item.qty * 1;
-            $scope.totalPrice -= item.qty * currentItem.unitPrice;
-            $scope.totalPriceTmp -= item.qty * currentItem.unitPrice;
+            $scope.totalPrice -= item.qty * item.unitPrice;
+            $scope.totalPriceTmp -= item.qty * item.unitPrice;
         };
 
         $scope.loadInvoices();

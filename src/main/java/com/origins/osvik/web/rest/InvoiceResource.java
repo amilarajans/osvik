@@ -35,6 +35,8 @@ public class InvoiceResource {
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
+    private RepRepository repRepository;
+    @Autowired
     private InvoiceRepository invoiceRepository;
     @Autowired
     private ItemRepository itemRepository;
@@ -73,6 +75,7 @@ public class InvoiceResource {
         invoiceNo.setInvoiceDate(new Date());
         invoiceNo.setTotal(invoices.getTotalPrice());
         invoiceNo.setClient(clientRepository.findOneByCode(invoices.getClientCode()));
+        invoiceNo.setRep(repRepository.findOne(invoices.getRepId()));
         invoiceNoRepository.save(invoiceNo);
 
         String invoiceNoStr = format.format(invoiceNo.getInvoiceNo());

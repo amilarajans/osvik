@@ -13,6 +13,7 @@ public class InvoiceRepresentation implements Serializable {
     private Double discount;
     private Double totalPrice;
     private Integer creditPeriod;
+    private Integer repId;
     private String poCode;
     private String paymentMethod;
     private String clientCode;
@@ -83,8 +84,16 @@ public class InvoiceRepresentation implements Serializable {
         this.totalPrice = totalPrice;
     }
 
+    public Integer getRepId() {
+        return repId;
+    }
+
+    public void setRepId(Integer repId) {
+        this.repId = repId;
+    }
+
     @Override
     public String toString() {
-        return String.format("InvoiceRepresentation{clientCode='%s', discount=%s, creditPeriod=%d, poCode='%s', paymentMethod='%s', poDate=%s}", clientCode, discount, creditPeriod, poCode, paymentMethod, poDate);
+        return String.format("InvoiceRepresentation{discount=%s, totalPrice=%s, creditPeriod=%d, repId=%d, poCode='%s', paymentMethod='%s', clientCode='%s', poDate=%s, invoices=%s}", discount, totalPrice, creditPeriod, repId, poCode, paymentMethod, clientCode, poDate, invoices);
     }
 }

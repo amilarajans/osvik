@@ -58,6 +58,11 @@ public class InvoiceNo implements Serializable {
     private Client client;
 
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rep_id", nullable = false)
+    private Rep rep;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "invoiceNo")
     private List<Invoice> invoices;
 
@@ -147,6 +152,14 @@ public class InvoiceNo implements Serializable {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public Rep getRep() {
+        return rep;
+    }
+
+    public void setRep(Rep rep) {
+        this.rep = rep;
     }
 
     @Override

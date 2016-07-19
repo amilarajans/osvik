@@ -1,5 +1,6 @@
 package com.origins.osvik.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
@@ -7,6 +8,7 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Amila-Kumara on 3/19/2016.
@@ -41,6 +43,10 @@ public class Rep implements Serializable {
     @Size(max = 185)
     @Column(name = "Remark")
     private String remark;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "rep")
+    private List<InvoiceNo> invoices;
 
     public Integer getId() {
         return id;
@@ -82,13 +88,20 @@ public class Rep implements Serializable {
         this.tel = tel;
     }
 
-
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public List<InvoiceNo> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<InvoiceNo> invoices) {
+        this.invoices = invoices;
     }
 
     @Override

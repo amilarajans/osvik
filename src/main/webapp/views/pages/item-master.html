@@ -37,7 +37,7 @@
 
                     <div class="form-group">
                         <label>Major Category</label>
-                        <select class="form-control" ng-model="item.category">
+                        <select class="form-control" ng-model="item.category" ng-change="loadSubCategoryByCategory()">
                             <option ng-repeat="category in categoryList" value="{{category.id}}">{{category.name}}</option>
                         </select>
                     </div>
@@ -75,7 +75,7 @@
                         <select class="form-control" ng-model="item.country">
                             <option>Please Select</option>
                             <option>German</option>
-                            <option>Malasiya</option>
+                            <option>Malaysia</option>
                             <option>India</option>
                             <option>USA</option>
                         </select>

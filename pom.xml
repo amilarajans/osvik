@@ -275,7 +275,7 @@
                     <user>root</user>
                     <password>admin</password>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>jdbc:mysql://127.0.0.1:3306/osvik?characterEncoding=UTF-8</url>
+                    <url>jdbc:mysql://127.0.0.1:3306/osvik?characterEncoding=UTF-8&amp;useSSL=false</url>
                 </configuration>
             </plugin>
         </plugins>

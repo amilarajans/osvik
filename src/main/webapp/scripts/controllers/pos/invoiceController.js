@@ -10,8 +10,10 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
         $scope.itemList = [];
         $scope.itemsList = [];
         $scope.clientList = [];
+        $scope.repList = [];
         $scope.currentItem = {};
         $scope.currentClient = {};
+        $scope.currentRep = {};
         $scope.invoiceNo = '';
         $scope.totalQty = 0;
         $scope.totalPrice = 0;
@@ -47,6 +49,14 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
                 console.log(e);
             });
         };
+        $scope.loadReps = function () {
+            $http.get('app/api/v1/rep/allReps').success(function (rs) {
+                $scope.repList = rs;
+            }).error(function (e) {
+                $scope.repList = [];
+                console.log(e);
+            });
+        };
 
         $scope.loadItems = function () {
             $http.get('app/api/v1/stock/allStock').success(function (rs) {
@@ -60,6 +70,10 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
         $scope.changeCurrentClient = function (item) {
             $scope.clientCode = item.code;
             $scope.currentClient = item;
+        };
+
+        $scope.changeCurrentRep = function (item) {
+            $scope.currentRep = item;
         };
 
         $scope.changeCurrentItem = function (item) {
@@ -108,7 +122,8 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
                     poDate: $scope.poDate,
                     paymentMethod: $scope.paymentMethod,
                     clientCode: $scope.clientCode,
-                    totalPrice: $scope.totalPrice
+                    totalPrice: $scope.totalPrice,
+                    repId: $scope.currentRep.id
                 }).success(function (data) {
                     toastr.success('Successfully Saved !!');
                     $scope.invoiceNo = data.invoiceNo;
@@ -206,4 +221,5 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
 
         $scope.loadClient();
         $scope.loadItems();
+        $scope.loadReps();
     }]);

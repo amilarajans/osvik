@@ -55,6 +55,12 @@ public class CategoryResource {
         return subCategoryRepository.findAll();
     }
 
+    @RequestMapping(value = {"/sub/allByCategory"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @Timed
+    public List<SubCategory> getAllSubCategoryByCategory(@RequestParam("id") Integer id) {
+        return subCategoryRepository.findAllByCategory(id);
+    }
+
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
     public void saveCategory(@RequestBody ObjectNode actionBody) {

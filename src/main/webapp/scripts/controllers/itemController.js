@@ -27,8 +27,12 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
             });
         };
 
-        $scope.loadSubCategory = function () {
-            $http.get('app/api/v1/category/sub/all').success(function (rs) {
+        $scope.loadSubCategoryByCategory = function () {
+            $scope.loadSubCategory($scope.item.category);
+        };
+
+        $scope.loadSubCategory = function (category) {
+            $http.get('app/api/v1/category/sub/allByCategory?id=' + category).success(function (rs) {
                 $scope.subCategoryList = rs;
             }).error(function (e) {
                 $scope.subCategoryList = [];
@@ -101,7 +105,6 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
 
         $scope.pageChanged();
         $scope.loadCategory();
-        $scope.loadSubCategory();
         $scope.loadUnit();
         $scope.loadSupplier();
     }]);
