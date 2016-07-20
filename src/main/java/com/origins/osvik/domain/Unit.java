@@ -30,6 +30,10 @@ public class Unit implements Serializable {
     @OneToMany(mappedBy="unit")
     private List<Item> items;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "unit")
+    private List<Stock> stocks;
+
     public Integer getId() {
         return id;
     }
@@ -52,6 +56,14 @@ public class Unit implements Serializable {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public List<Stock> getStocks() {
+        return stocks;
+    }
+
+    public void setStocks(List<Stock> stocks) {
+        this.stocks = stocks;
     }
 
     @Override

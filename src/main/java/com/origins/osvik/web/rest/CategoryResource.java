@@ -4,7 +4,6 @@ import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.origins.osvik.domain.Category;
 import com.origins.osvik.domain.SubCategory;
-import com.origins.osvik.dto.Page;
 import com.origins.osvik.repository.CategoryRepository;
 import com.origins.osvik.repository.SubCategoryRepository;
 import com.origins.osvik.web.rest.exception.ConflictException;
@@ -13,10 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,7 +38,14 @@ public class CategoryResource {
 
     @RequestMapping(value = {"/all"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
-    public List<Category> getAllCategory() {
+    public Page<Category> getAllCategory(@RequestParam("name") String name, @RequestParam("page") Integer page) {
+        name = name == null ? "%" : name.replace("*", "%");
+        return categoryRepository.findCategoryByName(name, new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "id")));
+    }
+
+    @RequestMapping(value = {"/allCategories"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @Timed
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
@@ -49,10 +55,10 @@ public class CategoryResource {
         return subCategoryRepository.findAll();
     }
 
-    @RequestMapping(value = {"/count"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @RequestMapping(value = {"/sub/allByCategory"}, method = {RequestMethod.GET}, produces = {"application/json"})
     @Timed
-    public Page getCount() {
-        return new Page(categoryRepository.count(), Long.parseLong(env.getProperty("result.page.size")));
+    public List<SubCategory> getAllSubCategoryByCategory(@RequestParam("id") Integer id) {
+        return subCategoryRepository.findAllByCategory(id);
     }
 
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
@@ -68,6 +74,12 @@ public class CategoryResource {
         }
     }
 
+    @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void updateCategory(@RequestBody Category category) {
+        categoryRepository.save(category);
+    }
+
     @RequestMapping(value = {"/sub/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
     public void saveSubCategory(@RequestBody ObjectNode actionBody) {
@@ -80,5 +92,20 @@ public class CategoryResource {
         } else {
             throw new ConflictException("Sub Category already exist with name " + subCategoryName);
         }
+    }
+
+    @RequestMapping(value = {"/sub/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
+    @Timed
+    public void updateSubCategory(@RequestBody SubCategory subCategory) {
+        System.out.println(subCategory);
+        Category category = categoryRepository.findOne(subCategory.getCategoryId());
+        subCategory.setCategory(category);
+        subCategoryRepository.save(subCategory);
+    }
+
+    @RequestMapping(value = {"/sub/delete/{id}"}, method = {RequestMethod.DELETE}, produces = {"application/json"})
+    @Timed
+    public void delete(@PathVariable String id) {
+        subCategoryRepository.delete(Integer.valueOf(id));
     }
 }

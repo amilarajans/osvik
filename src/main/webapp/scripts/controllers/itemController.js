@@ -12,13 +12,14 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
         $scope.unitList = [];
         $scope.supplierList = [];
         $scope.item = {};
+        $scope.editMode = false;
         $scope.maxSize = 10;
         $scope.itemsPerPage = 0;
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
         $scope.loadCategory = function () {
-            $http.get('app/api/v1/category/all').success(function (rs) {
+            $http.get('app/api/v1/category/allCategories').success(function (rs) {
                 $scope.categoryList = rs;
             }).error(function (e) {
                 $scope.categoryList = [];
@@ -26,8 +27,12 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
             });
         };
 
-        $scope.loadSubCategory = function () {
-            $http.get('app/api/v1/category/sub/all').success(function (rs) {
+        $scope.loadSubCategoryByCategory = function () {
+            $scope.loadSubCategory($scope.item.category);
+        };
+
+        $scope.loadSubCategory = function (category) {
+            $http.get('app/api/v1/category/sub/allByCategory?id=' + category).success(function (rs) {
                 $scope.subCategoryList = rs;
             }).error(function (e) {
                 $scope.subCategoryList = [];
@@ -53,16 +58,6 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
             });
         };
 
-        $scope.count = function () {
-            $http.get('app/api/v1/item/count').success(function (rs) {
-                $scope.itemsPerPage = rs.pageSize;
-                $scope.totalItems = rs.count;
-                $scope.pageChanged();
-            }).error(function (e) {
-                console.log(e);
-            });
-        };
-
         $scope.pageChanged = function () {
             $http.get('app/api/v1/item/all', {
                 params: {
@@ -70,7 +65,9 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
                     size: $scope.itemsPerPage
                 }
             }).success(function (rs) {
-                $scope.itemList = rs;
+                $scope.itemList = rs.content;
+                $scope.totalItems = rs.totalElements;
+                $scope.itemsPerPage = rs.size;
             }).error(function (e) {
                 $scope.itemList = [];
                 console.log(e);
@@ -89,11 +86,25 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
 
         $scope.resetItem = function () {
             $scope.item = {};
+            $scope.editMode = false;
         };
 
-        $scope.count();
+        $scope.editItem = function (item) {
+            $scope.item = item;
+            $scope.editMode = true;
+        };
+
+        $scope.deleteItem = function (id) {
+            $http.delete('app/api/v1/item/delete/' + id).success(function (data) {
+                toastr.success('Successfully Deleted !!');
+                $scope.pageChanged();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
+        $scope.pageChanged();
         $scope.loadCategory();
-        $scope.loadSubCategory();
         $scope.loadUnit();
         $scope.loadSupplier();
     }]);

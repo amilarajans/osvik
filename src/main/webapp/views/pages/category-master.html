@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <form role="form">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <h2 class="panel-title">Add a New Major Category</h2>
                         </div>
@@ -34,13 +34,20 @@
                         <input type="text" class="form-control" placeholder="Enter text" ng-model="category.name">
                     </div>
 
-                    <button type="submit" class="btn btn-success" ng-click="addCategory()">Submit Button</button>
-                    <button type="reset" class="btn btn-warning" ng-click="resetCategory()">Reset Button</button>
+                    <button type="submit" ng-show="!editCatMode" class="btn btn-success" ng-click="addCategory()">
+                        {{'GENERAL.ACTION.SAVE' | translate}}
+                    </button>
+                    <button type="submit" ng-show="editCatMode" class="btn btn-success" ng-click="updateCategory()">
+                        {{'GENERAL.ACTION.UPDATE' | translate}}
+                    </button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetCategory()">
+                        {{'GENERAL.ACTION.RESET' | translate}}
+                    </button>
                     <br><br><br>
                 </form>
                 <form role="form">
 
-                    <div class="panel panel-primary">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <h2 class="panel-title">Add a New Sub Category</h2>
                         </div>
@@ -58,9 +65,16 @@
                     </div>
                     <br>
 
-                    <button type="submit" class="btn btn-success" ng-click="addSubCategory()">Submit Button</button>
-                    <button type="reset" class="btn btn-warning" ng-click="resetSubCategory()">Reset Button</button>
-
+                    <button type="submit" ng-show="!editSubCatMode" class="btn btn-success" ng-click="addSubCategory()">
+                        {{'GENERAL.ACTION.SAVE' | translate}}
+                    </button>
+                    <button type="submit" ng-show="editSubCatMode" class="btn btn-success"
+                            ng-click="updateSubCategory()">
+                        {{'GENERAL.ACTION.UPDATE' | translate}}
+                    </button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetSubCategory()">
+                        {{'GENERAL.ACTION.RESET' | translate}}
+                    </button>
                 </form>
 
             </div>
@@ -70,27 +84,30 @@
         <!-- /.row -->
 
         <div class="row">
-            <br> <br> <br>
+            <br> <br>
             <div class="col-lg-10">
                 <h2>Listing of all Category</h2>
                 <br>
                 <div class="row">
-                    <div class="col-lg-3">
+                    <!--<div class="col-lg-3">-->
 
-                        <select class="form-control">
+                    <!--<select class="form-control">-->
 
-                            <option>Major Category</option>
-                            <option ng-repeat="category in categoryList" value="{{category.id}}">{{category.name}}
-                            </option>
-                        </select>
+                    <!--<option>Major Category</option>-->
+                    <!--<option ng-repeat="category in categoryList" value="{{category.id}}">{{category.name}}-->
+                    <!--</option>-->
+                    <!--</select>-->
 
-                    </div>
+                    <!--</div>-->
                     <div class="col-lg-3">
                         <div class="form-group input-group">
 
-                            <input type="text" class="form-control" placeholder=" Name">
-                            <span class="input-group-btn"><button class="btn btn-default" type="button"><i
-                                    class="fa fa-search"></i></button></span>
+                            <input type="text" class="form-control" placeholder="Category Name" ng-model="categoryName">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="searchCategory()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </div>
 
                     </div>
@@ -102,24 +119,47 @@
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>Category</th>
                             <th>Sub Category</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>Sub0001</td>
+                        <tr ng-repeat="category in categoryList">
+                            <td>{{$index+1}}</td>
+                            <td>{{category.name}}</td>
                             <td>
-                                <button type="submit" class="btn btn-primary ">Update</button>
+                                <table class="table table-bordered table-hover table-striped">
+                                    <tbody>
+                                    <tr ng-repeat="subCategory in category.subCategory">
+                                        <td>{{subCategory.name}}</td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                    ng-click="editSubCategory(subCategory,category.id)">
+                                                {{'GENERAL.ACTION.EDIT' | translate}} Sub Category
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                    ng-click="deleteSubCategory(subCategory.id)">
+                                                {{'GENERAL.ACTION.DELETE' | translate}} Sub Category
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-danger ">Delete</button>
+                                <button type="submit" class="btn btn-primary btn-sm" ng-click="editCategory(category)">
+                                    {{'GENERAL.ACTION.EDIT' | translate}} Category
+                                </button>
                             </td>
                         </tr>
 
                         </tbody>
                     </table>
-                    <!--<uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>-->
+                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage"
+                                    ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                                    boundary-link-numbers="true"></uib-pagination>
                 </div>
             </div>
         </div>

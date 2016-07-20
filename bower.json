@@ -1,0 +1,21 @@
+{
+  "name": "osvik",
+  "authors": [
+    "Amila Kumara <amilarajans@gmail.com>"
+  ],
+  "description": "project for osvik",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angucomplete-alt": "^2.4.1"
+  }
+}

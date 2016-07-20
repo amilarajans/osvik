@@ -1,12 +1,14 @@
 package com.origins.osvik.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Amila-Kumara on 3/19/2016.
@@ -14,6 +16,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ITEM")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Item implements Serializable {
     private static final long serialVersionUID = 5142510069953283639L;
     @Id
@@ -29,7 +32,7 @@ public class Item implements Serializable {
     @Column(name = "Name")
     private String name;
 
-    @Size(max = 45)
+    @Size(max = 100)
     @Column(name = "description")
     private String description;
 
@@ -56,6 +59,41 @@ public class Item implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Supplier_idSupplier", nullable = false)
     private Supplier supplier;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "item")
+    private List<Invoice> invoices;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "item")
+    private List<ReturnInvoice> returnInvoices;
+
+    @Transient
+    private String categoryName;
+
+    @Transient
+    private String subCategoryName;
+
+    @Transient
+    private String unitName;
+
+    @Transient
+    private String supplierName;
+
+    public Item() {
+    }
+
+    public Item(Integer id, String code, String categoryName, String subCategoryName, String name, String description, String unitName, String supplierName, String country) {
+        this.id = id;
+        this.code = code;
+        this.categoryName = categoryName;
+        this.subCategoryName = subCategoryName;
+        this.name = name;
+        this.description = description;
+        this.unitName = unitName;
+        this.supplierName = supplierName;
+        this.country = country;
+    }
 
     public Integer getId() {
         return id;
@@ -129,8 +167,56 @@ public class Item implements Serializable {
         this.supplier = supplier;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
+    public List<ReturnInvoice> getReturnInvoices() {
+        return returnInvoices;
+    }
+
+    public void setReturnInvoices(List<ReturnInvoice> returnInvoices) {
+        this.returnInvoices = returnInvoices;
+    }
+
     @Override
     public String toString() {
-        return String.format("Item{id=%d, code='%s', name='%s', description='%s', country='%s', category=%s, subCategory=%s, unit=%s, supplier=%s}", id, code, name, description, country, category, subCategory, unit, supplier);
+        return String.format("Item{id=%d, code='%s', name='%s'}", id, code, name);
     }
 }

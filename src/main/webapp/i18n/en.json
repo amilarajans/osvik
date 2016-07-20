@@ -3,7 +3,6 @@
     "YES": "Yes",
     "NO": "No",
     "ACTION": {
-      "LOGOUT": "Sign out",
       "DISMISS-ALERT": "Click to dismiss this message",
       "RETURN-TO-LIST": "Return to list",
       "SHOW-RESULTS": "Show {{'GENERAL.RESULT-SIZES.' + resultSize.toString() | translate}} results",
@@ -15,24 +14,19 @@
       "NEXT": "Next",
       "PREVIOUS": "Previous",
       "CLOSE": "Close",
-      "SHOWLICENSE": "License info"
+      "SHOWLICENSE": "License info",
+      "SAVE": "Submit",
+      "UPDATE": "Update",
+      "EDIT": "Edit",
+      "RESET": "Reset",
+      "DELETE": "Delete",
+      "ADDITEM": "Add Item",
+      "INVOICE": "Invoice",
+      "PRINT": "Print",
+      "NEWINVOICE": "New Invoice"
     },
     "TITLE": {
-      "MAIN": "OSVIK Administrator",
-      "ACTIONS": "Actions",
-      "FILTERS": "Filters",
-      "CLUSTERS": "Clusters"
-    },
-    "MENU": {
-      "DEPLOYMENTS": "Deployments",
-      "PROCESS-DEFINITIONS": "Definitions",
-      "PROCESS-INSTANCES": "Instances",
-      "TASKS": "Tasks",
-      "JOBS": "Jobs",
-      "CONFIGURATION": "Configuration",
-      "CONFIGURATION-ENGINE": "Engine",
-      "CONFIGURATION-USERS": "Configure users",
-      "MONITORING": "Monitoring"
+      "MAIN": "OSVIK Administrator"
     },
     "RESULT-SIZES": {
       "10": "10",
@@ -41,6 +35,21 @@
       "100": "100",
       "100000000": "all"
     }
+  },
+  "MENU": {
+    "DASHBOARD": "Dashboard",
+    "SUPPLIER": "Supplier Master",
+    "CLIENT": "Client Master",
+    "REP": "REP. Master",
+    "CATEGORY": "Category Master",
+    "UNIT": "Unit Master",
+    "BANK": "Bank Master",
+    "ITEM": "Item Master",
+    "STOCK": "Stock Master",
+    "INVOICE": "Invoice",
+    "CURRENTSTOCK": "Stock Management",
+    "RETURN": "Return Management",
+    "LOGOUT": "Sign out"
   },
   "LOGIN": {
     "TITLE": "Sign in",
@@ -197,15 +206,5 @@
       "CREATED": "User '{{login}}' created.",
       "PASSWORD-CHANGED": "Password for '{{login}}' is changed successfully."
     }
-  },
-  "MENU": {
-    "DASHBOARD": "Dashboard",
-    "SUPPLIER": "Supplier Master",
-    "CLIENT": "Client Master",
-    "REP": "REP. Master",
-    "CATEGORY": "Category Master",
-    "UNIT": "Unit Master",
-    "BANK": "Bank Master",
-    "ITEM": "Item Master"
   }
 }

@@ -35,6 +35,9 @@ public class SubCategory implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "subCategory")
     private List<Item> items;
 
+    @Transient
+    private Integer categoryId;
+
     public Integer getId() {
         return id;
     }
@@ -67,8 +70,16 @@ public class SubCategory implements Serializable {
         this.items = items;
     }
 
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public String toString() {
-        return String.format("SubCategory{id=%d, name='%s', category=%s, items=%s}", id, name, category, items);
+        return String.format("SubCategory{category=%s, id=%d, name='%s', items=%s, categoryId=%d}", category, id, name, items, categoryId);
     }
 }

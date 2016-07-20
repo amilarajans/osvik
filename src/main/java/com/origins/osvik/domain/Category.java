@@ -27,7 +27,7 @@ public class Category implements Serializable {
     private String name;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<SubCategory> SubCategory;
 
     @JsonIgnore

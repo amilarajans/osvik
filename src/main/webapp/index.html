@@ -17,9 +17,10 @@
     <link rel="icon" type="image/ico" href="favicon.ico">
 
     <link href="styles/bootstrap.min.css" rel="stylesheet">
-    <link href="additional_components/angular-ui-select2/select2.css" rel="stylesheet">
+    <link href="styles/select2.css" rel="stylesheet">
+    <link href="additional_components/ui-select/dist/select.css" rel="stylesheet">
     <link href="additional_components/ng-grid/ng-grid-2.0.14.min.css" rel="stylesheet">
-    <link href="styles/8dd004c8.style.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
     <link href="styles/sb-admin.css" rel="stylesheet">
     <link href="styles/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="additional_components/toastr/angular-toastr.min.css" rel="stylesheet" type="text/css">
@@ -59,11 +60,9 @@
     <div ng-show="authenticated" class="btn-group btn-group-sm pull-right">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             {{account.login}}
-            <span class="caret"></span>
+            <!--<span class="caret"></span>-->
         </button>
         <ul class="dropdown-menu">
-            <li><a href="" ng-click="showLicenseInfo()" translate="GENERAL.ACTION.SHOWLICENSE"></a></li>
-            <li><a href="#users" translate="GENERAL.MENU.CONFIGURATION-USERS"></a></li>
             <li><a href="#logout" translate="GENERAL.ACTION.LOGOUT"></a></li>
         </ul>
     </div>
@@ -94,6 +93,21 @@
             </li>
             <li ng-class="{active: navigation.selection == 'item'}">
                 <a href="#item"><i class="fa fa-fw fa-medkit"></i> {{'MENU.ITEM' | translate}}</a>
+            </li>
+            <li ng-class="{active: navigation.selection == 'stock'}">
+                <a href="#stock"><i class="fa fa-fw fa-bar-chart"></i> {{'MENU.STOCK' | translate}}</a>
+            </li>
+            <li ng-class="{active: navigation.selection == 'invoice'}">
+                <a href="#invoice"><i class="fa fa-fw fa-table"></i> {{'MENU.INVOICE' | translate}}</a>
+            </li>
+            <li ng-class="{active: navigation.selection == 'current-stock'}">
+                <a href="#current-stock"><i class="fa fa-fw fa-table"></i> {{'MENU.CURRENTSTOCK' | translate}}</a>
+            </li>
+            <li ng-class="{active: navigation.selection == 'return'}">
+                <a href="#return"><i class="fa fa-fw fa-table"></i> {{'MENU.RETURN' | translate}}</a>
+            </li>
+            <li>
+                <a href="#logout"><i class="fa fa-fw fa-sign-out"></i> {{'MENU.LOGOUT' | translate}}</a>
             </li>
         </ul>
     </div>
@@ -127,8 +141,7 @@
 <script src="additional_components/angularjs/angular-sanitize.min.js"></script>
 <script src="additional_components/angular-translate/angular-translate.min.js"></script>
 <script src="additional_components/angular-translate/angular-translate-loader-static-files.min.js"></script>
-<script src="additional_components/angular-ui-select2/select2.min.js"></script>
-<script src="additional_components/angular-ui-select2/angular-ui-select2.js"></script>
+<script src="additional_components/ui-select/dist/select.min.js"></script>
 <script src="additional_components/ng-grid/ng-grid-2.0.14.min.js"></script>
 <script src="additional_components/ui-bootstrap/ui-bootstrap-tpls-1.2.4.min.js"></script>
 <script src="additional_components/angular-file-upload/angular-file-upload.min.js"></script>
@@ -148,6 +161,11 @@
 <script src="scripts/controllers/repController.js"></script>
 <script src="scripts/controllers/unitController.js"></script>
 <script src="scripts/controllers/bankController.js"></script>
+<script src="scripts/controllers/pos/stockController.js"></script>
+<script src="scripts/controllers/pos/invoiceController.js"></script>
+<script src="scripts/controllers/pos/billingController.js"></script>
+<script src="scripts/controllers/pos/currentStockController.js"></script>
+<script src="scripts/controllers/pos/returnController.js"></script>
 
 <script src="scripts/users-controllers.js"></script>
 <script src="scripts/directives.js"></script>

@@ -40,7 +40,8 @@
                     </div>
                     <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" placeholder="Enter text" ng-model="supplier.originCountry">
+                        <input type="text" class="form-control" placeholder="Enter text"
+                               ng-model="supplier.originCountry">
                     </div>
                     <div class="form-group">
                         <label>Supplier Address</label>
@@ -49,16 +50,19 @@
 
                     <div class="form-group">
                         <label>Supplier Email</label>
-                        <input type="email" class="form-control" placeholder="Enter text" ng-model="supplier.supplierEmail">
+                        <input type="email" class="form-control" placeholder="Enter text"
+                               ng-model="supplier.supplierEmail">
                     </div>
 
                     <div class="form-group">
                         <label>Supplier Phone N0.</label>
-                        <input type="text" class="form-control" placeholder="Enter text" ng-model="supplier.supplierTel">
+                        <input type="text" class="form-control" placeholder="Enter text"
+                               ng-model="supplier.supplierTel">
                     </div>
                     <div class="form-group">
                         <label>Supplier Web</label>
-                        <input type="text" class="form-control" placeholder="Enter text" ng-model="supplier.supplierWeb">
+                        <input type="text" class="form-control" placeholder="Enter text"
+                               ng-model="supplier.supplierWeb">
                     </div>
 
                     <div class="form-group">
@@ -69,8 +73,15 @@
 
                     <br>
 
-                    <button type="submit" class="btn btn-success" ng-click="addSupplier()">Submit Button</button>
-                    <button type="reset" class="btn btn-warning" ng-click="resetSupplier()">Reset Button</button>
+                    <button type="submit" ng-show="!editMode" class="btn btn-success" ng-click="addSupplier()">
+                        {{'GENERAL.ACTION.SAVE' | translate}}
+                    </button>
+                    <button type="submit" ng-show="editMode" class="btn btn-success" ng-click="updateSupplier()">
+                        {{'GENERAL.ACTION.UPDATE' | translate}}
+                    </button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetSupplier()">
+                        {{'GENERAL.ACTION.RESET' | translate}}
+                    </button>
 
                 </form>
 
@@ -89,7 +100,8 @@
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" ng-model="supplier.supplierType" value="Local">Local Supplier
+                            <input type="radio" name="optionsRadios" ng-model="supplier.supplierType" value="Local">Local
+                            Supplier
                         </label>
                     </div>
                     <div class="radio">
@@ -109,21 +121,24 @@
                 <h2>Listing of all Suppliers</h2>
                 <br>
                 <div class="row">
-                    <div class="col-lg-3">
-                        <select class="form-control">
-                            <option>Select the country</option>
-                            <option>German</option>
-                            <option>Malasiya</option>
-                            <option>India</option>
-                            <option>USA</option>
-                        </select>
+                    <!--<div class="col-lg-3">-->
+                    <!--<select class="form-control">-->
+                    <!--<option>Select the country</option>-->
+                    <!--<option>German</option>-->
+                    <!--<option>Malasiya</option>-->
+                    <!--<option>India</option>-->
+                    <!--<option>USA</option>-->
+                    <!--</select>-->
 
-                    </div>
+                    <!--</div>-->
                     <div class="col-lg-3">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="company Name">
-                            <span class="input-group-btn"><button class="btn btn-default" type="button"><i
-                                    class="fa fa-search"></i></button></span>
+                            <input type="text" class="form-control" placeholder="Supplier Name" ng-model="supplierName">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="searchSupplier()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </div>
 
                     </div>
@@ -147,7 +162,7 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="supplier in supplierList">
-                            <td>{{supplier.id}}</td>
+                            <td>{{$index+1}}</td>
                             <td>{{supplier.code}}</td>
                             <td>{{supplier.name}}</td>
                             <td>{{supplier.originCountry}}</td>
@@ -158,13 +173,22 @@
                             <td>{{supplier.supplierDesc}}</td>
 
                             <td>
-                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                <button type="submit" class="btn btn-primary btn-sm" ng-click="editSupplier(supplier)">
+                                    {{'GENERAL.ACTION.EDIT' | translate}}
+                                </button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        ng-click="deleteSupplier(supplier.id)">{{'GENERAL.ACTION.DELETE' | translate}}
+                                </button>
                             </td>
                         </tr>
 
                         </tbody>
                     </table>
-                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage"
+                                    ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                                    boundary-link-numbers="true"></uib-pagination>
                 </div>
             </div>
         </div>

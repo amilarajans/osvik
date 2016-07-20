@@ -20,22 +20,28 @@ import java.util.Set;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @NotNull
     @Size(max = 50)
     @Id
     private String login;
+
     @JsonIgnore
     @Size(max = 100)
     private String password;
+
     @Size(max = 50)
     @Column(name = "first_name")
     private String firstName;
+
     @Size(max = 50)
     @Column(name = "last_name")
     private String lastName;
+
     @Email
     @Size(max = 100)
     private String email;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "USER_AUTHORITY", joinColumns = {@javax.persistence.JoinColumn(name = "login", referencedColumnName = "login")}, inverseJoinColumns = {@javax.persistence.JoinColumn(name = "name", referencedColumnName = "name")})

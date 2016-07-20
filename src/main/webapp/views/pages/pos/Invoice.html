@@ -1,0 +1,238 @@
+<div id="page-wrapper" class="col-lg-10 col-lg-offset-2">
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Invoice
+                    <!--<small>GRN</small>-->
+                </h1>
+                <div class="row">
+
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            <ui-select ng-model="clientCode" theme="select2"
+                                       ng-change="changeCurrentClient($select.selected)"
+                                       ng-disabled="disabled" style="width: 100%;" title="Choose a Client">
+                                <ui-select-match placeholder="Select a Client">
+                                    {{$select.selected.code}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="client.code as client in clientList | propsFilter: {code: $select.search, name: $select.search}">
+                                    <div ng-bind-html="client.code | highlight: $select.search"></div>
+                                    <small>
+                                        name: {{client.name}}
+                                        code: <span ng-bind-html="''+client.code | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            <ui-select ng-model="currentRep" theme="select2"
+                                       ng-change="changeCurrentRep($select.selected)"
+                                       ng-disabled="disabled" style="width: 100%;" title="Choose a Rep">
+                                <ui-select-match placeholder="Select a Rep">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="rep.id as rep in repList | propsFilter: {name: $select.search}">
+                                    <div ng-bind-html="rep.name | highlight: $select.search"></div>
+                                    <small>
+                                        name: {{rep.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-left">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="PO No" ng-model="poCode">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-left">
+                        <div class="form-group">
+                            <input type="date" class="form-control" placeholder="PO Date" ng-model="poDate">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-left">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="paymentMethod">
+                                <option value="0">Please Select</option>
+                                <option value="1">Cash Invoice</option>
+                                <option value="2">Credit Invoice</option>
+                                <option value="3">Sample Invoice</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form role="form">
+            <div class="row">
+
+                <div class="col-lg-3 text-left">
+                    <div class="form-group">
+                        <!--<label >Item Code</label>-->
+                        Item Code
+                        <ui-select ng-model="currentItem" theme="select2"
+                                   ng-change="changeCurrentItem($select.selected)"
+                                   ng-disabled="disabled" style="width: 100%;" title="Choose a Item">
+                            <ui-select-match placeholder="Select a Item">
+                                {{$select.selected.code}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="item in itemsList | propsFilter: {code: $select.search, name: $select.search}">
+                                <div ng-bind-html="item.code | highlight: $select.search"></div>
+                                <small>
+                                    name: {{item.name}}
+                                    code: <span ng-bind-html="''+item.code | highlight: $select.search"></span>
+                                    price: {{item.price}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-lg-1 text-left">
+                    <div class="form-group">
+                        QTY<input style="font-size: medium" required class="form-control" placeholder=" QTY"
+                                  ng-model="item.qty">
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left">Unit Price
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">Rs.</span>
+                        <input style="font-size: medium" required="" class="form-control" placeholder="53"
+                               ng-model="item.unitPrice">
+                        <span class="input-group-addon">.00</span>
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left">
+                    <div class="form-group">
+                        DOE<input readonly="" type="date" class="form-control"
+                                  value="{{currentItem.doe | date:'yyyy-MM-dd'}}">
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left">
+                    <div class="form-group">
+                        Lot No<input readonly="" class="form-control" value="{{currentItem.lotNo}}">
+                    </div>
+                </div>
+                <div class="col-lg-2 text-left">
+                    <div class="form-group ">
+                        Stock In Hand
+                        <input readonly="" type="text" class="form-control" value="{{currentItem.qty}}">
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <!--tabel start-->
+
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <hr>
+                <div class="row">
+                    <div class="col-lg-2 text-left">
+                        <div class="form-group ">
+                            Date
+                            <input readonly="" type="date" value="{{invoiceDate | date:'yyyy-MM-dd'}}"
+                                   formtarget="dd-MM-yyyy" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-left">
+                        Discount
+                        <div class="form-group input-group">
+
+                            <input style="font-size: medium" type="text" class="form-control" ng-model="discount"
+                                   ng-change="changeDiscount()">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 text-left">
+                        Credit Period
+                        <div class="form-group input-group">
+
+                            <input style="font-size: medium" type="text" class="form-control" ng-model="creditPeriod">
+                            <span class="input-group-addon">days</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn btn-success" ng-click="addItem()" ng-disabled="invoicePrint">
+                        {{'GENERAL.ACTION.ADDITEM' | translate}}
+                    </button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetItem()" ng-disabled="invoicePrint">
+                        {{'GENERAL.ACTION.RESET' | translate}}
+                    </button>
+                </div>
+
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Item Code</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Lot No</th>
+                                <th style="font-size: large">Qty</th>
+                                <th>Price</th>
+                                <th>Amount</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in invoiceList">
+                                <td>{{$index+1}}</td>
+                                <td>{{item.itemCode}}</td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.desc}}</td>
+                                <td>{{item.lotNo}}</td>
+                                <td>{{item.qty | number:2}}</td>
+                                <td>{{item.unitPrice | number:2}}</td>
+                                <td>{{item.qty*item.unitPrice | number:2}}</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            ng-click="deleteItem(item)">{{'GENERAL.ACTION.DELETE' | translate}}
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>{{totalQty | number:2}}</td>
+                                <td>&nbsp;</td>
+                                <td>{{totalPrice | number:2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success" ng-click="invoice()" ng-disabled="invoicePrint">
+                    {{'GENERAL.ACTION.INVOICE' | translate}}
+                </button>
+                <button type="submit" class="btn btn-success" ng-click="printInvoice()" ng-disabled="!invoicePrint">
+                    {{'GENERAL.ACTION.PRINT' | translate}}
+                </button>
+                <button type="reset" class="btn btn-default" ng-click="resetInvoice()">{{'GENERAL.ACTION.NEWINVOICE' |
+                    translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- /#page-wrapper -->
+

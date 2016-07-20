@@ -65,9 +65,15 @@
 
                     <br>
 
-                    <button type="submit" class="btn btn-success" ng-click="addBank()">Submit Button</button>
-                    <button type="reset" class="btn btn-warning" ng-click="resetBank()">Reset Button</button>
-
+                    <button type="submit" ng-show="!editMode" class="btn btn-success" ng-click="addBank()">
+                        {{'GENERAL.ACTION.SAVE' | translate}}
+                    </button>
+                    <button type="submit" ng-show="editMode" class="btn btn-success" ng-click="updateBank()">
+                        {{'GENERAL.ACTION.UPDATE' | translate}}
+                    </button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetBank()">
+                        {{'GENERAL.ACTION.RESET' | translate}}
+                    </button>
                 </form>
 
             </div>
@@ -84,8 +90,12 @@
 
                     <div class="col-lg-3">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder=" Name">
-                            <span class="input-group-btn"  ><button class="btn btn-default" type="button" ><i class="fa fa-search"></i></button></span>
+                            <input type="text" class="form-control" placeholder="Bank Name" ng-model="bankName">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="searchBank()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </div>
 
                     </div>
@@ -105,13 +115,22 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="bank in bankList">
-                            <td>{{bank.id}}</td>
+                            <td>{{$index+1}}</td>
                             <td>{{bank.name}}</td>
                             <td>{{bank.tel}}</td>
                             <td>{{bank.email}}</td>
                             <td>{{bank.remark}}</td>
 
-                            <td><button type="submit" class="btn btn-primary btn-sm">Update </button></td>
+                            <td>
+                                <button type="submit" class="btn btn-primary btn-sm" ng-click="editBank(bank)">
+                                    {{'GENERAL.ACTION.EDIT' | translate}}
+                                </button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        ng-click="deleteBank(bank.id)">{{'GENERAL.ACTION.DELETE' | translate}}
+                                </button>
+                            </td>
                         </tr>
 
                         </tbody>

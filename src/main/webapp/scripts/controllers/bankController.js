@@ -13,24 +13,24 @@ activitiAdminApp.controller('BankController', ['$rootScope', '$scope', '$http', 
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
-        $scope.count = function () {
-            $http.get('app/api/v1/bank/count').success(function (rs) {
-                $scope.itemsPerPage = rs.pageSize;
-                $scope.totalItems = rs.count;
-                $scope.pageChanged();
-            }).error(function (e) {
-                console.log(e);
-            });
-        };
+        $scope.editMode = false;
+        $scope.bankName;
 
         $scope.pageChanged = function () {
+            if (!$scope.bankName) {
+                name = '*';
+            } else {
+                name = $scope.bankName;
+            }
             $http.get('app/api/v1/bank/all', {
                 params: {
                     page: $scope.currentPage,
-                    size: $scope.itemsPerPage
+                    name: name
                 }
             }).success(function (rs) {
-                $scope.bankList = rs;
+                $scope.bankList = rs.content;
+                $scope.totalItems = rs.totalElements;
+                $scope.itemsPerPage = rs.size;
             }).error(function (e) {
                 $scope.bankList = [];
                 console.log(e);
@@ -47,9 +47,38 @@ activitiAdminApp.controller('BankController', ['$rootScope', '$scope', '$http', 
             });
         };
 
-        $scope.resetBank = function () {
-            $scope.bank = {};
+        $scope.updateBank = function () {
+            $http.post('app/api/v1/bank/update', $scope.bank).success(function (data) {
+                toastr.success('Successfully Updated !!');
+                $scope.pageChanged();
+                $scope.resetBank();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
         };
 
-        $scope.count();
+        $scope.editBank = function (bank) {
+            $scope.bank = bank;
+            $scope.editMode = true;
+        };
+
+        $scope.deleteBank = function (id) {
+            $http.delete('app/api/v1/bank/delete/' + id).success(function (data) {
+                toastr.success('Successfully Deleted !!');
+                $scope.pageChanged();
+            }).error(function (data) {
+                toastr.error(data.message);
+            });
+        };
+
+        $scope.resetBank = function () {
+            $scope.bank = {};
+            $scope.editMode = false;
+        };
+
+        $scope.searchBank = function () {
+            $scope.pageChanged();
+        };
+
+        $scope.pageChanged();
     }]);

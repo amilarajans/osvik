@@ -6,11 +6,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    <i class="fa fa-fw fa-hospital-o"></i>  CLIENT MASTER
+                    <i class="fa fa-fw fa-hospital-o"></i> CLIENT MASTER
                 </h1>
                 <ol class="breadcrumb">
                     <li>
-                        <i class="fa fa-dashboard"></i>  <a href="#dashboard">Dashboard</a>
+                        <i class="fa fa-dashboard"></i> <a href="#dashboard">Dashboard</a>
                     </li>
                     <li class="active">
                         <i class="fa fa-hospital-o"></i> CLIENT MASTER
@@ -61,11 +61,17 @@
                         <textarea class="form-control" rows="2" ng-model="client.remark"></textarea>
                     </div>
 
-
                     <br>
 
-                    <button type="submit" class="btn btn-success" ng-click="addClient()">Submit Button</button>
-                    <button type="reset" class="btn btn-warning" ng-click="resetClient()">Reset Button</button>
+                    <button type="submit" ng-show="!editMode" class="btn btn-success" ng-click="addClient()">
+                        {{'GENERAL.ACTION.SAVE' | translate}}
+                    </button>
+                    <button type="submit" ng-show="editMode" class="btn btn-success" ng-click="updateClient()">
+                        {{'GENERAL.ACTION.UPDATE' | translate}}
+                    </button>
+                    <button type="reset" class="btn btn-warning" ng-click="resetClient()">{{'GENERAL.ACTION.RESET' |
+                        translate}}
+                    </button>
 
                 </form>
 
@@ -80,14 +86,17 @@
                 <h2>Listing of all Clients</h2>
                 <br>
                 <div class="row">
-                    <div class="col-lg-3">
+                    <!--<div class="col-lg-3">-->
 
                     </div>
                     <div class="col-lg-3">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="Client Name">
-                            <span class="input-group-btn"><button class="btn btn-default" type="button"><i
-                                    class="fa fa-search"></i></button></span>
+                            <input type="text" class="form-control" placeholder="Client Name" ng-model="clientName">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="searchClient()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </div>
 
                     </div>
@@ -105,13 +114,11 @@
                             <th>Phone</th>
                             <th>Address</th>
                             <th>Description</th>
-
-
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="client in clientList">
-                            <td>{{client.id}}</td>
+                            <td>{{$index+1}}</td>
                             <td>{{client.code}}</td>
                             <td>{{client.name}}</td>
                             <td>{{client.email}}</td>
@@ -119,12 +126,23 @@
                             <td>{{client.address}}</td>
                             <td>{{client.remark}}</td>
 
-                            <td><button type="submit" class="btn btn-primary btn-sm">Update </button></td>
+                            <td>
+                                <button type="submit" class="btn btn-primary btn-sm" ng-click="editClient(client)">
+                                    {{'GENERAL.ACTION.EDIT' | translate}}
+                                </button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger btn-sm" ng-click="deleteClient(client.id)">
+                                    {{'GENERAL.ACTION.DELETE' | translate}}
+                                </button>
+                            </td>
                         </tr>
 
                         </tbody>
                     </table>
-                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage"
+                                    ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                                    boundary-link-numbers="true"></uib-pagination>
                 </div>
             </div>
         </div>

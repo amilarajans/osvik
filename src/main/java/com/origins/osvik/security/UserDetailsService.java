@@ -23,7 +23,7 @@ import java.util.Collection;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Transactional
     public UserDetails loadUserByUsername(String login) {
