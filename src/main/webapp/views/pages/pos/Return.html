@@ -184,9 +184,14 @@
                             <td>{{item.name}}</td>
                             <td>{{item.desc}}</td>
                             <td>{{item.lotNo}}</td>
-                            <td>{{item.qty}}</td>
+                            <td>{{item.qty | number:2}}</td>
                             <td>{{item.unitPrice | number:2}}</td>
                             <td>{{item.qty*item.unitPrice | number:2}}</td>
+                            <td>
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        ng-click="deleteItem(item)">{{'GENERAL.ACTION.DELETE' | translate}}
+                                </button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Total</td>

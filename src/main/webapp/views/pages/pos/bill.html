@@ -13,7 +13,7 @@
             <div class="col-lg-12" style="">
 
                 <div class="col-xs-4">
-                    <img src="images/osvik-logo.png"/>
+                    <img src="images/logo.jpg"/>
 
                 </div>
                 <div class="col-xs-4">
@@ -41,83 +41,90 @@
                 <br/> <br/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-8" style="font-size:small;">
-                <p>
-                    Name: <label>{{invoiceDetails.client.name}}</label>
-                </p>
-                <p>
-                    Address: <label>{{invoiceDetails.client.address}}</label>
-                </p>
-                <p>
-                    Tel:<label>{{invoiceDetails.client.tel}}</label>
-                </p>
-                <p>
-                    Attn: <label>-</label>
-                </p>
-            </div>
-            <div class="col-xs-4" style=" ">
-                <p>
-                    Invoice No: <label>{{invoiceDetails.invoiceNo | pad:6}}</label>
-                </p>
-                <p>
-                    Date: <label>{{invoiceDetails.invoiceDate | date:'dd-MM-yyyy'}}</label>
-                </p>
-                <p>
-                    PO No:<label>{{invoiceDetails.poCode}}</label>
-                </p>
-                <p>
-                    PO Date: <label>{{invoiceDetails.poDate | date:'dd-MM-yyyy'}}</label>
-                </p>
+
+        <div class="panel panel-primary">
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-8" style="font-size:small;">
+                        <p>
+                            Name: <label>{{invoiceDetails.client.name}}</label>
+                        </p>
+                        <p>
+                            Address: <label>{{invoiceDetails.client.address}}</label>
+                        </p>
+                        <p>
+                            Tel:<label>{{invoiceDetails.client.tel}}</label>
+                        </p>
+                        <p>
+                            Attn: <label>-</label>
+                        </p>
+                    </div>
+                    <div class="col-xs-4" style=" ">
+                        <p>
+                            Invoice No: <label>{{invoiceDetails.invoiceNo| pad:6}}</label>
+                        </p>
+                        <p>
+                            Date: <label>{{invoiceDetails.invoiceDate| date:'dd-MM-yyyy'}}</label>
+                        </p>
+                        <p>
+                            PO No:<label>{{invoiceDetails.poCode}}</label>
+                        </p>
+                        <p>
+                            PO Date: <label>{{invoiceDetails.poDate| date:'dd-MM-yyyy'}}</label>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
         <!--tabel-->
         <div class="row">
             <div class="col-lg-12" style="font-size: small;">
                 <div class="table-responsive" style="font-size: small;">
-                    <table class="table table-bordered table-hover table-striped" style="font-size: small;">
+                    <table class="table table-bordered  table-striped"
+                           style="font-size: small; border-width: 2px;   color: #000;">
                         <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Code</th>
-                            <th>Description</th>
-                            <th>Qty</th>
-                            <th>Rate</th>
-                            <th>Amount</th>
+                            <th style="border-width: 2px;   color: #000;">#</th>
+                            <th style="border-width: 2px;   color: #000;">Code</th>
+                            <th style="border-width: 2px;   color: #000;">Description</th>
+                            <th style="border-width: 2px;   color: #000;">Qty</th>
+                            <th style="border-width: 2px;   color: #000;">Rate</th>
+                            <th style="border-width: 2px;   color: #000;">Amount</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="item in invoiceList">
-                            <td>{{$index+1}}</td>
+                            <td>{{$index + 1}}</td>
                             <td>{{item.itemCode}}</td>
-                            <td>
+                            <td style="font-size: small;">
                                 {{item.name}}
                                 <br/>
                                 {{item.desc}}
                                 <br/>
-                                Exp Date : {{item.doe | date:'dd-MM-yyyy'}}
+                                Exp Date : {{item.doe| date:'dd-MM-yyyy'}}
                                 <br/>
                                 LOT :{{item.lotNo}}
                             </td>
-                            <td>{{item.qty | number:2}}</td>
-                            <td>{{item.unitPrice | number:2}}</td>
-                            <td>{{item.qty*item.unitPrice | number:2}}</td>
+                            <td>{{item.qty| number:2}}</td>
+                            <td>{{item.unitPrice| number:2}}</td>
+                            <td>{{item.qty * item.unitPrice| number:2}}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>Discount (%)</td>
+                            <td style="font-size: small;">Discount (%)</td>
                             <td></td>
                             <td></td>
-                            <td>{{invoiceDetails.discount | number:2}}</td>
+                            <td>{{invoiceDetails.discount| number:2}}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td>Total</td>
-                            <td>{{invoiceDetails.qty | number:2}}</td>
+                            <td>{{invoiceDetails.qty| number:2}}</td>
                             <td></td>
-                            <td>{{invoiceDetails.price | number:2}}</td>
+                            <td>{{invoiceDetails.price| number:2}}</td>
                         </tr>
                         </tbody>
                     </table>

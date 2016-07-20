@@ -30,6 +30,24 @@
                             </ui-select>
                         </div>
                     </div>
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            <ui-select ng-model="currentRep" theme="select2"
+                                       ng-change="changeCurrentRep($select.selected)"
+                                       ng-disabled="disabled" style="width: 100%;" title="Choose a Rep">
+                                <ui-select-match placeholder="Select a Rep">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="rep.id as rep in repList | propsFilter: {name: $select.search}">
+                                    <div ng-bind-html="rep.name | highlight: $select.search"></div>
+                                    <small>
+                                        name: {{rep.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
                     <div class="col-lg-2 text-left">
                         <div class="form-group">
                             <input class="form-control" placeholder="PO No" ng-model="poCode">
