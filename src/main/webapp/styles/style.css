@@ -1216,3 +1216,22 @@ body {
         display: block;
     }
 }
+
+#page-wrapper {
+    width: 83% !important;
+}
+
+::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+    background: #384042;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #151b1d;
+    -webkit-box-shadow: 0px 1px 2px rgb(56, 64, 66);
+}
+
+::-webkit-scrollbar-corner {
+    background: #384042;
+}

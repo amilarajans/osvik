@@ -100,8 +100,11 @@
             <li ng-class="{active: navigation.selection == 'invoice'}">
                 <a href="#invoice"><i class="fa fa-fw fa-table"></i> {{'MENU.INVOICE' | translate}}</a>
             </li>
+            <li ng-class="{active: navigation.selection == 'invoice-brief'}">
+                <a href="#invoice-brief"><i class="fa fa-fw fa-table"></i> {{'MENU.INVOICE_BRIEF' | translate}}</a>
+            </li>
             <li ng-class="{active: navigation.selection == 'current-stock'}">
-                <a href="#current-stock"><i class="fa fa-fw fa-table"></i> {{'MENU.CURRENTSTOCK' | translate}}</a>
+                <a href="#current-stock"><i class="fa fa-fw fa-table"></i> {{'MENU.CURRENT_STOCK' | translate}}</a>
             </li>
             <li ng-class="{active: navigation.selection == 'return'}">
                 <a href="#return"><i class="fa fa-fw fa-table"></i> {{'MENU.RETURN' | translate}}</a>
@@ -166,6 +169,7 @@
 <script src="scripts/controllers/pos/billingController.js"></script>
 <script src="scripts/controllers/pos/currentStockController.js"></script>
 <script src="scripts/controllers/pos/returnController.js"></script>
+<script src="scripts/controllers/pos/invoiceBriefController.js"></script>
 
 <script src="scripts/users-controllers.js"></script>
 <script src="scripts/directives.js"></script>

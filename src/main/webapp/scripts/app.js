@@ -111,6 +111,12 @@ activitiAdminApp
                     resolve: authRouteResolver,
                     reloadOnSearch: true
                 })
+                .when('/invoice-brief', {
+                    templateUrl: 'views/pages/pos/invoice-brief.html',
+                    controller: 'InvoiceBriefController',
+                    resolve: authRouteResolver,
+                    reloadOnSearch: true
+                })
                 .when('/return', {
                     templateUrl: 'views/pages/pos/return.html',
                     controller: 'ReturnController',
