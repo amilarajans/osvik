@@ -9,6 +9,18 @@ activitiAdminApp.controller('InvoiceBriefController', ['$rootScope', '$scope', '
         $scope.invoiceList = [];
         $scope.clientList = [];
         $scope.repList = [];
+
+        //invoice print
+        $scope.invoiceItemList = [];
+        $scope.itemTotalQty;
+        $scope.itemTotalPrice;
+        $scope.itemDiscount;
+        $scope.itemCurrentClient;
+        $scope.itemPoCode;
+        $scope.itemPoDate;
+        $scope.itemInvoiceNo;
+        $scope.itemInvoiceDate;
+
         $scope.currentClient = {};
         $scope.currentRep = {};
         $scope.clientCode;
@@ -80,11 +92,26 @@ activitiAdminApp.controller('InvoiceBriefController', ['$rootScope', '$scope', '
             });
         };
 
-        $scope.addItem = function () {
-
+        $scope.printInvoice = function (currentInvoice) {
+            $scope.itemInvoiceNo = currentInvoice.invoiceNumber;
+            $scope.itemInvoiceDate = currentInvoice.invoiceDate;
+            $http.get('app/api/v1/invoiceBrief/invoiceDetails?invoiceNo=' + currentInvoice.invoiceNumber, {}).success(function (rs) {
+                $scope.itemTotalQty = rs.totalQty;
+                $scope.itemTotalPrice = rs.totalPrice;
+                $scope.itemDiscount = rs.discount;
+                $scope.itemPoCode = rs.poCode;
+                $scope.itemPoDate = rs.poDate;
+                $scope.itemCurrentClient = rs.client;
+                $scope.invoiceItemList = rs.invoices;
+                $scope.openInvoice();
+            }).error(function (e) {
+                $scope.invoiceItemList = [];
+                toastr.error('Something went wrong Oops..');
+                console.log(e);
+            });
         };
 
-        $scope.printInvoice = function () {
+        $scope.openInvoice = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'views/pages/pos/bill.html',
@@ -92,23 +119,22 @@ activitiAdminApp.controller('InvoiceBriefController', ['$rootScope', '$scope', '
                 size: 'lg',
                 resolve: {
                     invoiceList: function () {
-                        return $scope.invoiceList;
+                        return $scope.invoiceItemList;
                     },
                     invoiceDetails: function () {
                         return {
-                            qty: $scope.totalQty,
-                            price: $scope.totalPrice,
-                            discount: $scope.discount,
-                            client: $scope.currentClient,
-                            invoiceNo: $scope.invoiceNo,
-                            poCode: $scope.poCode,
-                            poDate: $scope.poDate,
-                            invoiceDate: $scope.invoiceDate
+                            qty: $scope.itemTotalQty,
+                            price: $scope.itemTotalPrice,
+                            discount: $scope.itemDiscount,
+                            client: $scope.itemCurrentClient,
+                            invoiceNo: $scope.itemInvoiceNo,
+                            poCode: $scope.itemPoCode,
+                            poDate: $scope.itemPoDate,
+                            invoiceDate: $scope.itemInvoiceDate
                         };
                     }
                 }
             });
-
         };
 
         $scope.resetInvoice = function () {

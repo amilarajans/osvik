@@ -2,8 +2,12 @@ package com.origins.osvik.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.origins.osvik.domain.Invoice;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.origins.osvik.domain.*;
+import com.origins.osvik.repository.InvoiceNoRepository;
 import com.origins.osvik.repository.InvoiceRepository;
+import com.origins.osvik.repository.StockRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,10 @@ public class InvoiceBriefResource {
     @Autowired
     private InvoiceRepository invoiceRepository;
     @Autowired
+    private InvoiceNoRepository invoiceNoRepository;
+    @Autowired
+    private StockRepository stockRepository;
+    @Autowired
     private ObjectMapper objectMapper;
 
     @RequestMapping(value = {"/all"}, method = {RequestMethod.GET}, produces = {"application/json"})
@@ -41,6 +49,53 @@ public class InvoiceBriefResource {
         } else {
             return invoiceRepository.findAllByCriteria(clientCode, repCode, invoiceNo, new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "id")));
         }
+    }
+
+    @RequestMapping(value = {"/invoiceDetails"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @Timed
+    public ObjectNode getInvoiceDetails(@RequestParam(value = "invoiceNo", required = false) Long invoiceNo) {
+        Double totalQty = 0d;
+        InvoiceNo invoice = invoiceNoRepository.findInvoiceNoByInvoiceNo(invoiceNo);
+
+        ArrayNode arrayNode = objectMapper.createArrayNode();
+        ObjectNode client = objectMapper.createObjectNode();
+
+        Client invoiceClient = invoice.getClient();
+
+        client.put("name", invoiceClient.getName());
+        client.put("address", invoiceClient.getAddress());
+        client.put("tel", invoiceClient.getTel());
+
+        for (Invoice item : invoice.getInvoices()) {
+
+            totalQty += item.getQty();
+
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            objectNode.put("qty", item.getQty());
+            objectNode.put("unitPrice", item.getUnitPrice());
+            Item invoiceItem = item.getItem();
+            objectNode.put("itemCode", invoiceItem.getCode());
+            objectNode.put("desc", invoiceItem.getDescription());
+            objectNode.put("name", invoiceItem.getName());
+
+            Stock stock = stockRepository.findOneByInvoiceNoAndItemCode(invoiceNo.toString(), invoiceItem.getCode(), item.getUnitPrice());
+
+            objectNode.put("doe", stock.getDoe().getTime());
+            objectNode.put("lotNo", stock.getLotNo());
+
+            arrayNode.add(objectNode);
+        }
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("discount", invoice.getDiscount());
+        objectNode.put("totalPrice", invoice.getTotal());
+        objectNode.put("totalQty", totalQty);
+        objectNode.put("poCode", invoice.getPoCode());
+        objectNode.put("poDate", invoice.getPoDate().getTime());
+        objectNode.set("invoices", arrayNode);
+        objectNode.set("client", client);
+
+        return objectNode;
     }
 
 }

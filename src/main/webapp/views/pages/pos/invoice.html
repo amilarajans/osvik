@@ -200,7 +200,7 @@
                                 <td>{{item.unitPrice | number:2}}</td>
                                 <td>{{item.qty*item.unitPrice | number:2}}</td>
                                 <td>
-                                    <button type="submit" class="btn btn-danger btn-sm"
+                                    <button type="submit" class="btn btn-danger btn-sm" ng-disabled="invoicePrint"
                                             ng-click="deleteItem(item)">{{'GENERAL.ACTION.DELETE' | translate}}
                                     </button>
                                 </td>

@@ -24,7 +24,8 @@
       "INVOICE": "Invoice",
       "PRINT": "Print",
       "NEWINVOICE": "New Invoice",
-      "SEARCH": "Search"
+      "SEARCH": "Search",
+      "VIEW": "View"
     },
     "TITLE": {
       "MAIN": "OSVIK Administrator"

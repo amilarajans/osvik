@@ -28,4 +28,7 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
 
     @Query(value = "SELECT new com.origins.osvik.dto.StockRepresentation(stock.id,item.code,item.name,SUM (stock.qty),stock.doe,stock.lotNo,stock.batchNo,item.description,stock.price,item.supplier.name) FROM Stock stock , Item item WHERE stock.code=item.code AND ((stock.lotNo LIKE :query OR stock.batchNo LIKE :query OR item.name LIKE :query OR item.code LIKE :query OR item.description LIKE :query) AND item.category.name LIKE :mCat AND item.subCategory.name LIKE :sCat AND item.supplier.name LIKE :supplier) GROUP BY stock.code,stock.price")
     Page<StockRepresentation> getSearchAllByPage(@Param("query") String query, @Param("mCat") String mCat, @Param("sCat") String sCat, @Param("supplier") String supplier, Pageable pageable);
+
+    @Query(value = "SELECT item FROM Stock item WHERE item.code=:code AND item.invoiceNo=:invoiceNo AND item.price =:unitPrice")
+    Stock findOneByInvoiceNoAndItemCode(@Param("invoiceNo") String invoiceNo, @Param("code") String code, @Param("unitPrice") Double unitPrice);
 }
