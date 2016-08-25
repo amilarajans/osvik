@@ -38,12 +38,14 @@
                     <div class="form-group">
                         <label>Major Category</label>
                         <select class="form-control" ng-model="item.category" ng-change="loadSubCategoryByCategory()">
+                            <option value="">Please Select</option>
                             <option ng-repeat="category in categoryList" value="{{category.id}}">{{category.name}}</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Sub Category</label>
                         <select class="form-control" ng-model="item.subCategory">
+                            <option value="">Please Select</option>
                             <option ng-repeat="subCategory in subCategoryList" value="{{subCategory.id}}">{{subCategory.name}}</option>
                         </select>
                     </div>
@@ -55,6 +57,7 @@
                     <div class="form-group">
                         <label>Unit</label>
                         <select class="form-control" ng-model="item.unit">
+                            <option value="">Please Select</option>
                             <option ng-repeat="unit in unitList" value="{{unit.id}}">{{unit.name}}</option>
                         </select>
                     </div>
@@ -66,6 +69,7 @@
                     <div class="form-group">
                         <label>Supplier Code</label>
                         <select class="form-control" ng-model="item.supplier">
+                            <option value="">Please Select</option>
                             <option ng-repeat="supplier in supplierList" value="{{supplier.id}}">{{supplier.code}}
                             </option>
                         </select>
@@ -73,7 +77,7 @@
                     <div class="form-group">
                         <label>Country</label>
                         <select class="form-control" ng-model="item.country">
-                            <option>Please Select</option>
+                            <option value="">Please Select</option>
                             <option>China</option>
                             <option>German</option>
                             <option>India</option>

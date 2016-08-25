@@ -77,6 +77,7 @@ public class InvoiceBriefResource {
             objectNode.put("itemCode", invoiceItem.getCode());
             objectNode.put("desc", invoiceItem.getDescription());
             objectNode.put("name", invoiceItem.getName());
+            objectNode.put("category", item.getItem().getCategory().getName() + " " + item.getItem().getSubCategory().getName());
 
             Stock stock = stockRepository.findOneByInvoiceNoAndItemCode(invoiceNo.toString(), invoiceItem.getCode(), item.getUnitPrice());
 

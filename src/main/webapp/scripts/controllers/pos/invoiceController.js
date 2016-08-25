@@ -23,7 +23,7 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
         $scope.poCode = '';
         $scope.poDate = '';
         $scope.clientCode = '';
-        $scope.paymentMethod = 0;
+        $scope.paymentMethod;
         $scope.invoiceDate = new Date();
         $scope.item = {
             stockId: 0,
@@ -86,6 +86,7 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
             $scope.item.lotNo = item.lotNo;
             $scope.item.name = item.name;
             $scope.item.doe = item.doe;
+            $scope.item.category = item.category;
         };
 
         $scope.addItem = function () {
@@ -113,7 +114,7 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
         };
 
         $scope.invoice = function () {
-            if ($scope.invoiceList.length > 0) {
+            if ($scope.validateInvoice()) {
                 $http.post('app/api/v1/invoice/save', {
                     invoices: $scope.invoiceList,
                     discount: $scope.discount,
@@ -131,9 +132,20 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
                 }).error(function (data) {
                     toastr.error(data.message);
                 });
-            } else {
-                toastr.error('No item(s) to Invoice');
             }
+        };
+
+        $scope.validateInvoice = function () {
+            var ok = true;
+            if (!$scope.paymentMethod) {
+                toastr.error('Please select a payment method');
+                ok = false;
+            }
+            if ($scope.invoiceList.length <= 0) {
+                toastr.error('No item(s) to Invoice');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.printInvoice = function () {
@@ -200,7 +212,7 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
             $scope.totalPriceTmp = 0;
             $scope.discount = 0;
             $scope.creditPeriod = 0;
-            $scope.paymentMethod = 0;
+            $scope.paymentMethod;
             $scope.currentItem = {};
             $scope.invoiceList = [];
             $scope.editMode = false;

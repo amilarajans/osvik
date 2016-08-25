@@ -40,13 +40,28 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
         };
 
         $scope.addSupplier = function () {
-            $http.post('app/api/v1/supplier/save', $scope.supplier).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetSupplier();
-            }).error(function (data) {
-                toastr.error(data.message);
-            });
+            if ($scope.validate()) {
+                $http.post('app/api/v1/supplier/save', $scope.supplier).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetSupplier();
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            }
+        };
+
+        $scope.validate = function () {
+            var ok = true;
+            if (!$scope.supplier.name) {
+                toastr.error('Please Enter Supplier Name');
+                ok = false;
+            }
+            if (!$scope.supplier.originCountry) {
+                toastr.error('Please Enter Supplier Country');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.updateSupplier = function () {

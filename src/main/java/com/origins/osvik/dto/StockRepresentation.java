@@ -18,8 +18,9 @@ public class StockRepresentation extends Stock {
     private String supplier;
     private Double price;
     private String desc;
+    private String category;
 
-    public StockRepresentation(Integer id, String itemCode, String itemName, Double qty, Date doe, String lotNo, String batchNo, String desc, Double price, String supplier) {
+    public StockRepresentation(Integer id, String itemCode, String itemName, Double qty, Date doe, String lotNo, String batchNo, String desc, Double price, String supplier, String category) {
         this.batchNo = batchNo;
         this.code = itemCode;
         this.doe = doe;
@@ -30,6 +31,7 @@ public class StockRepresentation extends Stock {
         this.desc = desc;
         this.id = id;
         this.supplier = supplier;
+        this.category = category;
     }
 
     public String getBatchNo() {
@@ -110,6 +112,14 @@ public class StockRepresentation extends Stock {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
