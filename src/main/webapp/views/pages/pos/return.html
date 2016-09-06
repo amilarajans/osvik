@@ -14,6 +14,7 @@
                         <div class="row">
                             <div class="col-lg-2 text-left">
                                 <div class="form-group">
+                                    Invoice No<span style="color: red">*</span>
                                     <ui-select ng-model="invoiceNo" theme="select2"
                                                ng-change="changeCurrentInvoice($select.selected)"
                                                ng-disabled="disabled" style="width: 100%;" title="Enter Invoice No">
@@ -32,12 +33,14 @@
                             </div>
                             <div class="col-lg-2 text-left">
                                 <div class="form-group">
+                                    Client
                                     <input readonly="" class="form-control" placeholder="Client"
                                            value="{{currentInvoice.clientName}}">
                                 </div>
                             </div>
                             <div class="col-lg-2 text-left">
                                 <div class="form-group">
+                                    PO No
                                     <input readonly="" class="form-control" placeholder="PO No"
                                            value="{{currentInvoice.poCode}}">
                                 </div>
@@ -45,12 +48,14 @@
 
                             <div class="col-lg-2 text-left">
                                 <div class="form-group">
+                                    Payment Method
                                     <input readonly="" class="form-control" placeholder="Payment method"
                                            value="{{currentInvoice.paymentMethod}}">
                                 </div>
                             </div>
                             <div class="col-lg-2 text-left">
                                 <div class="form-group">
+                                    Amount
                                     <input readonly="" class="form-control" placeholder="Amount"
                                            value="{{currentInvoice.total | number:2}}">
                                 </div>
@@ -67,7 +72,7 @@
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
                         <!--<label >Item Code</label>-->
-                        Item Code
+                        Item Code<span style="color: red">*</span>
                         <ui-select ng-model="returnItem" theme="select2"
                                    ng-change="changeCurrentItem($select.selected)"
                                    ng-disabled="disabled" style="width: 100%;" title="Choose a Item">
@@ -88,8 +93,9 @@
                 </div>
                 <div class="col-lg-1 text-left">
                     <div class="form-group">
-                        QTY<input style="font-size: medium" required class="form-control" placeholder=" QTY"
-                                  ng-model="returnItem.qty">
+                        QTY<span style="color: red">*</span>
+                        <input style="font-size: medium" required class="form-control" placeholder=" QTY"
+                               ng-model="returnItem.qty">
                     </div>
                 </div>
                 <div class="col-lg-2 text-left">Unit Price
@@ -134,9 +140,9 @@
                 <div class="row">
                     <div class="col-lg-2 text-left">
                         <div class="form-group ">
-                            Cause Of Return
+                            Cause Of Return<span style="color: red">*</span>
                             <select class="form-control" ng-model="causeOfReturn">
-                                <option value="0">Please Select</option>
+                                <option value="">Please Select</option>
                                 <option value="1">Damaged</option>
                                 <option value="2">Expired</option>
                                 <option value="3">Wrong Item</option>

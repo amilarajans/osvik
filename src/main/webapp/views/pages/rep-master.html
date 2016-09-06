@@ -31,7 +31,7 @@
                 <form role="form">
 
                     <div class="form-group">
-                        <label>Rep Name</label>
+                        <label>Rep Name<span style="color: red">*</span></label>
                         <input type="text" class="form-control" placeholder="Enter text" ng-model="rep.name">
                     </div>
 
@@ -44,7 +44,7 @@
                         <textarea class="form-control" rows="2" ng-model="rep.address"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Rep Phone N0.</label>
+                        <label>Rep Phone No<span style="color: red">*</span></label>
                         <input type="text" class="form-control" placeholder="Enter text" ng-model="rep.tel">
                     </div>
 
@@ -80,7 +80,9 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="form-group input-group">
+                            Rep Name
                             <input type="text" class="form-control" placeholder="Rep Name" ng-model="repName">
+                            <div>&nbsp;</div>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="searchRep()">
                                     <i class="fa fa-search"></i>

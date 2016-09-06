@@ -50,6 +50,9 @@ public class Stock implements Serializable {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "costPrice")
+    private Double costPrice;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "mfd")
     private Date mfd;
@@ -194,6 +197,14 @@ public class Stock implements Serializable {
 
     public void setUnitId(Integer unitId) {
         this.unitId = unitId;
+    }
+
+    public Double getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(Double costPrice) {
+        this.costPrice = costPrice;
     }
 
     @Override

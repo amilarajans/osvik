@@ -38,13 +38,36 @@ activitiAdminApp.controller('BankController', ['$rootScope', '$scope', '$http', 
         };
 
         $scope.addBank = function () {
-            $http.post('app/api/v1/bank/save', $scope.bank).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetBank();
-            }).error(function (data) {
-                toastr.error('Failed to Save !!');
-            });
+            if ($scope.validate()) {
+                $http.post('app/api/v1/bank/save', $scope.bank).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetBank();
+                }).error(function (data) {
+                    toastr.error('Failed to Save !!');
+                });
+            }
+        };
+
+        $scope.validate = function () {
+            var ok = true;
+            if (!$scope.bank.name) {
+                toastr.error('Please Enter Bank Name');
+                ok = false;
+            }
+            if (!$scope.bank.accNo) {
+                toastr.error('Please Enter Account No');
+                ok = false;
+            }
+            if (!$scope.bank.accType) {
+                toastr.error('Please Enter Account Type');
+                ok = false;
+            }
+            // if (!$scope.bank.tel) {
+            //     toastr.error('Please Enter Bank Contact No');
+            //     ok = false;
+            // }
+            return ok;
         };
 
         $scope.updateBank = function () {

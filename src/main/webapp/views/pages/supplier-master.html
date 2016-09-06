@@ -32,16 +32,28 @@
 
                     <div class="form-group">
                         <label>Supplier Code </label>
-                        <input type="text" class="form-control" placeholder="SWQA352" ng-model="supplier.code">
+                        <input type="text" class="form-control" placeholder="SWQA352" value="{{supplier.code | pad:3}}"
+                               disabled>
                     </div>
                     <div class="form-group">
-                        <label>Supplier Name</label>
+                        <label>Supplier Name<span style="color: red">*</span></label>
                         <input type="text" class="form-control" placeholder="Enter text" ng-model="supplier.name">
                     </div>
                     <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" class="form-control" placeholder="Enter text"
-                               ng-model="supplier.originCountry">
+                        <label>Country<span style="color: red">*</span></label>
+                        <ui-select ng-model="supplier.originCountry" theme="select2"
+                                   ng-disabled="disabled" style="width: 100%;" title="Choose a Country">
+                            <ui-select-match placeholder="Select a Country">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="country.code as country in countries | propsFilter: {code: $select.search, name: $select.search}">
+                                <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                <small>
+                                    code: {{country.code}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
                     <div class="form-group">
                         <label>Supplier Address</label>
@@ -133,7 +145,9 @@
                     <!--</div>-->
                     <div class="col-lg-3">
                         <div class="form-group input-group">
+                            Supplier Name
                             <input type="text" class="form-control" placeholder="Supplier Name" ng-model="supplierName">
+                            <div>&nbsp;</div>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="searchSupplier()">
                                     <i class="fa fa-search"></i>
@@ -163,9 +177,13 @@
                         <tbody>
                         <tr ng-repeat="supplier in supplierList">
                             <td>{{$index+1}}</td>
-                            <td>{{supplier.code}}</td>
+                            <td>{{supplier.code | pad:3}}</td>
                             <td>{{supplier.name}}</td>
-                            <td>{{supplier.originCountry}}</td>
+                            <td>
+                                <div ng-repeat="country in countries | fuzzyBy : 'code' : supplier.originCountry">
+                                    {{country.name}}
+                                </div>
+                            </td>
                             <td>{{supplier.supplierEmail}}</td>
                             <td><a href="{{supplier.supplierWeb}}">{{supplier.supplierWeb}}</a></td>
                             <td>{{supplier.supplierTel}}</td>

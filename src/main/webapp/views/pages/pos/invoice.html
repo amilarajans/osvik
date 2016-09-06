@@ -13,18 +13,18 @@
 
                     <div class="col-lg-3 text-left">
                         <div class="form-group">
+                            Select a Client<span style="color: red">*</span>
                             <ui-select ng-model="clientCode" theme="select2"
                                        ng-change="changeCurrentClient($select.selected)"
                                        ng-disabled="disabled" style="width: 100%;" title="Choose a Client">
                                 <ui-select-match placeholder="Select a Client">
-                                    {{$select.selected.code}}
+                                    {{$select.selected.name}}
                                 </ui-select-match>
                                 <ui-select-choices
-                                        repeat="client.code as client in clientList | propsFilter: {code: $select.search, name: $select.search}">
-                                    <div ng-bind-html="client.code | highlight: $select.search"></div>
+                                        repeat="client.name as client in clientList | propsFilter: {code: $select.search, name: $select.search}">
+                                    <div ng-bind-html="client.name | highlight: $select.search"></div>
                                     <small>
-                                        name: {{client.name}}
-                                        code: <span ng-bind-html="''+client.code | highlight: $select.search"></span>
+                                        code: {{client.code}}
                                     </small>
                                 </ui-select-choices>
                             </ui-select>
@@ -32,6 +32,7 @@
                     </div>
                     <div class="col-lg-3 text-left">
                         <div class="form-group">
+                            Medical Rep:
                             <ui-select ng-model="currentRep" theme="select2"
                                        ng-change="changeCurrentRep($select.selected)"
                                        ng-disabled="disabled" style="width: 100%;" title="Choose a Rep">
@@ -41,25 +42,26 @@
                                 <ui-select-choices
                                         repeat="rep.id as rep in repList | propsFilter: {name: $select.search}">
                                     <div ng-bind-html="rep.name | highlight: $select.search"></div>
-                                    <small>
-                                        name: {{rep.name}}
-                                    </small>
+
                                 </ui-select-choices>
                             </ui-select>
                         </div>
                     </div>
                     <div class="col-lg-2 text-left">
                         <div class="form-group">
+                            PO No
                             <input class="form-control" placeholder="PO No" ng-model="poCode">
                         </div>
                     </div>
                     <div class="col-lg-2 text-left">
                         <div class="form-group">
+                            PO Date
                             <input type="date" class="form-control" placeholder="PO Date" ng-model="poDate">
                         </div>
                     </div>
                     <div class="col-lg-2 text-left">
                         <div class="form-group">
+                            Invoice type<span style="color: red">*</span>
                             <select class="form-control" ng-model="paymentMethod">
                                 <option value="">Please Select</option>
                                 <option value="1">Cash Invoice</option>
@@ -77,7 +79,7 @@
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
                         <!--<label >Item Code</label>-->
-                        Item Code
+                        Item Code<span style="color: red">*</span>
                         <ui-select ng-model="currentItem" theme="select2"
                                    ng-change="changeCurrentItem($select.selected)"
                                    ng-disabled="disabled" style="width: 100%;" title="Choose a Item">
@@ -98,21 +100,30 @@
                 </div>
                 <div class="col-lg-1 text-left">
                     <div class="form-group">
-                        QTY<input style="font-size: medium" required class="form-control" placeholder=" QTY"
-                                  ng-model="item.qty">
+                        QTY<span style="color: red">*</span>
+                        <input style="font-size: medium" required class="form-control" placeholder=" QTY"
+                               ng-model="item.qty">
                     </div>
                 </div>
+                <div class="col-lg-2 text-left">
+                    <div class="form-group ">
+                        Stock In Hand
+                        <input readonly="" type="text" class="form-control" style="color: blue; font-size: large; "
+                               value="{{currentItem.qty}}">
+                    </div>
+                </div>
+
                 <div class="col-lg-2 text-left">Unit Price
                     <div class="form-group input-group">
                         <span class="input-group-addon">Rs.</span>
-                        <input style="font-size: medium" required="" class="form-control" placeholder="53"
+                        <input style="font-size: small;" required="" class="form-control" placeholder="53"
                                ng-model="item.unitPrice">
                         <span class="input-group-addon">.00</span>
                     </div>
                 </div>
                 <div class="col-lg-2 text-left">
                     <div class="form-group">
-                        DOE<input readonly="" type="date" class="form-control"
+                        DOE<input readonly="" type="date" class="form-control" style="color: blue;"
                                   value="{{currentItem.doe | date:'yyyy-MM-dd'}}">
                     </div>
                 </div>
@@ -121,12 +132,7 @@
                         Lot No<input readonly="" class="form-control" value="{{currentItem.lotNo}}">
                     </div>
                 </div>
-                <div class="col-lg-2 text-left">
-                    <div class="form-group ">
-                        Stock In Hand
-                        <input readonly="" type="text" class="form-control" value="{{currentItem.qty}}">
-                    </div>
-                </div>
+
             </div>
 
         </form>

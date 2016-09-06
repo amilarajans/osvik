@@ -69,7 +69,7 @@ public class StockResource {
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
     public void save(@RequestBody Stock item) {
-        item.setUnit(unitRepository.findOne(item.getUnitId()));
+        item.setUnit(unitRepository.findOneByName(item.getUnitName()));
         stockRepository.save(item);
     }
 

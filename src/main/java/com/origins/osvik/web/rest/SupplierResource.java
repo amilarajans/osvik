@@ -52,6 +52,12 @@ public class SupplierResource {
         }
     }
 
+    @RequestMapping(value = {"/count"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @Timed
+    public long getCount() {
+        return supplierRepository.count();
+    }
+
     @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
     public void update(@RequestBody Supplier supplier) {

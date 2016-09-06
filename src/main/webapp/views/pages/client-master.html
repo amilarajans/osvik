@@ -32,10 +32,11 @@
 
                     <div class="form-group">
                         <label>Client Code </label>
-                        <input type="text" class="form-control" placeholder="SWQA352" ng-model="client.code">
+                        <input type="text" class="form-control" placeholder="SWQA352" value="{{client.code | pad:3}}"
+                               disabled>
                     </div>
                     <div class="form-group">
-                        <label>Client Name</label>
+                        <label>Client Name<span style="color: red">*</span></label>
                         <input type="text" class="form-control" placeholder="Enter text" ng-model="client.name">
                     </div>
                     <div class="form-group">
@@ -48,7 +49,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Client Phone N0.</label>
+                        <label>Client Phone No<span style="color: red">*</span></label>
                         <input type="text" class="form-control" placeholder="Enter text" ng-model="client.tel">
                     </div>
                     <div class="form-group">
@@ -88,67 +89,69 @@
                 <div class="row">
                     <!--<div class="col-lg-3">-->
 
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="Client Name" ng-model="clientName">
-                            <span class="input-group-btn">
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group input-group">
+                        Client Name
+                        <input type="text" class="form-control" placeholder="Client Name" ng-model="clientName">
+                        <div>&nbsp;</div>
+                        <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="searchClient()">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                        </div>
-
                     </div>
 
                 </div>
-                <br> <br>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Client Code</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="client in clientList">
-                            <td>{{$index+1}}</td>
-                            <td>{{client.code}}</td>
-                            <td>{{client.name}}</td>
-                            <td>{{client.email}}</td>
-                            <td>{{client.tel}}</td>
-                            <td>{{client.address}}</td>
-                            <td>{{client.remark}}</td>
 
-                            <td>
-                                <button type="submit" class="btn btn-primary btn-sm" ng-click="editClient(client)">
-                                    {{'GENERAL.ACTION.EDIT' | translate}}
-                                </button>
-                            </td>
-                            <td>
-                                <button type="submit" class="btn btn-danger btn-sm" ng-click="deleteClient(client.id)">
-                                    {{'GENERAL.ACTION.DELETE' | translate}}
-                                </button>
-                            </td>
-                        </tr>
+            </div>
+            <br> <br>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Client Code</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="client in clientList">
+                        <td>{{$index+1}}</td>
+                        <td>{{client.code | pad:3}}</td>
+                        <td>{{client.name}}</td>
+                        <td>{{client.email}}</td>
+                        <td>{{client.tel}}</td>
+                        <td>{{client.address}}</td>
+                        <td>{{client.remark}}</td>
 
-                        </tbody>
-                    </table>
-                    <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage"
-                                    ng-model="currentPage" max-size="maxSize" class="pagination-sm"
-                                    boundary-link-numbers="true"></uib-pagination>
-                </div>
+                        <td>
+                            <button type="submit" class="btn btn-primary btn-sm" ng-click="editClient(client)">
+                                {{'GENERAL.ACTION.EDIT' | translate}}
+                            </button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-danger btn-sm" ng-click="deleteClient(client.id)">
+                                {{'GENERAL.ACTION.DELETE' | translate}}
+                            </button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <uib-pagination ng-change="pageChanged()" total-items="totalItems" items-per-page="itemsPerPage"
+                                ng-model="currentPage" max-size="maxSize" class="pagination-sm"
+                                boundary-link-numbers="true"></uib-pagination>
             </div>
         </div>
-
-
     </div>
-    <!-- /.container-fluid -->
+
+
+</div>
+<!-- /.container-fluid -->
 
 </div>

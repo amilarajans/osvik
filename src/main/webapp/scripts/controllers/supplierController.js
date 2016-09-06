@@ -18,6 +18,8 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
         $scope.editMode = false;
         $scope.supplierName;
 
+        $scope.countries = [];
+
         $scope.pageChanged = function () {
             if (!$scope.supplierName) {
                 name = '*';
@@ -33,9 +35,24 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
                 $scope.supplierList = rs.content;
                 $scope.totalItems = rs.totalElements;
                 $scope.itemsPerPage = rs.size;
+
+                $http.get('app/api/v1/supplier/count', {}).success(function (rs) {
+                    $scope.supplier.code = rs + 1;
+                }).error(function (e) {
+                    console.log(e);
+                });
+
             }).error(function (e) {
                 $scope.supplierList = [];
                 console.log(e);
+            });
+        };
+
+        $scope.loadCountries = function () {
+            $http.get('static/countries.json').success(function (rs) {
+                $scope.countries = rs;
+            }).error(function (e) {
+                $scope.countries = [];
             });
         };
 
@@ -98,4 +115,5 @@ activitiAdminApp.controller('SupplierController', ['$rootScope', '$scope', '$htt
         };
 
         $scope.pageChanged();
+        $scope.loadCountries();
     }]);
