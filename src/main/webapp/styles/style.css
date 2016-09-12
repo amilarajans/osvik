@@ -660,7 +660,6 @@ body {
 }
 
 .modal-body {
-    padding: 5px 10px;
     max-height: 850px;
     min-height: 100px;
     overflow: auto;

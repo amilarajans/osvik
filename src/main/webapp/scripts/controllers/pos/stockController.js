@@ -19,7 +19,7 @@ activitiAdminApp.controller('StockController', ['$rootScope', '$scope', '$http',
             mfd: new Date(),
             doe: new Date(),
             lotNo: '',
-            batchNo: '',
+            batchNo: ''
         };
         $scope.selectedItem = {};
         $scope.editMode = false;
@@ -132,7 +132,7 @@ activitiAdminApp.controller('StockController', ['$rootScope', '$scope', '$http',
                 mfd: new Date(),
                 doe: new Date(),
                 lotNo: '',
-                batchNo: '',
+                batchNo: ''
             };
             $scope.selectedItem = {};
             $scope.editMode = false;

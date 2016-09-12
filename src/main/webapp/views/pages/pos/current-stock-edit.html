@@ -1,156 +1,137 @@
 <!-- Modal view and update -->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Item View and Update Form</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form">
-                    <div class="row">
-                        <div class="col-lg-3 text-left">
-                            <div class="form-group">
-                                <label></label>
-                                <select class="form-control" required>
-                                    <option>Imported</option>
-                                    <option>Local purchasing</option>
-
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-3 text-left">
-                            <div class="form-group">
-                                <!--<label >Item Code</label>-->
-                                Supplier Invoice No<input required class="form-control" placeholder="Invoice No"
-                                                          id="inputSuccess">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- /.row -->
-                    <!--code-->
-                    <div class="row">
-                        <div class="col-lg-3 text-left">
-                            <div class="form-group">
-                                <!--<label >Item Code</label>-->
-                                Item Code<input required class="form-control" placeholder="Enter Item Code"
-                                                id="inputSuccess">
-                            </div>
-                        </div>
-                        <div class="col-lg-3 text-left">
-                            <div class="form-group">
-                                QTY<input required class="form-control" placeholder="Enter QTY">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 text-left">
-                            <div class="form-group">
-                                UNIT <select class="form-control" required>
-                                <option>ML</option>
-                                <option>Pckt</option>
-
-                            </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 text-left">Unit Price
-                            <div class="form-group input-group">
-                                <span class="input-group-addon">Rs.</span>
-                                <input style="font-size: large" required="" class="form-control" placeholder="53">
-                                <span class="input-group-addon">.00</span>
-                            </div>
+<div id="page-wrapper modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" aria-label="Close" ng-click="cancel()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Item View and Update Form</h4>
+        </div>
+        <div class="modal-body">
+            <form role="form">
+                <div class="row">
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            Item Location<input readonly class="form-control" value="{{stockDetails.location}}">
                         </div>
 
                     </div>
-                    <!-- /.row -->
-                    <!--lot-->
-                    <div class="row">
-                        <div class="col-lg-3 text-left">
-                            Date Of Manufacture
-                            <div class="form-group">
-                                <div class='input-group date' id='datetimepicker1'>
-                                    <input type='text' class="form-control" required=""/>
-                                    <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                </span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-3 text-left">
-                            Date Of Expire
-                            <div class="form-group">
-                                <div class='input-group date' id='datetimepicker1'>
-                                    <input type='text' class="form-control" required=""/>
-                                    <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                </span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-3 text-left">
-                            <div class="form-group">
-                                Lot No<input required class="form-control" placeholder="Enter Lot No">
-                            </div>
-                        </div>
-                        <div class="col-lg-3 text-left">
-                            <div class="form-group">
-                                Batch No<input required class="form-control" placeholder="Enter Batch No">
-                            </div>
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            Supplier Invoice No<input readonly class="form-control" value="{{stockDetails.invoiceNo}}">
                         </div>
                     </div>
-                    <!--dom-->
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            <div class="row">
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            Lot No<input readonly class="form-control" value="{{stockDetails.lotNo}}">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            Batch No<input readonly class="form-control" value="{{stockDetails.batchNo}}">
+                        </div>
+                    </div>
+                </div>
 
-                                <div class="col-lg-4 text-left">
-                                    Major Category <select class="form-control" required>
-                                    <option>1</option>
-                                    <option>2</option>
+                <!-- /.row -->
+                <!--code-->
+                <div class="row">
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            Item Code<input readonly class="form-control" value="{{stockDetails.code}}">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            UNIT <input readonly class="form-control" value="{{stockDetails.unitName}}">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 text-left">
+                        <div class="form-group">
+                            QTY<input class="form-control" ng-model="stockDetails.qty">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 text-left">Unit Price
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">Rs.</span>
+                            <input style="font-size: large" class="form-control" ng-model="stockDetails.price">
+                            <span class="input-group-addon">.00</span>
+                        </div>
+                    </div>
 
-                                </select>
-                                </div>
-                                <div class="col-lg-4 text-left">
-                                    Sub Category <select class="form-control" required>
-                                    <option>1</option>
-                                    <option>2</option>
-
-                                </select>
-                                </div>
-                                <div class="col-lg-3 text-left">
-                                    Name <input class="form-control" placeholder="Item Name">
-                                </div>
-
-                            </div>
-                            <br/>
-                            <div class="row">
-
-                                <div class="col-lg-4 text-left">
-                                    Supplier <select class="form-control" required>
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
-                                </div>
-                                <div class="col-lg-6 text-left">
-                                    <textarea class="form-control" rows="3" placeholder="Description"></textarea>
-                                </div>
-
+                </div>
+                <!-- /.row -->
+                <!--lot-->
+                <div class="row">
+                    <div class="col-lg-3 text-left">
+                        Date Of Manufacture
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control" readonly value="{{stockDetails.doe | date:'dd-MM-yyyy'}}"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                             </div>
                         </div>
 
                     </div>
-                </form>
+                    <div class="col-lg-3 text-left">
+                        Date Of Expire
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='text' class="form-control" readonly value="{{stockDetails.doe | date:'dd-MM-yyyy'}}"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                    <div class="col-lg-3 text-left">Cost Price
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">Rs.</span>
+                            <input style="font-size: large" class="form-control" ng-model="stockDetails.costPrice">
+                            <span class="input-group-addon">.00</span>
+                        </div>
+                    </div>
+                </div>
+                <!--dom-->
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">
 
-            </div>
+                            <div class="col-lg-4 text-left">
+                                Major Category <input readonly class="form-control" value="{{stockDetails.categoryName}}">
+                            </div>
+                            <div class="col-lg-4 text-left">
+                                Sub Category <input readonly class="form-control" value="{{stockDetails.subCategoryName}}">
+                            </div>
+                            <div class="col-lg-3 text-left">
+                                Name <input readonly class="form-control" value="{{stockDetails.name}}">
+                            </div>
+
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4 text-left">
+                                Supplier <input readonly class="form-control" value="{{stockDetails.supplier}}">
+                            </div>
+                            <div class="col-lg-6 text-left">
+                                <textarea class="form-control" readonly rows="3">
+                                    {{stockDetails.desc}}
+                                </textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="update()">Update Stock</button>
         </div>
     </div>
 </div>

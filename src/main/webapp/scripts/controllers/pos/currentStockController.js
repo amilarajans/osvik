@@ -1,8 +1,8 @@
 /**
  * Created by Amila-Kumara on 3/19/2016.
  */
-activitiAdminApp.controller('CurrentStockController', ['$rootScope', '$scope', '$http', 'toastr',
-    function ($rootScope, $scope, $http, toastr) {
+activitiAdminApp.controller('CurrentStockController', ['$rootScope', '$scope', '$http', 'toastr', '$uibModal',
+    function ($rootScope, $scope, $http, toastr, $uibModal) {
 
         $rootScope.navigation = {selection: 'current-stock'};
 
@@ -64,6 +64,26 @@ activitiAdminApp.controller('CurrentStockController', ['$rootScope', '$scope', '
             }).error(function (e) {
                 $scope.itemList = [];
                 console.log(e);
+            });
+        };
+
+        $scope.stockEdit = function (item) {
+            item.currentQty = item.qty;
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'views/pages/pos/current-stock-edit.html',
+                controller: 'StockManagementController',
+                size: 'lg',
+                resolve: {
+                    stockDetails: function () {
+                        return item;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (result) {
+                $scope.pageChanged();
+            }, function () {
             });
         };
 
