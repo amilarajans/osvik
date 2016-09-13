@@ -10,12 +10,15 @@ import com.origins.osvik.web.rest.exception.NotPermittedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 
 /**
  * Created by Amila-Kumara on 3/12/2016.
@@ -48,5 +51,20 @@ public class AccountResource {
             response.setStatus(500);
         }
         return user;
+    }
+
+    @RequestMapping(value = {"/rest/isAdmin"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @Timed
+    public ObjectNode getUserAuthority(Authentication principal) {
+        ObjectNode result = this.objectMapper.createObjectNode();
+        boolean isAdmin = false;
+        Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                isAdmin = true;
+            }
+        }
+        result.put("admin", isAdmin);
+        return result;
     }
 }
