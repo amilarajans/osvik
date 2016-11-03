@@ -31,6 +31,13 @@ activitiAdminApp.controller('ClientController', ['$rootScope', '$scope', '$http'
                 $scope.clientList = rs.content;
                 $scope.totalItems = rs.totalElements;
                 $scope.itemsPerPage = rs.size;
+
+                $http.get('app/api/v1/client/count', {}).success(function (rs) {
+                    $scope.client.code = rs + 1;
+                }).error(function (e) {
+                    console.log(e);
+                });
+
             }).error(function (e) {
                 $scope.clientList = [];
                 console.log(e);
@@ -38,13 +45,28 @@ activitiAdminApp.controller('ClientController', ['$rootScope', '$scope', '$http'
         };
 
         $scope.addClient = function () {
-            $http.post('app/api/v1/client/save', $scope.client).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetClient();
-            }).error(function (data) {
-                toastr.error(data.message);
-            });
+            if ($scope.validate()) {
+                $http.post('app/api/v1/client/save', $scope.client).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetClient();
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            }
+        };
+
+        $scope.validate = function () {
+            var ok = true;
+            if (!$scope.client.name) {
+                toastr.error('Please Enter Client Name');
+                ok = false;
+            }
+            if (!$scope.client.tel) {
+                toastr.error('Please Enter Client Contact no');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.updateClient = function () {

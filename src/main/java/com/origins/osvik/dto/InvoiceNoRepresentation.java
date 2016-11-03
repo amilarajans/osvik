@@ -8,6 +8,7 @@ import java.io.Serializable;
  * Created by Amila-Kumara on 20/06/2016.
  */
 public class InvoiceNoRepresentation implements Serializable {
+    private static final long serialVersionUID = -4290777141536632872L;
     private Double discount;
     private String poCode;
     private String paymentMethod;
@@ -17,7 +18,11 @@ public class InvoiceNoRepresentation implements Serializable {
 
     public InvoiceNoRepresentation(String poCode, String paymentMethod, String clientName, Double total, Long invoiceNo) {
         this.poCode = poCode;
-        this.paymentMethod = PaymentMethods.getByCode(Integer.parseInt(paymentMethod)).getName();
+        if (paymentMethod == null || paymentMethod.equals("0")) {
+            this.paymentMethod = "N/A";
+        } else {
+            this.paymentMethod = PaymentMethods.getByCode(Integer.parseInt(paymentMethod)).getName();
+        }
         this.clientName = clientName;
         this.total = total;
         this.invoiceNo = invoiceNo;

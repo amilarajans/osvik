@@ -72,7 +72,7 @@ activitiAdminApp.controller('ReturnController', ['$rootScope', '$scope', '$http'
         };
 
         $scope.addItem = function () {
-            if ($scope.returnItem.qty > 0 && !!$scope.returnItem.itemCode) {
+            if ($scope.validate()) {
                 $scope.totalQty += $scope.returnItem.qty * 1;
                 $scope.totalPrice += $scope.returnItem.qty * $scope.returnItem.unitPrice;
                 $scope.totalPriceTmp += $scope.returnItem.qty * $scope.returnItem.unitPrice;
@@ -80,13 +80,24 @@ activitiAdminApp.controller('ReturnController', ['$rootScope', '$scope', '$http'
                 $scope.returnItemsList.push($scope.returnItem);
                 $scope.resetItem();
                 toastr.success('Item added to Return invoice');
-            } else {
-                toastr.error('No item to add');
             }
         };
 
+        $scope.validate = function () {
+            var ok = true;
+            if (!($scope.returnItem.qty > 0)) {
+                toastr.error('Please Enter Return Quantity');
+                ok = false;
+            }
+            if (!$scope.returnItem.itemCode) {
+                toastr.error('Please Select Return Item');
+                ok = false;
+            }
+            return ok;
+        };
+
         $scope.returnInvoice = function () {
-            if ($scope.invoiceList.length > 0) {
+            if ($scope.validateInvoice()) {
                 $http.post('app/api/v1/return/save', {
                     invoiceNo: $scope.invoiceNo,
                     returnItemsList: $scope.returnItemsList,
@@ -98,9 +109,24 @@ activitiAdminApp.controller('ReturnController', ['$rootScope', '$scope', '$http'
                 }).error(function (data) {
                     toastr.error(data.message);
                 });
-            } else {
-                toastr.error('No item(s) to Return');
             }
+        };
+
+        $scope.validateInvoice = function () {
+            var ok = true;
+            if (!($scope.returnItemsList.length > 0)) {
+                toastr.error('No item(s) to Return');
+                ok = false;
+            }
+            if (!$scope.invoiceNo) {
+                toastr.error('Please Select a Return Invoice');
+                ok = false;
+            }
+            if (!$scope.causeOfReturn) {
+                toastr.error('Please Select a Cause of Return');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.resetForm = function () {

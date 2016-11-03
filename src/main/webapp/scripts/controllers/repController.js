@@ -38,13 +38,28 @@ activitiAdminApp.controller('RepController', ['$rootScope', '$scope', '$http', '
         };
 
         $scope.addRep = function () {
-            $http.post('app/api/v1/rep/save', $scope.rep).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetRep();
-            }).error(function (data) {
-                toastr.error(data.message);
-            });
+            if ($scope.validate()) {
+                $http.post('app/api/v1/rep/save', $scope.rep).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetRep();
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            }
+        };
+
+        $scope.validate = function () {
+            var ok = true;
+            if (!$scope.rep.name) {
+                toastr.error('Please Enter Rep Name');
+                ok = false;
+            }
+            if (!$scope.rep.tel) {
+                toastr.error('Please Enter Rep Contact no');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.updateRep = function () {

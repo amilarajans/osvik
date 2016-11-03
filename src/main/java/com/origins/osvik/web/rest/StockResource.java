@@ -69,14 +69,19 @@ public class StockResource {
     @RequestMapping(value = {"/save"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
     public void save(@RequestBody Stock item) {
-        item.setUnit(unitRepository.findOne(item.getUnitId()));
+        item.setUnit(unitRepository.findOneByName(item.getUnitName()));
         stockRepository.save(item);
     }
 
     @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
-    public void update(@RequestBody Stock item) {
-        stockRepository.save(item);
+    public void update(@RequestBody ObjectNode node) {
+        Stock stock = stockRepository.findOne(node.get("id").asInt());
+        stock.setPrice(node.get("price").asDouble());
+        stock.setCostPrice(node.get("costPrice").asDouble());
+        stock.setQty(node.get("qty").asDouble()-node.get("currentQty").asDouble());
+        stock.setId(null);
+        stockRepository.save(stock);
     }
 
     @RequestMapping(value = {"/delete/{id}"}, method = {RequestMethod.DELETE}, produces = {"application/json"})

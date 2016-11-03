@@ -40,7 +40,7 @@ public class CategoryResource {
     @Timed
     public Page<Category> getAllCategory(@RequestParam("name") String name, @RequestParam("page") Integer page) {
         name = name == null ? "%" : name.replace("*", "%");
-        return categoryRepository.findCategoryByName(name, new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "id")));
+        return categoryRepository.findCategoryByName(name, new PageRequest(page - 1, Integer.parseInt(env.getProperty("result.page.size")), new Sort(Sort.Direction.ASC, "name")));
     }
 
     @RequestMapping(value = {"/allCategories"}, method = {RequestMethod.GET}, produces = {"application/json"})

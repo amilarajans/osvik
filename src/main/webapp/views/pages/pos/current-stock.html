@@ -7,7 +7,6 @@
             <div class="col-lg-12">
                 <h1 class="page-header">
                     Stock Management
-                    <!--<small>GRN</small>-->
                 </h1>
                 <ol class="breadcrumb">
                     <li>
@@ -30,6 +29,7 @@
 
                     <div class="col-lg-2">
                         <div class="form-group">
+                            Major Category
                             <select class="form-control" ng-model="mCat">
                                 <option value="*">Major Category</option>
                                 <option ng-repeat="category in categoryList" value="{{category.name}}">
@@ -40,6 +40,7 @@
                     </div>
                     <div class="col-lg-2">
                         <div class="form-group">
+                            Sub Category
                             <select class="form-control" ng-model="sCat">
                                 <option value="*">Sub Category</option>
                                 <option ng-repeat="subCategory in subCategoryList" value="{{subCategory.name}}">
@@ -50,6 +51,7 @@
                     </div>
                     <div class="col-lg-2">
                         <div class="form-group">
+                            Supplier
                             <select class="form-control" ng-model="supplier">
                                 <option value="*">Supplier</option>
                                 <option ng-repeat="supplier in supplierList" value="{{supplier.name}}">
@@ -58,10 +60,12 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <div class="form-group input-group">
+                            Lot# / Batch# / Name / Code / Description
                             <input type="text" class="form-control" placeholder="ITEM Name / code / disc / lot / batch "
                                    ng-model="searchBy">
+                            <div>&nbsp;</div>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="pageChanged()">
                                     <i class="fa fa-search"></i>
@@ -101,7 +105,7 @@
                             <td>{{item.supplier}}</td>
                             <td>{{item.price | number:2}}</td>
                             <td>
-                                <button type="submit" class="btn btn-primary btn-sm">View</button>
+                                <button type="submit" class="btn btn-primary btn-sm" ng-click="stockEdit(item)">View</button>
                             </td>
                         </tr>
                         </tbody>

@@ -24,7 +24,9 @@
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
                         <label></label>
-                        <select class="form-control" ng-model="item.location" required>
+                        Source Of Supplier<span style="color: red">*</span>
+                        <select class="form-control" ng-model="item.location">
+                            <option value="">Select a Source</option>
                             <option>Imported</option>
                             <option>Local purchasing</option>
                         </select>
@@ -33,10 +35,17 @@
                 </div>
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
-                        <!--<label >Item Code</label>-->
                         Supplier Invoice No
-                        <input required class="form-control" placeholder="Invoice No" id="inputSuccess"
+                        <input class="form-control" placeholder="Invoice No" id="inputSuccess"
                                ng-model="item.invoiceNo">
+                    </div>
+                </div>
+                <div class="col-lg-3 text-left">Cost Price ( landed price )<span style="color: red">*</span>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">Rs.</span>
+                        <input style="font-size: small;" class="form-control" placeholder="must code"
+                               ng-model="item.costPrice">
+                        <span class="input-group-addon">.00</span>
                     </div>
                 </div>
             </div>
@@ -46,10 +55,7 @@
             <div class="row">
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
-                        <!--<label >Item Code</label>-->
-                        Item Code
-                        <!--<input required class="form-control" placeholder="Enter Item Code" id="inputSuccess"-->
-                        <!--ng-model="">-->
+                        Item Code<span style="color: red">*</span>
                         <ui-select ng-model="item.code" theme="select2"
                                    on-select="currentItem($item)"
                                    ng-disabled="disabled" style="width: 100%;" title="Choose a Item">
@@ -70,23 +76,21 @@
                 </div>
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
-                        QTY
-                        <input required class="form-control" placeholder="Enter QTY" ng-model="item.qty">
+                        QTY<span style="color: red">*</span>
+                        <input class="form-control" placeholder="Enter QTY" ng-model="item.qty">
                     </div>
                 </div>
 
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
-                        UNIT
-                        <select class="form-control" ng-model="item.unitId">
-                            <option ng-repeat="unit in unitList" value="{{unit.id}}">{{unit.name}}</option>
-                        </select>
+                        Item Unit
+                        <input class="form-control" value="{{selectedItem.unitName}}" disabled>
                     </div>
                 </div>
-                <div class="col-lg-3 text-left">Unit Price
+                <div class="col-lg-3 text-left">Unit Price<span style="color: red">*</span>
                     <div class="form-group input-group">
                         <span class="input-group-addon">Rs.</span>
-                        <input style="font-size: large" required class="form-control" placeholder="53"
+                        <input style="font-size: small;" class="form-control" placeholder="53"
                                ng-model="item.price">
                         <span class="input-group-addon">.00</span>
                     </div>
@@ -97,10 +101,10 @@
             <!--lot-->
             <div class="row">
                 <div class="col-lg-3 text-left">
-                    Date Of Manufacture
+                    Date Of Manufacture<span style="color: red">*</span>
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker1'>
-                            <input type="date" class="form-control" required ng-model="item.mfd"/>
+                            <input type="date" class="form-control" ng-model="item.mfd"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -109,10 +113,10 @@
 
                 </div>
                 <div class="col-lg-3 text-left">
-                    Date Of Expire
+                    Date Of Expire<span style="color: red">*</span>
                     <div class="form-group">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type="date" class="form-control" required ng-model="item.doe"/>
+                        <div class='input-group date' id='datetimepicker2'>
+                            <input type="date" class="form-control" ng-model="item.doe"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -122,13 +126,13 @@
                 </div>
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
-                        Lot No<input required class="form-control" placeholder="Enter Lot No" ng-model="item.lotNo">
+                        Lot No<input class="form-control" placeholder="Enter Lot No" ng-model="item.lotNo">
                     </div>
                 </div>
                 <div class="col-lg-3 text-left">
                     <div class="form-group">
                         Batch No
-                        <input required class="form-control" placeholder="Enter Batch No" ng-model="item.batchNo">
+                        <input class="form-control" placeholder="Enter Batch No" ng-model="item.batchNo">
                     </div>
                 </div>
             </div>
@@ -137,11 +141,10 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-3 text-center">
-                            <!--<input style="font-size: large" readonly="" class="form-control" placeholder="Available Stock" >-->
                             <div class="form-group input-group">
                                 <span class="input-group-addon">Stock In Hand</span>
                                 <input style="font-size: large" readonly="" type="text" class="form-control"
-                                       placeholder="Available Stock" value="{{selectedItem.qty}}">
+                                       placeholder=" Stock" value="{{selectedItem.qty}}">
                             </div>
                         </div>
                         <div class="col-lg-3 text-center">
@@ -152,15 +155,6 @@
                             <input readonly="" class="form-control" placeholder="Sub Category"
                                    value="{{selectedItem.subCategoryName}}">
                         </div>
-                        <!--<div class="col-lg-3 text-center">-->
-                        <!--&lt;!&ndash;<input style="font-size: large" readonly="" class="form-control" placeholder="Available Stock" >&ndash;&gt;-->
-                        <!--<div class="form-group input-group">-->
-                        <!--<span class="input-group-addon">Current Price- Rs.</span>-->
-                        <!--<input style="font-size: large" readonly="" type="text" class="form-control"-->
-                        <!--placeholder="price">-->
-                        <!--<span class="input-group-addon">.00</span>-->
-                        <!--</div>-->
-                        <!--</div>-->
                     </div>
                     <br/>
                     <div class="row">
@@ -209,7 +203,6 @@
                             <th>DOE</th>
                             <th>Lot No</th>
                             <th>Batch No</th>
-                            <!--<th>Supplier</th>-->
                             <th>Price(Rs)</th>
                             <!--<th>Revenue</th>-->
                         </tr>
@@ -223,7 +216,6 @@
                             <td>{{item.doe | date:'dd-MM-yyyy'}}</td>
                             <td>{{item.lotNo}}</td>
                             <td>{{item.batchNo}}</td>
-                            <!--<td>DMES</td>-->
                             <td>{{item.price | number:2}}</td>
                             <!--<td><button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg">View / Update </button></td>-->
                         </tr>

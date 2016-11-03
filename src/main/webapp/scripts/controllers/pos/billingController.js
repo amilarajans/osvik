@@ -19,7 +19,7 @@ activitiAdminApp.controller('BillingController', ['$scope', '$http', 'toastr', '
             var printContents = document.getElementById(id).innerHTML;
             var popupWin = window.open('', '_blank', 'width=1000,height=600');
             popupWin.document.open();
-            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="styles/sb-admin.css" /> <link rel="stylesheet" type="text/css" href="styles/style.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/bootstrap.print.min.css" /><link rel="stylesheet" type="text/css" href="styles/sb-admin.css" /> <link rel="stylesheet" type="text/css" href="styles/style.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
             popupWin.document.close();
         };
 

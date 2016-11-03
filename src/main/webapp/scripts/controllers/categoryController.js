@@ -18,16 +18,6 @@ activitiAdminApp.controller('CategoryController', ['$rootScope', '$scope', '$htt
         $scope.editSubCatMode = false;
         $scope.categoryName;
 
-        //
-        // $scope.loadCategory = function () {
-        //     $http.get('app/api/v1/category/all').success(function (rs) {
-        //         $scope.categoryList = rs;
-        //     }).error(function (e) {
-        //         $scope.categoryList = [];
-        //         console.log(e);
-        //     });
-        // };
-
         $scope.pageChanged = function () {
             if (!$scope.categoryName) {
                 name = '*';
@@ -50,13 +40,17 @@ activitiAdminApp.controller('CategoryController', ['$rootScope', '$scope', '$htt
         };
 
         $scope.addCategory = function () {
-            $http.post('app/api/v1/category/save', $scope.category).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetCategory();
-            }).error(function (data) {
-                toastr.error(data.message);
-            });
+            if (!!$scope.category.name) {
+                $http.post('app/api/v1/category/save', $scope.category).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetCategory();
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            } else {
+                toastr.error('Please Enter a Category');
+            }
         };
 
         $scope.updateCategory = function () {
@@ -80,13 +74,28 @@ activitiAdminApp.controller('CategoryController', ['$rootScope', '$scope', '$htt
         };
 
         $scope.addSubCategory = function () {
-            $http.post('app/api/v1/category/sub/save', $scope.subCategory).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetSubCategory();
-            }).error(function (data) {
-                toastr.error(data.message);
-            });
+            if ($scope.validate()) {
+                $http.post('app/api/v1/category/sub/save', $scope.subCategory).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetSubCategory();
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            }
+        };
+
+        $scope.validate = function () {
+            var ok = true;
+            if (!$scope.subCategory.name) {
+                toastr.error('Please Enter a Sub Category');
+                ok = false;
+            }
+            if (!$scope.subCategory.category) {
+                toastr.error('Please Select a Category');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.updateSubCategory = function () {

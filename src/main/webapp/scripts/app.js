@@ -3,7 +3,7 @@
 /* App Module */
 
 var activitiAdminApp = angular.module('activitiAdminApp', ['http-auth-interceptor', 'ngResource', 'ngRoute', 'ngCookies',
-    'pascalprecht.translate', 'ngGrid', 'ui.select', 'ui.bootstrap', 'angularFileUpload', 'ngSanitize', 'toastr']);
+    'pascalprecht.translate', 'ngGrid', 'ui.select', 'ui.bootstrap', 'angularFileUpload', 'ngSanitize', 'toastr', 'angular.filter']);
 
 var authRouteResolver = ['$rootScope', 'AuthenticationSharedService', function ($rootScope, AuthenticationSharedService) {
 
@@ -108,6 +108,12 @@ activitiAdminApp
                 .when('/invoice', {
                     templateUrl: 'views/pages/pos/invoice.html',
                     controller: 'InvoiceController',
+                    resolve: authRouteResolver,
+                    reloadOnSearch: true
+                })
+                .when('/invoice-brief', {
+                    templateUrl: 'views/pages/pos/invoice-brief.html',
+                    controller: 'InvoiceBriefController',
                     resolve: authRouteResolver,
                     reloadOnSearch: true
                 })

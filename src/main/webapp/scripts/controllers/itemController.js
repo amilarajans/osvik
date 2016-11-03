@@ -18,6 +18,18 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
         $scope.totalItems = 0;
         $scope.currentPage = 1;
 
+        $scope.countries = [];
+
+
+        $scope.loadCountries = function () {
+            $http.get('static/countries.json').success(function (rs) {
+                $scope.countries = rs;
+            }).error(function (e) {
+                $scope.countries = [];
+            });
+        };
+
+
         $scope.loadCategory = function () {
             $http.get('app/api/v1/category/allCategories').success(function (rs) {
                 $scope.categoryList = rs;
@@ -75,13 +87,44 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
         };
 
         $scope.addItem = function () {
-            $http.post('app/api/v1/item/save', $scope.item).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetItem();
-            }).error(function (data) {
-                toastr.error(data.message);
-            });
+            if ($scope.validate()) {
+                $http.post('app/api/v1/item/save', $scope.item).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetItem();
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            }
+        };
+
+        $scope.validate = function () {
+            var ok = true;
+            if (!$scope.item.supplier) {
+                toastr.error('Please Select a Supplier');
+                ok = false;
+            }
+            if (!$scope.item.code) {
+                toastr.error('Please Enter an Item code');
+                ok = false;
+            }
+            if (!$scope.item.country) {
+                toastr.error('Please Select a Country');
+                ok = false;
+            }
+            if (!$scope.item.unit) {
+                toastr.error('Please Select an Unit');
+                ok = false;
+            }
+            if (!$scope.item.subCategory) {
+                toastr.error('Please Select a Sub Category');
+                ok = false;
+            }
+            if (!$scope.item.category) {
+                toastr.error('Please Select a Category');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.resetItem = function () {
@@ -107,4 +150,5 @@ activitiAdminApp.controller('ItemController', ['$rootScope', '$scope', '$http', 
         $scope.loadCategory();
         $scope.loadUnit();
         $scope.loadSupplier();
+        $scope.loadCountries();
     }]);

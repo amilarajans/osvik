@@ -53,6 +53,12 @@ public class ClientResource {
         }
     }
 
+    @RequestMapping(value = {"/count"}, method = {RequestMethod.GET}, produces = {"application/json"})
+    @Timed
+    public long getCount() {
+        return clientRepository.count();
+    }
+
     @RequestMapping(value = {"/update"}, method = {RequestMethod.POST}, produces = {"application/json"})
     @Timed
     public void update(@RequestBody Client client) {

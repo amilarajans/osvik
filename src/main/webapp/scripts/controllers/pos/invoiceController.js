@@ -23,7 +23,7 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
         $scope.poCode = '';
         $scope.poDate = '';
         $scope.clientCode = '';
-        $scope.paymentMethod = 0;
+        $scope.paymentMethod;
         $scope.invoiceDate = new Date();
         $scope.item = {
             stockId: 0,
@@ -86,10 +86,11 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
             $scope.item.lotNo = item.lotNo;
             $scope.item.name = item.name;
             $scope.item.doe = item.doe;
+            $scope.item.category = item.category;
         };
 
         $scope.addItem = function () {
-            if ($scope.item.qty > 0 && !!$scope.item.itemCode) {
+            if ($scope.validate()) {
                 $scope.totalQty += $scope.item.qty * 1;
                 $scope.totalPrice += $scope.item.qty * $scope.item.unitPrice;
                 $scope.totalPriceTmp += $scope.item.qty * $scope.item.unitPrice;
@@ -99,9 +100,31 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
                 // $scope.pageChanged();
                 $scope.changeDiscount();
                 toastr.success('Item added to invoice');
-            } else {
-                toastr.error('No item to add');
             }
+        };
+
+        $scope.validate = function () {
+            var ok = true;
+            if (!($scope.item.qty > 0)) {
+                toastr.error('Please Enter Quantity');
+                ok = false;
+            }
+            if (!$scope.item.itemCode) {
+                toastr.error('Please Select an Item');
+                ok = false;
+            } else if (!($scope.currentItem.qty >= $scope.item.qty)) {
+                toastr.error('Stock Not Available');
+                ok = false;
+            }
+            if (!$scope.paymentMethod) {
+                toastr.error('Please Select a Payment Method');
+                ok = false;
+            }
+            if (!$scope.clientCode) {
+                toastr.error('Please Select a Client');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.changeDiscount = function () {
@@ -113,7 +136,7 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
         };
 
         $scope.invoice = function () {
-            if ($scope.invoiceList.length > 0) {
+            if ($scope.validateInvoice()) {
                 $http.post('app/api/v1/invoice/save', {
                     invoices: $scope.invoiceList,
                     discount: $scope.discount,
@@ -128,12 +151,24 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
                     toastr.success('Successfully Saved !!');
                     $scope.invoiceNo = data.invoiceNo;
                     $scope.invoicePrint = true;
+                    $scope.loadItems();
                 }).error(function (data) {
                     toastr.error(data.message);
                 });
-            } else {
-                toastr.error('No item(s) to Invoice');
             }
+        };
+
+        $scope.validateInvoice = function () {
+            var ok = true;
+            if (!$scope.paymentMethod) {
+                toastr.error('Please select a payment method');
+                ok = false;
+            }
+            if ($scope.invoiceList.length <= 0) {
+                toastr.error('No item(s) to Invoice');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.printInvoice = function () {
@@ -200,8 +235,10 @@ activitiAdminApp.controller('InvoiceController', ['$rootScope', '$scope', '$http
             $scope.totalPriceTmp = 0;
             $scope.discount = 0;
             $scope.creditPeriod = 0;
-            $scope.paymentMethod = 0;
+            $scope.paymentMethod = '';
             $scope.currentItem = {};
+            $scope.currentClient = {};
+            $scope.currentRep = {};
             $scope.invoiceList = [];
             $scope.editMode = false;
             $scope.invoicePrint = false;

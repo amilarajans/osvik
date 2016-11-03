@@ -14,12 +14,12 @@ activitiAdminApp.controller('StockController', ['$rootScope', '$scope', '$http',
             invoiceNo: '',
             code: '',
             qty: '',
-            unitId: '',
             price: '',
+            costPrice: '',
             mfd: new Date(),
             doe: new Date(),
             lotNo: '',
-            batchNo: '',
+            batchNo: ''
         };
         $scope.selectedItem = {};
         $scope.editMode = false;
@@ -48,6 +48,7 @@ activitiAdminApp.controller('StockController', ['$rootScope', '$scope', '$http',
 
         $scope.currentItem = function (item) {
             $scope.selectedItem = item;
+            $scope.item.unitName = item.unitName;
             $http.get('app/api/v1/stock/stockByItem', {
                 params: {
                     code: item.code
@@ -76,13 +77,48 @@ activitiAdminApp.controller('StockController', ['$rootScope', '$scope', '$http',
         };
 
         $scope.addItem = function () {
-            $http.post('app/api/v1/stock/save', $scope.item).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetItem();
-            }).error(function (data) {
-                toastr.error(data.message);
-            });
+            if ($scope.validate()) {
+                $http.post('app/api/v1/stock/save', $scope.item).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetItem();
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            }
+        };
+
+        $scope.validate = function () {
+            var ok = true;
+            if (!$scope.item.location) {
+                toastr.error('Please Select a Source');
+                ok = false;
+            }
+            if (!$scope.item.costPrice) {
+                toastr.error('Please Enter Cost Price');
+                ok = false;
+            }
+            if (!$scope.item.code) {
+                toastr.error('Please Select Item');
+                ok = false;
+            }
+            if (!$scope.item.qty) {
+                toastr.error('Please Enter Quantity');
+                ok = false;
+            }
+            if (!$scope.item.price) {
+                toastr.error('Please Enter Unit Price');
+                ok = false;
+            }
+            if (moment($scope.item.mfd).isAfter(new Date(), 'day')) {
+                toastr.error('Manufacture Date cannot be a future Day');
+                ok = false;
+            }
+            if (moment($scope.item.doe).isSameOrBefore(new Date(), 'day')) {
+                toastr.error('Date of Expiry Must be a future Day');
+                ok = false;
+            }
+            return ok;
         };
 
         $scope.resetItem = function () {
@@ -91,13 +127,14 @@ activitiAdminApp.controller('StockController', ['$rootScope', '$scope', '$http',
                 invoiceNo: '',
                 code: '',
                 qty: '',
-                unitId: '',
                 price: '',
+                costPrice: '',
                 mfd: new Date(),
                 doe: new Date(),
                 lotNo: '',
-                batchNo: '',
+                batchNo: ''
             };
+            $scope.selectedItem = {};
             $scope.editMode = false;
         };
 

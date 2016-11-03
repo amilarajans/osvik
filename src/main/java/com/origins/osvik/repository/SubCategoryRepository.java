@@ -14,6 +14,6 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory, Intege
     @Query(value = "SELECT subCategory FROM SubCategory subCategory WHERE subCategory.name=:name")
     SubCategory findOneByName(@Param("name") String name);
 
-    @Query(value = "SELECT subCategory FROM SubCategory subCategory WHERE subCategory.category.id=:id")
+    @Query(value = "SELECT subCategory FROM SubCategory subCategory WHERE subCategory.category.id=:id ORDER BY subCategory.name")
     List<SubCategory> findAllByCategory(@Param("id") Integer id);
 }

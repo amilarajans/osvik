@@ -100,8 +100,11 @@
             <li ng-class="{active: navigation.selection == 'invoice'}">
                 <a href="#invoice"><i class="fa fa-fw fa-table"></i> {{'MENU.INVOICE' | translate}}</a>
             </li>
+            <li ng-class="{active: navigation.selection == 'invoice-brief'}">
+                <a href="#invoice-brief"><i class="fa fa-fw fa-table"></i> {{'MENU.INVOICE_BRIEF' | translate}}</a>
+            </li>
             <li ng-class="{active: navigation.selection == 'current-stock'}">
-                <a href="#current-stock"><i class="fa fa-fw fa-table"></i> {{'MENU.CURRENTSTOCK' | translate}}</a>
+                <a href="#current-stock"><i class="fa fa-fw fa-table"></i> {{'MENU.CURRENT_STOCK' | translate}}</a>
             </li>
             <li ng-class="{active: navigation.selection == 'return'}">
                 <a href="#return"><i class="fa fa-fw fa-table"></i> {{'MENU.RETURN' | translate}}</a>
@@ -146,6 +149,8 @@
 <script src="additional_components/ui-bootstrap/ui-bootstrap-tpls-1.2.4.min.js"></script>
 <script src="additional_components/angular-file-upload/angular-file-upload.min.js"></script>
 <script src="additional_components/toastr/angular-toastr.tpls.min.js"></script>
+<script src="additional_components/angular-filter/dist/angular-filter.min.js"></script>
+<script src="additional_components/moment/min/moment.min.js"></script>
 <script src="scripts/http-auth-interceptor.js"></script>
 
 <script src="scripts/app.js"></script>
@@ -166,6 +171,8 @@
 <script src="scripts/controllers/pos/billingController.js"></script>
 <script src="scripts/controllers/pos/currentStockController.js"></script>
 <script src="scripts/controllers/pos/returnController.js"></script>
+<script src="scripts/controllers/pos/invoiceBriefController.js"></script>
+<script src="scripts/controllers/pos/stockManagementController.js"></script>
 
 <script src="scripts/users-controllers.js"></script>
 <script src="scripts/directives.js"></script>

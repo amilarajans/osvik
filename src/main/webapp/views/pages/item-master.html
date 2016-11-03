@@ -30,20 +30,22 @@
                 <form role="form">
 
                     <div class="form-group">
-                        <label>Item Code </label>
+                        <label>Item Code<span style="color: red">*</span></label>
                         <input type="text" class="form-control" placeholder="SWQA352" ng-model="item.code">
                     </div>
 
 
                     <div class="form-group">
-                        <label>Major Category</label>
+                        <label>Major Category<span style="color: red">*</span></label>
                         <select class="form-control" ng-model="item.category" ng-change="loadSubCategoryByCategory()">
+                            <option value="">Please Select</option>
                             <option ng-repeat="category in categoryList" value="{{category.id}}">{{category.name}}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Sub Category</label>
+                        <label>Sub Category<span style="color: red">*</span></label>
                         <select class="form-control" ng-model="item.subCategory">
+                            <option value="">Please Select</option>
                             <option ng-repeat="subCategory in subCategoryList" value="{{subCategory.id}}">{{subCategory.name}}</option>
                         </select>
                     </div>
@@ -53,8 +55,9 @@
                         <input type="text" class="form-control" placeholder="Enter text" ng-model="item.name">
                     </div>
                     <div class="form-group">
-                        <label>Unit</label>
+                        <label>Unit<span style="color: red">*</span></label>
                         <select class="form-control" ng-model="item.unit">
+                            <option value="">Please Select</option>
                             <option ng-repeat="unit in unitList" value="{{unit.id}}">{{unit.name}}</option>
                         </select>
                     </div>
@@ -64,21 +67,28 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Supplier Code</label>
+                        <label>Supplier<span style="color: red">*</span></label>
                         <select class="form-control" ng-model="item.supplier">
-                            <option ng-repeat="supplier in supplierList" value="{{supplier.id}}">{{supplier.code}}
+                            <option value="">Please Select</option>
+                            <option ng-repeat="supplier in supplierList" value="{{supplier.id}}">{{supplier.name}}
                             </option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Country</label>
-                        <select class="form-control" ng-model="item.country">
-                            <option>Please Select</option>
-                            <option>German</option>
-                            <option>Malaysia</option>
-                            <option>India</option>
-                            <option>USA</option>
-                        </select>
+                        <label>Country<span style="color: red">*</span></label>
+                        <ui-select ng-model="item.country" theme="select2"
+                                   ng-disabled="disabled" style="width: 100%;" title="Choose a Country">
+                            <ui-select-match placeholder="Select a Country">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="country.code as country in countries | propsFilter: {code: $select.search, name: $select.search}">
+                                <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                <small>
+                                    code: {{country.code}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
                     <br>
 
@@ -105,15 +115,19 @@
                 <br>
                 <div class="row">
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="ITEM Name / code /disc">
-                            <span class="input-group-btn"  ><button class="btn btn-default" type="button" ><i class="fa fa-search"></i></button></span>
+                            Name / Code / Description
+                            <input type="text" class="form-control" placeholder="ITEM Name / code / desc">
+                            <div>&nbsp;</div>
+                            <span class="input-group-btn"><button class="btn btn-default" type="button"><i
+                                    class="fa fa-search"></i></button></span>
                         </div>
 
                     </div>
                     <div class="col-lg-3">
                         <div class="form-group">
+                            Major Category
                             <select class="form-control">
                                 <option>Major Category</option>
                                 <option ng-repeat="category in categoryList" value="{{category.id}}">{{category.name}}</option>
@@ -122,6 +136,7 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="form-group">
+                            Sub Category
                             <select class="form-control">
                                 <option>Sub Category</option>
                                 <option ng-repeat="subCategory in subCategoryList" value="{{subCategory.id}}">{{subCategory.name}}</option>
@@ -156,7 +171,11 @@
                             <td>{{item.description}}</td>
                             <td>{{item.unitName}}</td>
                             <td>{{item.supplierName}}</td>
-                            <td>{{item.country}}</td>
+                            <td>
+                                <div ng-repeat="country in countries| fuzzyBy : 'code' : item.country">
+                                    {{country.name}}
+                                </div>
+                            </td>
                             <!--<td>-->
                             <!--<button type="submit" class="btn btn-primary btn-sm" ng-click="editItem(item)">-->
                             <!--{{'GENERAL.ACTION.EDIT' | translate}}-->

@@ -7,7 +7,7 @@ activitiAdminApp.controller('UnitController', ['$rootScope', '$scope', '$http', 
         $rootScope.navigation = {selection: 'unit'};
 
         $scope.unitList = [];
-        $scope.unit ;
+        $scope.unit = {};
         $scope.maxSize = 10;
         $scope.itemsPerPage = 0;
         $scope.totalItems = 0;
@@ -38,13 +38,17 @@ activitiAdminApp.controller('UnitController', ['$rootScope', '$scope', '$http', 
         };
 
         $scope.addUnit = function () {
-            $http.post('app/api/v1/unit/save', $scope.unit).success(function (data) {
-                toastr.success('Successfully Saved !!');
-                $scope.pageChanged();
-                $scope.resetUnit();
-            }).error(function (data) {
-                toastr.error(data.message);
-            });
+            if (!!$scope.unit.name) {
+                $http.post('app/api/v1/unit/save', $scope.unit).success(function (data) {
+                    toastr.success('Successfully Saved !!');
+                    $scope.pageChanged();
+                    $scope.resetUnit();
+                }).error(function (data) {
+                    toastr.error(data.message);
+                });
+            } else {
+                toastr.error('Please Enter an Unit Name');
+            }
         };
 
         $scope.updateUnit = function () {

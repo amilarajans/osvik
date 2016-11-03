@@ -17,9 +17,13 @@ public class StockRepresentation extends Stock {
     private String batchNo;
     private String supplier;
     private Double price;
+    private Double costPrice;
     private String desc;
+    private String category;
+    private String categoryName;
+    private String subCategoryName;
 
-    public StockRepresentation(Integer id, String itemCode, String itemName, Double qty, Date doe, String lotNo, String batchNo, String desc, Double price, String supplier) {
+    public StockRepresentation(Integer id, String itemCode, String itemName, Double qty, Date doe, String lotNo, String batchNo, String desc, Double price, String supplier, String category) {
         this.batchNo = batchNo;
         this.code = itemCode;
         this.doe = doe;
@@ -30,6 +34,27 @@ public class StockRepresentation extends Stock {
         this.desc = desc;
         this.id = id;
         this.supplier = supplier;
+        this.category = category;
+    }
+
+    public StockRepresentation(Integer id, String itemCode, String itemName, Double qty, Date doe, String lotNo, String batchNo, String desc, Double price, String supplier, String category, String invoiceNo, String location, String unitName, String categoryName, String subCategoryName,Double costPrice) {
+        this.batchNo = batchNo;
+        this.code = itemCode;
+        this.doe = doe;
+        this.lotNo = lotNo;
+        this.name = itemName;
+        this.price = price;
+        this.qty = qty;
+        this.desc = desc;
+        this.id = id;
+        this.supplier = supplier;
+        this.category = category;
+        this.categoryName = categoryName;
+        this.subCategoryName = subCategoryName;
+        this.costPrice = costPrice;
+        this.setInvoiceNo(invoiceNo);
+        this.setLocation(location);
+        this.setUnitName(unitName);
     }
 
     public String getBatchNo() {
@@ -88,6 +113,16 @@ public class StockRepresentation extends Stock {
         this.price = price;
     }
 
+    @Override
+    public Double getCostPrice() {
+        return costPrice;
+    }
+
+    @Override
+    public void setCostPrice(Double costPrice) {
+        this.costPrice = costPrice;
+    }
+
     public Double getQty() {
         return qty;
     }
@@ -110,6 +145,30 @@ public class StockRepresentation extends Stock {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
     }
 
     @Override
